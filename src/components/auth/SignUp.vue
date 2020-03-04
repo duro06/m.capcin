@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-danger is-fullheight is-flex-mobile">
+  <section class="hero is-fullheight is-flex-mobile">
     <div class="hero-body">
       <div class="container has-text-centered">
         <div class="box form-control">
@@ -187,7 +187,7 @@
           data-wow-duration="2s"
         >
           <div class="has-text-centered">
-            <router-link :to="{ path: '/login' }" style="color: white">
+            <router-link :to="{ path: '/login' }">
               Sudah Punya Akun?
               <strong style="text-decoration:underline;">Log in</strong>
               Sekarang !

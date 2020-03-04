@@ -30,11 +30,11 @@ export default {
         return false;
       }
     }
-  },
-
-  created() {
-    document.querySelector("body").style.backgroundColor = "#aef";
   }
+
+  // created() {
+  //   document.querySelector("body").style.backgroundColor = "#aef";
+  // }
 };
 </script>
 <style scoped>

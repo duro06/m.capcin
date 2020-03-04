@@ -32,14 +32,14 @@ export default {
   data() {
     return {
       pengumuman: [
-        { image: "./img/image/Chrysanthemum.jpg" },
-        { image: "./img/image/Hydrangeas.jpg" },
-        { image: "./img/image/Jellyfish.jpg" },
-        { image: "./img/image/Koala.jpg" },
-        { image: "./img/image/Lighthouse.jpg" },
-        { image: "./img/image/Penguins.jpg" },
-        { image: "./img/image/Tulips.jpg" },
-        { image: "./img/image/Desert.jpg" }
+        { image: "../img/image/Chrysanthemum.jpg" },
+        { image: "../img/image/Hydrangeas.jpg" },
+        { image: "../img/image/Jellyfish.jpg" },
+        { image: "../img/image/Koala.jpg" },
+        { image: "../img/image/Lighthouse.jpg" },
+        { image: "../img/image/Penguins.jpg" },
+        { image: "../img/image/Tulips.jpg" },
+        { image: "../img/image/Desert.jpg" }
       ]
     };
   }
