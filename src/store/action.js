@@ -1,6 +1,6 @@
-import { http, httpNot } from "../../services/service";
+import { http, httpNot } from "../services/http_service.js";
 import store from ".";
-import { setToken } from "../../services/auth_service";
+import { setToken } from "../services/auth_service.js";
 
 export default {
   aunthenticate(context, payload) {
