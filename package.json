@@ -10,6 +10,7 @@
   "dependencies": {
     "@smartweb/vue-flash-message": "^0.6.2",
     "axios": "^0.19.2",
+    "bulma-badge": "^3.0.1",
     "core-js": "^3.6.4",
     "jsonwebtoken": "^8.5.1",
     "pusher-js": "^5.1.1",
