@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       pengumuman: [
-        { image: "./img/image/chrysanthemum.jpg" },
+        { image: "./img/image/Chrysanthemum.jpg" },
         { image: "./img/image/Hydrangeas.jpg" },
         { image: "./img/image/Jellyfish.jpg" },
         { image: "./img/image/Koala.jpg" },
