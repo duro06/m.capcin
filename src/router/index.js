@@ -70,10 +70,6 @@ const routes = [
         component: () => import("../views/Produksi.vue"),
 
         beforeEnter: (to, from, next) => {
-          // console.log("to ",to)
-          // console.log("from ",from)
-          // console.log(store.getters.levelAccess);
-          // console.log("router get Profile ",store.getters.myProfile.role);
           console.log("router get access Profile ", store.getters.levelAccess);
 
           if (
