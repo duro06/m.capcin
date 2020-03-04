@@ -154,22 +154,22 @@ const routes = [
     }
   },
 
-  // {
-  //   path: "*",
-  //   name: "hello",
-  //   component: () => import("../components/HelloWorld.vue"),
+  {
+    path: "*",
+    name: "hello",
+    component: () => import("../components/HelloWorld.vue"),
 
-  //   beforeEnter: (to, from, next) => {
-  //     console.log("logged get ", store.getters.loggedIn);
-  //     if (store.getters.loggedIn) {
-  //       next();
-  //     } else if (store.getters.waitingVerified) {
-  //       next("/waiting");
-  //     } else {
-  //       next("/login");
-  //     }
-  //   }
-  // },
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
   // {
   //   path: "/logged",
   //   name: "logged",
