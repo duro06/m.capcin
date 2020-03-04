@@ -25,7 +25,7 @@ const routes = [
       if (store.getters.loggedIn) {
         next("/home");
       } else if (store.getters.waitingVerified) {
-        next("/test");
+        next("/waiting");
       } else {
         next();
       }
@@ -40,25 +40,25 @@ const routes = [
       if (store.getters.loggedIn) {
         next("/home");
       } else if (store.getters.waitingVerified) {
-        next("/test");
+        next("/waiting");
       } else {
         next();
       }
     }
   },
-  // {
-  //   path: "/test",
-  //   name: "test",
-  //   component: () => import("../views/Test.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     console.log("tetst get ", store.getters.waitingVerified);
-  //     if (store.getters.waitingVerified) {
-  //       next();
-  //     } else {
-  //       next("/login");
-  //     }
-  //   }
-  // },
+  {
+    path: "/waiting",
+    name: "waiting",
+    component: () => import("../views/Waiting.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("tetst get ", store.getters.waitingVerified);
+      if (store.getters.waitingVerified) {
+        next();
+      } else {
+        next("/login");
+      }
+    }
+  },
   {
     path: "/home",
     name: "home",
@@ -80,7 +80,7 @@ const routes = [
     //         console.log("Produksi confirm");
     //       } else if (store.getters.waitingVerified) {
     //         console.log("Produksi look for verified");
-    //         next("/test");
+    //         next("/waiting");
     //       } else {
     //         console.log("Produksi none are true");
     //         next("/home");
@@ -100,7 +100,7 @@ const routes = [
     //       ) {
     //         next();
     //       } else if (store.getters.waitingVerified) {
-    //         next("/test");
+    //         next("/waiting");
     //       } else {
     //         next("/home");
     //       }
@@ -115,7 +115,7 @@ const routes = [
     //       if (store.getters.levelAccess == "Supplier") {
     //         next();
     //       } else if (store.getters.waitingVerified) {
-    //         next("/test");
+    //         next("/waiting");
     //       } else {
     //         next("/home");
     //       }
@@ -133,7 +133,7 @@ const routes = [
     //       ) {
     //         next();
     //       } else if (store.getters.waitingVerified) {
-    //         next("/test");
+    //         next("/waiting");
     //       } else {
     //         next("/home");
     //       }
@@ -147,7 +147,7 @@ const routes = [
     //     console.log("Entering Home ");
     //     next();
     //   } else if (store.getters.waitingVerified) {
-    //     next("/test");
+    //     next("/waiting");
     //   } else {
     //     next("/login");
     //   }
@@ -164,7 +164,7 @@ const routes = [
   //     if (store.getters.loggedIn) {
   //       next();
   //     } else if (store.getters.waitingVerified) {
-  //       next("/test");
+  //       next("/waiting");
   //     } else {
   //       next("/login");
   //     }
@@ -179,7 +179,7 @@ const routes = [
   //     if (store.getters.loggedIn) {
   //       next();
   //     } else if (store.getters.waitingVerified) {
-  //       next("/test");
+  //       next("/waiting");
   //     } else {
   //       next("/login");
   //     }
@@ -195,7 +195,7 @@ const routes = [
   //     if (store.getters.loggedIn) {
   //       next();
   //     } else if (store.getters.waitingVerified) {
-  //       next("/test");
+  //       next("/waiting");
   //     } else {
   //       next("/login");
   //     }

@@ -246,10 +246,10 @@ export default {
       reg: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     };
   },
-  // backup plan kalo gagal redirect ke halaman test, untuk menuggu verifikasi
+  // backup plan kalo gagal redirect ke halaman waiting, untuk menuggu verifikasi
   updated() {
     if (localStorage.getItem("waiting_verivication")) {
-      this.$router.replace(this.$route.query.redirect || "/test");
+      this.$router.replace(this.$route.query.redirect || "/waiting");
     }
   },
   methods: {
@@ -277,7 +277,7 @@ export default {
               time: 5000
             });
             vm.loading = ""; // button spinner disable
-            this.$router.replace({ name: "test" }, () => {}); // arahkan ke halaman test untuk menuggu verifikasi
+            this.$router.replace({ name: "waiting" }, () => {}); // arahkan ke halaman waiting untuk menuggu verifikasi
           })
           .catch(error => {
             if (error) {
