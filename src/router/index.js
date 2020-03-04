@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import store from "../store";
+import store from "../store";
 // import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
@@ -12,40 +12,40 @@ const routes = [
       name: "home"
     }
   },
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "../views/Login.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     console.log("login 2 get ", store.getters.loggedIn);
-  //     if (store.getters.loggedIn) {
-  //       next("/home");
-  //     } else if (store.getters.waitingVerified) {
-  //       next("/test");
-  //     } else {
-  //       next();
-  //     }
-  //   }
-  // },
-  // {
-  //   path: "/signup",
-  //   name: "signup",
-  //   component: () => import("../components/auth/SignUp.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     console.log("signup get ", store.getters.loggedIn);
-  //     if (store.getters.loggedIn) {
-  //       next("/home");
-  //     } else if (store.getters.waitingVerified) {
-  //       next("/test");
-  //     } else {
-  //       next();
-  //     }
-  //   }
-  // },
+  {
+    path: "/login",
+    name: "login",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("login 2 get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next("/home");
+      } else if (store.getters.waitingVerified) {
+        next("/test");
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: () => import("../components/auth/SignUp.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("signup get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next("/home");
+      } else if (store.getters.waitingVerified) {
+        next("/test");
+      } else {
+        next();
+      }
+    }
+  },
   // {
   //   path: "/test",
   //   name: "test",
@@ -152,7 +152,7 @@ const routes = [
     //     next("/login");
     //   }
     // }
-  }
+  },
 
   // {
   //   path: "*",
@@ -206,11 +206,11 @@ const routes = [
   //   name: "card",
   //   component: () => import("../components/element/Card.vue")
   // },
-  // {
-  //   path: "/logout",
-  //   name: "logout",
-  //   component: () => import("../components/auth/Logout.vue")
-  // },
+  {
+    path: "/logout",
+    name: "logout",
+    component: () => import("../components/auth/Logout.vue")
+  }
   // {
   //   path: "/tabel",
   //   name: "tabel",
