@@ -1,32 +1,54 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <!-- <section id="app" class="hero is-danger is-small">
+    <div class="hero-head"> -->
+    <FlashMessage
+      position="right top"
+      style="z-index: 19999 !important; position: fixed;"
+    ></FlashMessage>
+    <transition class="slideInLeft" v-wow data-wow-duration="1s">
+      <router-view />
+    </transition>
+    <!-- </div>
+  </section> -->
   </div>
 </template>
+<script>
+import * as auth from "./services/auth_service";
+import store from "./store";
+// import router from "./router";
+export default {
+  name: "app",
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  beforeCreate: async function() {
+    localStorage.removeItem("level"); // hapus temporary local storege level
+    //===================jangan lupa ini nanti dihapus=============
+    console.log("App Get Profile");
+    //=============================================================
+    try {
+      //jika login maka
+      if (store.getters.loggedIn) {
+        //===================jangan lupa ini nanti dihapus=============
+        console.log("Login = ", store.getters.loggedIn);
+        //=============================================================
+        const response = await auth.getProfile(); // ambil profile
+        //===================jangan lupa ini nanti dihapus=============
+        console.log(response);
+        //=============================================================
+        store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+        //jika tidak
+      } else {
+        //===================jangan lupa ini nanti dihapus=============
+        console.log("Login = false");
+        //=============================================================
+        store.dispatch("destroyToken"); //paggil action untuk menghapus authentifikasi
+      }
+      setTimeout(function() {}, 2000);
+    } catch (error) {
+      //meskipun error tetap data yang ada di hapus
+      store.dispatch("destroyToken");
     }
   }
-}
-</style>
+};
+</script>
+<style lang="scss"></style>
