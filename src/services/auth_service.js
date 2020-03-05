@@ -40,3 +40,7 @@ export function getAccessToken() {
 export function getProfile() {
   return set.http().get("auth/profile");
 }
+
+export function updateImage(id, data) {
+  return set.httpFile().post(`/user/update-image/${id}`, data);
+}
