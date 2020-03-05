@@ -12,4 +12,8 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.mitra {
+  background: black;
+}
+</style>

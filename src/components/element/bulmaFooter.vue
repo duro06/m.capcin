@@ -4,38 +4,26 @@
     v-wow
     data-wow-duration="2s"
   >
-    <div class="container " style="background-color: grey">
+    <div class="container">
       <div class="navbar-brand level is-mobile">
-        <div class="level-item has-text-centered">
+        <div class="btn_nav_item level-item has-text-centered active">
           <router-link :to="{ path: '/home' }">
-            <i
-              class="fas fa-home slideInRight"
-              style="color: white"
-              v-wow
-              data-wow-duration="2s"
-            />
-            <p
-              class="subtitle is-7 slideInLeft"
-              style="color: white"
-              v-wow
-              data-wow-duration="2s"
-            >
+            <i class="fas fa-home slide" v-wow data-wow-duration="2s" />
+            <p class="subtitle is-7 slideInLeft" v-wow data-wow-duration="2s">
               Beranda
             </p>
           </router-link>
         </div>
-        <div class="level-item has-text-centered">
+        <div class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/' }">
             <i
-              class="fas fa-wallet slideInRight"
-              style="color: white"
+              class="fas fa-wallet slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.5s"
             ></i>
             <p
-              class="subtitle is-7 slideInLeft"
-              style="color: white"
+              class="subtitle is-7 slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.5s"
@@ -44,18 +32,16 @@
             </p>
           </router-link>
         </div>
-        <div class="level-item has-text-centered">
+        <div class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/profile' }">
             <i
-              class="fas fa-user-tie slideInRight "
-              style="color: white"
+              class="fas fa-user-tie slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.7s"
             ></i>
             <p
-              class="subtitle is-7 slideInLeft"
-              style="color: white"
+              class="subtitle is-7 slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.7s"
@@ -64,18 +50,16 @@
             </p>
           </router-link>
         </div>
-        <div v-if="!loggedIn" class="level-item has-text-centered">
+        <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/login' }">
             <i
-              class="fas fa-sign-in-alt slideInRight"
-              style="color: white"
+              class="fas fa-sign-in-alt slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.9s"
             ></i>
             <p
-              class="subtitle is-7 slideInLeft"
-              style="color: white"
+              class="subtitle is-7 slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.9s"
@@ -84,18 +68,16 @@
             </p>
           </router-link>
         </div>
-        <div v-if="loggedIn" class="level-item has-text-centered">
+        <div v-if="loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/logout' }">
             <i
-              class="fas fa-sign-out-alt slideInRight"
-              style="color: white"
+              class="fas fa-sign-out-alt slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.9s"
             ></i>
             <p
-              class="subtitle is-7 slideInLeft"
-              style="color: white"
+              class="subtitle is-7 slide"
               v-wow
               data-wow-duration="2s"
               data-wow-delay="0.9s"
@@ -126,7 +108,30 @@ export default {
 };
 </script>
 <style scoped>
+.navbar-brand {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  height: 60px;
+  box-shadow: 0 -2px 5px -2px #333;
+  background-color: #fff;
+}
+
+.btn_nav_item a{
+  color:#636e72;
+}
+.btn_nav_item.active a{
+  color:#ee1846 !important;
+}
+.btn_nav_item.active p{
+  color:#ee1846 !important;
+}
+
 p.subtitle {
   padding-top: 0px;
+  font-size: 10px;
 }
 </style>

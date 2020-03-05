@@ -1,5 +1,5 @@
 <template>
-  <keep-alive>
+  <div>
     <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
@@ -25,7 +25,7 @@
         </div>
       </div> -->
     </div>
-  </keep-alive>
+  </div>
 </template>
 <script>
 export default {

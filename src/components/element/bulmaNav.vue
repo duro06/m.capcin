@@ -1,20 +1,32 @@
 <template>
-  <nav class="navbar is-fixed-top fadeInUp " v-wow data-wow-duration="2s">
-    <div class="container ">
-      <div class="navbar-brand level is-mobile">
-        <div class="level-item has-text-centered">
+  <div>
+    <nav class="navbar is-fixed-top fadeIn" v-wow data-wow-duration="2s">
+      <div class="container is-fullwidth">
+        <div class="navbar-dropdown is-right">
+          <a role="button" class="navbar-burger">
+            <i class="fa fa-bell"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <!-- <nav class="navbar is-fixed-top fadeIn" v-wow data-wow-duration="2s">
+    <div class="container is-widescreen navbar-menu">
+      <div class="navbar-end">
+        <div class="notif-bar is-right">
+          <a>
+            <i class="fa fa-bell"></i>
+          </a>
+        </div>
+        <div class="">
           <span>
             <router-link
-              class="navbar-item slideInLeft "
+              class="navbar-item slide"
               to="/home"
               v-wow
               data-wow-duration="1s"
             >
-              <i
-                class="fas fa-home slideInRight"
-                v-wow
-                data-wow-duration="1s"
-              />
+              <i class="fas fa-home slide" v-wow data-wow-duration="1s" />
               Home</router-link
             >
           </span>
@@ -87,7 +99,7 @@
         </div>
       </div>
     </div>
-  </nav>
+  </nav> -->
 </template>
 <script>
 export default {
@@ -108,3 +120,23 @@ export default {
   }
 };
 </script>
+<style scoped>
+.navbar-burger {
+  color: #4e4e4e !important;
+  cursor: pointer;
+  display: block;
+  height: 3.25rem;
+  position: relative;
+  width: 3.25rem;
+  margin-left: auto;
+  text-align: center;
+  padding: inherit;
+  line-height: 30px;
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+/* .notif-atas {
+
+} */
+</style>

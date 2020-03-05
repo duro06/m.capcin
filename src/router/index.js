@@ -139,19 +139,19 @@ const routes = [
           }
         }
       }
-    ]
+    ],
 
-    // beforeEnter: (to, from, next) => {
-    //   console.log("logged get ", store.getters.loggedIn);
-    //   if (store.getters.loggedIn) {
-    //     console.log("Entering Home ");
-    //     next();
-    //   } else if (store.getters.waitingVerified) {
-    //     next("/waiting");
-    //   } else {
-    //     next("/login");
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        console.log("Entering Home ");
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
   },
 
   // {

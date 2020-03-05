@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container is-fullhd">
     <Navbar class="navbar" />
-    <div class=" hero-body has-text-centered">
+    <div class="has-text-centered">
       <Welcome />
       <router-view></router-view>
     </div>
@@ -33,7 +33,7 @@ export default {
   },
 
   created() {
-    document.querySelector("body").style.backgroundColor = "#aef";
+    document.querySelector("body").style.backgroundColor = "#aaa";
   }
 };
 </script>
