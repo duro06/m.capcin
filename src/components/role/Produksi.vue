@@ -168,14 +168,15 @@ export default {
     //jika ada scroll event
     Scroll() {
       //================= development mode ===========================
-      console.log("Last page  :  ", this.meta.last);
+      console.log("Last page  :  ", this.last_page);
       console.log("Current page  :  ", this.current_page);
       console.log("Busy Scroll :  ", this.busy);
       //================ jangan lupa nanti di hapus =========================
       this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
-      //sebenarnya bisa juga pake nextTick, cuma lali carane.
-      if (this.more_exist) {
+      // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
+      //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
+      if (this.more_exist && this.last_page != null) {
         this.loadMore(); //jalankan fungsi Load more
       }
     },
@@ -269,10 +270,11 @@ export default {
   },
   // sementara hanya du=igunakan untuk ngecek masih ada data yang perlu di load lagi tau tidak
   updated() {
-    // logikanya jika halaman terakhir kurang dari halaman sekara
+    // logikanya jika halaman terakhir kurang dari halaman sekarang
     // atau jika halama terkhir kurang dari halaman sekarang dan jumlah halaman hanya 2
     // kalo ga dikasih ini kalo halamannya cuma dua, ga muncul lagi halaman terakhir
     // sebab more_exist sudah false duluan untuk next page
+
     if (
       this.current_page < this.last_page ||
       (this.current_page < this.last_page && this.last_page == 2)
@@ -281,6 +283,7 @@ export default {
     } else {
       this.more_exist = false;
     }
+
     //=====================jangan lupa ini nanti di hapus ============
     console.log("Updated :  ", this.more_exist);
     //======================================================
