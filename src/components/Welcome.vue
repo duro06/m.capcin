@@ -23,7 +23,7 @@
 </template>
 <script>
 import Bilboard from "./element/ElementCard.vue";
-
+// import { httpMe } from "../services/http_service";
 export default {
   name: "welcome",
   components: {

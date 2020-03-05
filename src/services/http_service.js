@@ -9,20 +9,19 @@ export function http() {
     }
   });
 }
-export function httpTry() {
-  return axios.create({
-    // baseURL: store.getters.serverUrl,
+export function httpMe() {
+  return {
+    baseURL: "localhost:8080",
     headers: {
-      username: "farhan",
-      password: "farhan"
-      // Authorization: "Bearer" + auth.getAccessToken()
+      "Content-Location": "text/plain"
     }
-  });
+  };
 }
-export function httpNot() {
+export function httpFile() {
   return axios.create({
     headers: {
-      "Content-Type": "aplication/json"
+      Authorization: "Bearer " + auth.getAccessToken(),
+      "Content-Type": "multipart/form-data"
     }
   });
 }

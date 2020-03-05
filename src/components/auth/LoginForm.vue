@@ -135,8 +135,13 @@
             >
               <p class="has-text-centered has-text-small">
                 Did you
-                <a class="is-small" @click="forgot">forgot your password</a> or
-                <a @click="signup">need an account?</a>
+                <router-link class="is-small" :to="{ path: '/forgot' }"
+                  >forgot your password</router-link
+                >
+                or
+                <router-link :to="{ path: '/signup' }"
+                  >need an account?</router-link
+                >
               </p>
             </div>
           </form>
@@ -184,14 +189,6 @@ export default {
     }
   },
   methods: {
-    //redirect ke sign up
-    signup() {
-      this.$router.replace("/signup");
-    },
-    //redirect ke forgot, jika lupa password
-    forgot() {
-      this.$router.replace("/forgot");
-    },
     // fungsi ridirect sesuai role
     findRole(item) {
       //redirect pake { name: "link"} biar ga panjang gini nulisnya
