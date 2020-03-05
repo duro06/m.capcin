@@ -16,7 +16,7 @@
           <a @click="login"> Link </a>
 
           To navigate to whatever you're looking for, if its not there, it means
-          you are not allowed to get itn there
+          you are not allowed to get it not there
         </div>
       </article>
     </div>

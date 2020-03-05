@@ -70,7 +70,12 @@ const routes = [
         component: () => import("../views/Produksi.vue"),
 
         beforeEnter: (to, from, next) => {
-          console.log("router get access Profile ", store.getters.levelAccess);
+          console.log(
+            "router get access Profile ",
+            store.getters.levelAccess,
+            "router get state Profile ",
+            store.state.profile.role
+          );
 
           if (
             store.getters.levelAccess === "Produksi" ||
@@ -186,21 +191,21 @@ const routes = [
   //   }
   // },
 
-  // {
-  //   path: "/profile",
-  //   name: "profile",
-  //   component: () => import("../components/Profile.vue"),
-  //   beforeEnter: (to, from, next) => {
-  //     console.log("logged get ", store.getters.loggedIn);
-  //     if (store.getters.loggedIn) {
-  //       next();
-  //     } else if (store.getters.waitingVerified) {
-  //       next("/waiting");
-  //     } else {
-  //       next("/login");
-  //     }
-  //   }
-  // },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/Profile.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
   // {
   //   path: "/card",
   //   name: "card",
