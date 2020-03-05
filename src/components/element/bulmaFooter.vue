@@ -116,7 +116,7 @@ export default {
   z-index: 1000;
   display: flex;
   height: 60px;
-  box-shadow: 0 -2px 5px -2px #333;
+  box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
 }
 

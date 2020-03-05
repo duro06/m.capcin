@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar is-fixed-top fadeIn" v-wow data-wow-duration="2s">
+    <nav class="navbar has-shadow is-fixed-top fadeIn" v-wow data-wow-duration="2s">
       <div class="container is-fullwidth">
         <div class="navbar-dropdown is-right">
           <a role="button" class="navbar-burger">
