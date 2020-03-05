@@ -61,20 +61,45 @@
         </button>
         <Modal v-if="showModal" @close="handleModal">
           <!-- <h3 slot="header">Custom header</h3> -->
-          <header slot="header" class="modal-card-head">
-            <p class="modal-card-title">Modal title</p>
+          <header
+            slot="header"
+            class="modal-card-head fadeInUp"
+            v-wow
+            data-wow-duration="1s"
+          >
+            <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
+              Modal title
+            </p>
             <button
               class="delete"
               aria-label="close"
               @click.prevent="handleModal"
             ></button>
           </header>
-          <section slot="body" class="modal-card-body">
+          <section
+            slot="body"
+            class="modal-card-body  fadeInUp"
+            v-wow
+            data-wow-duration="1s"
+          >
             Content ...
           </section>
-          <footer slot="footer" class="modal-card-foot">
-            <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button>
+          <footer
+            slot="footer"
+            class="modal-card-foot  fadeInUp"
+            v-wow
+            data-wow-duration="1s"
+          >
+            <button
+              class="button is-success fadeInUp"
+              v-wow
+              data-wow-duration="1s"
+            >
+              Save changes
+            </button>
+            <button class="button  fadeInUp" v-wow data-wow-duration="1s">
+              Cancel
+            </button>
           </footer>
         </Modal>
       </div>
@@ -158,8 +183,7 @@ export default {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
         console.log("" + error); // jangan lupa di hapus nanti ======================================
         this.flashMessage.error({
-          // kirim flash Message
-          message: "" + error,
+          message: "" + error, // kirim flash Message
           time: 5000
         });
       }
@@ -214,16 +238,16 @@ export default {
         console.log(response);
         //==============================================
         let getData = response.data.data;
-        // bedanya dengan fungsi request data awal
-        // yang ini datanya di push
+        // bedanya dengan fungsi request data awal, yang ini datanya di push
         getData.data.forEach(data => {
           this.items.push(data);
-        }); //ambil data yang dibutuhkan
+        });
+        //============ambil data yang dibutuhkan=====================
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total;
-        // jangan lupa current page dimasukkan juga..
-        this.current_page = getData.current_page;
+        this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
+        //==============================================================
         // ====================== review lagi data meta butuh atau tidak ========
         // masukkan data meta
         this.meta = {
@@ -256,10 +280,10 @@ export default {
     //jika ada emmit jumlah data tiap halaman
     handleSearch(val) {
       this.current_page = 1; //reset halaman ke halaman satu
-      this.search = val; // masukkan nilai perhalaman
+      this.search = val; // masukkan nilai search
       this.req(); //reload data
     },
-    // fungsi untuk menampilkan modal, nutupya dari $emit komponen modal
+    // fungsi untuk nutup modal, bukanya dari $emit komponen modal
     handleModal() {
       this.showModal = false;
     },
@@ -268,7 +292,7 @@ export default {
       this.showModal = true;
     }
   },
-  // sementara hanya du=igunakan untuk ngecek masih ada data yang perlu di load lagi tau tidak
+  // sementara hanya digunakan untuk ngecek masih ada data yang perlu di load lagi tau tidak
   updated() {
     // logikanya jika halaman terakhir kurang dari halaman sekarang
     // atau jika halama terkhir kurang dari halaman sekarang dan jumlah halaman hanya 2
@@ -292,6 +316,7 @@ export default {
 </script>
 <style scoped>
 /* @import "../../assets/css/debug.css"; */
+
 .wrapper {
   padding: 0px 20px 55px 20px;
 }
