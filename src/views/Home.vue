@@ -30,11 +30,18 @@ export default {
         return false;
       }
     }
+<<<<<<< HEAD
   },
 
   created() {
     document.querySelector("body").style.backgroundColor = "#aaa";
+=======
+>>>>>>> semua komponen role sudah masuk
   }
+
+  // created() {
+  //   document.querySelector("body").style.backgroundColor = "#aef";
+  // }
 };
 </script>
 <style scoped>

@@ -64,63 +64,63 @@ const routes = [
     name: "home",
     component: () => import("../views/Home.vue"),
     children: [
-      //   {
-      //     path: "produksi",
-      //     name: "produksi",
-      //     component: () => import("../views/Produksi.vue"),
+      {
+        path: "produksi",
+        name: "produksi",
+        component: () => import("../views/Produksi.vue"),
 
-      //     beforeEnter: (to, from, next) => {
-      //       console.log("router get access Profile ", store.getters.levelAccess);
+        beforeEnter: (to, from, next) => {
+          console.log("router get access Profile ", store.getters.levelAccess);
 
-      //       if (
-      //         store.getters.levelAccess === "Produksi" ||
-      //         localStorage.getItem("level") === "Produksi"
-      //       ) {
-      //         next();
-      //         console.log("Produksi confirm");
-      //       } else if (store.getters.waitingVerified) {
-      //         console.log("Produksi look for verified");
-      //         next("/waiting");
-      //       } else {
-      //         console.log("Produksi none are true");
-      //         next("/home");
-      //       }
-      //     }
-      //   },
-      //   {
-      //     path: "packing",
-      //     name: "packing",
-      //     component: () => import("../views/Packing.vue"),
-      //     beforeEnter: (to, from, next) => {
-      //       console.log("router get Profile ", store.getters.myProfile.role);
-      //       console.log("router get Profile ", store.getters.levelAccess);
-      //       if (
-      //         store.getters.myProfile.role == "Packing" ||
-      //         localStorage.getItem("level") === "Packing"
-      //       ) {
-      //         next();
-      //       } else if (store.getters.waitingVerified) {
-      //         next("/waiting");
-      //       } else {
-      //         next("/home");
-      //       }
-      //     }
-      //   },
-      //   {
-      //     path: "supplier",
-      //     name: "supplier",
-      //     component: () => import("../views/Supplier.vue"),
-      //     beforeEnter: (to, from, next) => {
-      //       console.log(store.getters.levelAccess);
-      //       if (store.getters.levelAccess == "Supplier") {
-      //         next();
-      //       } else if (store.getters.waitingVerified) {
-      //         next("/waiting");
-      //       } else {
-      //         next("/home");
-      //       }
-      //     }
-      //   },
+          if (
+            store.getters.levelAccess === "Produksi" ||
+            localStorage.getItem("level") === "Produksi"
+          ) {
+            next();
+            console.log("Produksi confirm");
+          } else if (store.getters.waitingVerified) {
+            console.log("Produksi look for verified");
+            next("/waiting");
+          } else {
+            console.log("Produksi none are true");
+            next("/home");
+          }
+        }
+      },
+      {
+        path: "packing",
+        name: "packing",
+        component: () => import("../views/Packing.vue"),
+        beforeEnter: (to, from, next) => {
+          console.log("router get Profile ", store.getters.myProfile.role);
+          console.log("router get Profile ", store.getters.levelAccess);
+          if (
+            store.getters.myProfile.role == "Packing" ||
+            localStorage.getItem("level") === "Packing"
+          ) {
+            next();
+          } else if (store.getters.waitingVerified) {
+            next("/waiting");
+          } else {
+            next("/home");
+          }
+        }
+      },
+      {
+        path: "supplier",
+        name: "supplier",
+        component: () => import("../views/Supplier.vue"),
+        beforeEnter: (to, from, next) => {
+          console.log(store.getters.levelAccess);
+          if (store.getters.levelAccess == "Supplier") {
+            next();
+          } else if (store.getters.waitingVerified) {
+            next("/waiting");
+          } else {
+            next("/home");
+          }
+        }
+      },
       {
         path: "mitra",
         name: "mitra",
