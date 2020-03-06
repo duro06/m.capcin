@@ -121,18 +121,19 @@ export default {
   },
   data() {
     return {
+      showModal: false, // modal tampil atau tidak
       units: {}, // data unit
+      meta: {}, // perlu di review butuh atau
       items: {}, // data items
-      meta: {}, // perlu di review butuh atau tidak
+
+      loading: "", // ini untuk loading spinner input search
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
       per_page: 8, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
       sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
-      loading: "", // ini untuk loading spinner input search
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
-      showModal: false // modal tampil atau tidak
+      last_page: null // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
     };
   },
   created() {

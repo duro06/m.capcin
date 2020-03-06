@@ -3,7 +3,37 @@
     <div class="container">
       <div class="navbar-brand level is-mobile">
         <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]">
-          <router-link :to="{ path: '/home' }">
+          <router-link
+            v-if="level == 'Produksi'"
+            :to="{ path: '/home/produksi' }"
+          >
+            <i class="fas fa-home" />
+            <p class="subtitle is-7 ">
+              Beranda
+            </p>
+          </router-link>
+          <router-link
+            v-else-if="level == 'Packing'"
+            :to="{ path: '/home/packing' }"
+          >
+            <i class="fas fa-home" />
+            <p class="subtitle is-7 ">
+              Beranda
+            </p>
+          </router-link>
+          <router-link
+            v-else-if="level == 'Mitra'"
+            :to="{ path: '/home/mitra' }"
+          >
+            <i class="fas fa-home" />
+            <p class="subtitle is-7 ">
+              Beranda
+            </p>
+          </router-link>
+          <router-link
+            v-else-if="level == 'Supplier'"
+            :to="{ path: '/home/supplier' }"
+          >
             <i class="fas fa-home" />
             <p class="subtitle is-7 ">
               Beranda
@@ -60,6 +90,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    level() {
+      return this.$store.getters.levelAccess;
     }
   },
   watch: {
