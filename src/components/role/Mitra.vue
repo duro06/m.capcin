@@ -1,6 +1,6 @@
 <template>
   <div class="mitra">
-    <p class="message-body is-primary">
+    <p>
       ini halaman mitra
     </p>
   </div>

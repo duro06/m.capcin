@@ -51,4 +51,18 @@ export default {
   }
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.rata-kanan {
+  text-align: right;
+}
+.link-color {
+  color: #ee1846;
+}
+.judul-component {
+  text-align: left;
+  padding:5px;
+}
+.VueCarousel-wrapper {
+  border-radius: 10px;
+}
+</style>

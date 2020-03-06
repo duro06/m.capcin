@@ -1,11 +1,20 @@
 <template>
   <div>
-    <nav class="navbar has-shadow is-fixed-top fadeIn" v-wow data-wow-duration="2s">
+    <nav
+      class="navbar has-shadow is-fixed-top fadeIn"
+      v-wow
+      data-wow-duration="2s"
+    >
       <div class="container is-fullwidth">
-        <div class="navbar-dropdown is-right">
-          <a role="button" class="navbar-burger">
-            <i class="fa fa-bell"></i>
-          </a>
+        <div class="navbar-dropdown is-pulled-right">
+          <ul class="mega-ul">
+            <li id="top-menu-1" class="one-icon mega-li">
+              <a href="javascript:void(0)" class="mega-link">
+                <span class="mega-icon"><i class="fa fa-bell"></i></span>
+                <span class="tag is-danger">1</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -135,8 +144,50 @@ export default {
   font-size: 20px;
   margin-right: 5px;
 }
+.navbar-dropdown .mega-ul,
+.navbar-dropdown .mega-li {
+  margin: 0;
+  padding: 0;
+}
+.navbar-dropdown .mega-li {
+  list-style: none;
+}
 
-/* .notif-atas {
+.navbar-dropdown > .mega-ul > li.one-icon {
+  padding: 10px 5px 2px;
+}
 
-} */
+.navbar-dropdown > .mega-ul > li.one-icon > .mega-link {
+  display: block;
+  height: 36px;
+  line-height: 30px;
+  width: 36px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
+
+.navbar-dropdown > .mega-ul > li.one-icon > .mega-link .mega-icon {
+  font-size: 1.3rem;
+  color: #6e6d6d;
+}
+.navbar-dropdown > .mega-ul > .mega-li > a {
+  padding: 0;
+}
+.navbar-dropdown > .mega-ul > .mega-li > a:hover,
+.navbar-dropdown > .mega-ul > .mega-li > a:focus {
+  background: none;
+}
+
+.navbar-dropdown > .mega-ul > .mega-li .tag {
+  position: absolute;
+  right: 7px;
+  top: 12px;
+  border-radius: inherit;
+  font-size: 8px;
+}
 </style>

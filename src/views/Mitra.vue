@@ -1,5 +1,5 @@
 <template>
-  <div class="mitra">
+  <div class="body-mitra has-shadow">
     <Mitra />
   </div>
 </template>
@@ -13,7 +13,10 @@ export default {
 };
 </script>
 <style scoped>
-.mitra {
-  background: black;
+.body-mitra {
+  box-shadow: 0 2px 0 0 whitesmoke;
+}
+.VueCarousel {
+  border-radius: 20px !important;
 }
 </style>

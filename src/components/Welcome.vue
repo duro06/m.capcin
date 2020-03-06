@@ -1,7 +1,7 @@
 <template>
-  <div class="body">
+  <div class="welcome-body">
     <div class=" fadeInUp" v-wow data-wow-duration="1s" name="welcome">
-      <h1 class="has-text-centered">Pengumuman</h1>
+      <h1 class="judul-component">Info Capcin</h1>
       <carousel
         :per-page="1"
         :autoplay="true"
@@ -18,6 +18,9 @@
           <bilboard class="dat" :data="item"></bilboard>
         </slide>
       </carousel>
+      <div class="rata-kanan">
+        <a class="link-color">Lihat semua</a>
+      </div>
     </div>
   </div>
 </template>
@@ -45,10 +48,12 @@ export default {
 };
 </script>
 <style scoped>
-.body {
-  padding: 26px 24px 0px 24px;
+.welcome-body {
+  padding: 10px;
+  margin-top:10px;
+  box-shadow: 0 2px 0 0 whitesmoke;
 }
 .dat {
-  height: 100px;
+  height: 120px;
 }
 </style>
