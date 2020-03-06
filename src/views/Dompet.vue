@@ -3,7 +3,7 @@
     <div class="container">
       <p>Ini halaman Dompet</p>
     </div>
-    <Footer />
+    <Footer class="navbar" />
   </div>
 </template>
 <script>
