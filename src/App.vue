@@ -66,7 +66,7 @@ export default {
 }
 .judul-component {
   text-align: left;
-  padding:5px;
+  padding: 5px;
 }
 .VueCarousel-wrapper {
   border-radius: 10px;
