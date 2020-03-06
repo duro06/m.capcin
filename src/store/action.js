@@ -1,4 +1,4 @@
-import { http, httpNot } from "../services/http_service.js";
+import { http } from "../services/http_service.js";
 import store from ".";
 import { setToken } from "../services/auth_service.js";
 
@@ -38,7 +38,7 @@ export default {
   },
   register(context, data) {
     return new Promise((resolve, reject) => {
-      httpNot()
+      http()
         .post("client/register", data)
         .then(response => {
           resolve(response);
