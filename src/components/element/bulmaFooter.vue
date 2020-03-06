@@ -6,7 +6,7 @@
   >
     <div class="container">
       <div class="navbar-brand level is-mobile">
-        <div class="btn_nav_item level-item has-text-centered active">
+        <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]">
           <router-link :to="{ path: '/home' }">
             <i class="fas fa-home slide" v-wow data-wow-duration="2s" />
             <p class="subtitle is-7 slideInLeft" v-wow data-wow-duration="2s">
@@ -14,8 +14,10 @@
             </p>
           </router-link>
         </div>
-        <div class="btn_nav_item level-item has-text-centered">
-          <router-link :to="{ path: '/' }">
+        <div
+          :class="['btn_nav_item', 'level-item', 'has-text-centered', dompet]"
+        >
+          <router-link :to="{ path: '/dompet' }">
             <i
               class="fas fa-wallet slide"
               v-wow
@@ -32,7 +34,9 @@
             </p>
           </router-link>
         </div>
-        <div class="btn_nav_item level-item has-text-centered">
+        <div
+          :class="['btn_nav_item', 'level-item', 'has-text-centered', profile]"
+        >
           <router-link :to="{ path: '/profile' }">
             <i
               class="fas fa-user-tie slide"
@@ -94,15 +98,46 @@
 <script>
 export default {
   name: "footnav",
+  data() {
+    return { home: "", dompet: "", profile: "" };
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
+  },
+  watch: {
+    lokasi: {
+      immediate: true,
+      handler() {
+        this.isActive();
+      }
+    }
+  },
+  methods: {
     isActive() {
-      let active;
-      let me = window.location;
+      let me = window.location.pathname;
       console.log("Location: ", me);
-      return active;
+      switch (me) {
+        case "/home":
+          this.home = "active";
+          this.dompet = "";
+          this.profile = "";
+          break;
+        case "/dompet":
+          this.home = "";
+          this.dompet = "active";
+          this.profile = "";
+          break;
+        case "/profile":
+          this.home = "";
+          this.dompet = "";
+          this.profile = "active";
+          break;
+
+        default:
+          break;
+      }
     }
   }
 };

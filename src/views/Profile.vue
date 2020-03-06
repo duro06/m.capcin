@@ -79,7 +79,7 @@
         data-wow-duration="1s"
       >
         <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
-          Modal title
+          Update Profile
         </p>
         <button
           class="delete"
@@ -119,7 +119,7 @@
         data-wow-duration="1s"
       >
         <button
-          class="button is-success fadeInUp"
+          class="button is-success fadeInUp is-small"
           v-wow
           data-wow-duration="1s"
           @click.prevent="saveModal"
@@ -128,7 +128,7 @@
           Save changes
         </button>
         <button
-          class="button  fadeInUp"
+          class="button  fadeInUp is-small"
           v-wow
           data-wow-duration="1s"
           @click.prevent="handleModal"
@@ -137,6 +137,7 @@
         </button>
       </footer>
     </Modal>
+    <Footer class="navbar " />
   </div>
 </template>
 <script>
@@ -144,10 +145,11 @@
 import { mapState } from "vuex";
 import * as auth from "../services/auth_service";
 import Modal from "../components/element/Modal.vue";
+import Footer from "@/components/element/bulmaFooter.vue";
 
 export default {
   name: "profile",
-  components: { Modal },
+  components: { Modal, Footer },
   data() {
     return {
       user: "",
@@ -228,7 +230,8 @@ export default {
       console.log("Profile Updated ", this.profile);
       let user = this.profile;
       this.user = user;
-      if (user.image != null) {
+      if (user.image != null || user.image != " null") {
+        console.log("user image", user.image);
         this.displayImage = this.serverImage + user.image;
       } else {
         this.displayImage = this.serverImage + "galleries_images/nouser.png";
@@ -237,7 +240,7 @@ export default {
 
     attachImage: async function() {
       this.user.image = this.$refs.editAvatar.files[0];
-      console.log(this.$refs.editAvatar);
+      console.log(this.$refs.editAvatar.files[0]);
       let reader = new FileReader();
 
       reader.addEventListener(

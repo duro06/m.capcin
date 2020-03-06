@@ -3,6 +3,7 @@
     <Navbar class="navbar" />
     <div class="has-text-centered">
       <Welcome />
+
       <router-view></router-view>
     </div>
     <Footer class="navbar " />
@@ -31,6 +32,14 @@ export default {
       }
     }
   }
+  // methods: {
+  //   testloc() {
+  //     // let active;
+  //     let me = window.location;
+  //     console.log("Location: ", me);
+  //     // return active;
+  //   }
+  // }
 
   // created() {
   //   document.querySelector("body").style.backgroundColor = "#aef";
