@@ -6,22 +6,20 @@
 
       <router-view></router-view>
     </div>
-    <Footer class="navbar " />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Navbar from "@/components/element/bulmaNav.vue";
-import Footer from "@/components/element/bulmaFooter.vue";
+
 import Welcome from "@/components/Welcome.vue";
 
 export default {
   name: "Home",
   components: {
     Welcome,
-    Navbar,
-    Footer
+    Navbar
   },
   computed: {
     produksi() {

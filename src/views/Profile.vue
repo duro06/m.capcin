@@ -137,7 +137,6 @@
         </button>
       </footer>
     </Modal>
-    <Footer class="navbar " />
   </div>
 </template>
 <script>
@@ -145,11 +144,10 @@
 import { mapState } from "vuex";
 import * as auth from "../services/auth_service";
 import Modal from "../components/element/Modal.vue";
-import Footer from "@/components/element/bulmaFooter.vue";
 
 export default {
   name: "profile",
-  components: { Modal, Footer },
+  components: { Modal },
   data() {
     return {
       user: "",
