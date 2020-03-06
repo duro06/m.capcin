@@ -25,3 +25,11 @@ export function httpFile() {
     }
   });
 }
+
+export function httpNot() {
+  return axios.create({
+    headers: {
+      "Content-Type": "aplication/json"
+    }
+  });
+}

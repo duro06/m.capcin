@@ -81,7 +81,7 @@ export default {
 
   methods: {
     pindah(){
-      this.$router.replace({ name: "login" })
+      this.$router.replace({ name: "login" },()=>{})
     },
     // Fungsinya pusher
     subscribe () {

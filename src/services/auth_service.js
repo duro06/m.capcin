@@ -44,3 +44,7 @@ export function getProfile() {
 export function updateImage(id, data) {
   return set.httpFile().post(`/user/update-image/${id}`, data);
 }
+
+export function updateProfile(id, data) {
+  return set.http().put(`/user/update-profile/${id}`, data);
+}

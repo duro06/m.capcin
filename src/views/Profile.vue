@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
+  <div class="profile">
     <div class="has-text-centered">
       <div>
         <div>
           <div class="card">
             <div class="avatar-profile">
               <div class="card-image">
-                <figure class="image is-4by5">
+                <figure class="image is-480x480">
                   <img
                     class="avatar-ku"
                     :src="displayImage"
@@ -32,7 +32,11 @@
               <div class="media">
                 <div class="media-left">
                   <figure class="image is-48x48">
-                    <img :src="displayImage" alt="Placeholder image" />
+                    <img
+                      :src="displayImage"
+                      alt="avatar"
+                      ref="miniDisplayAvatarImage"
+                    />
                   </figure>
                 </div>
                 <div class="media-content">
@@ -42,16 +46,13 @@
                     {{ user.role }} Capcin
                   </p>
                 </div>
-              </div>
-
-              <div class="content">
-                <div class="kotak">
-                  <label class="isi-kotak" for="input">Nama </label>
-                  <input class="isi-kotak input is-small" type="text" />
-                </div>
-                <div class="kotak">
-                  <label class="isi-kotak" for="input">Email </label>
-                  <input class="isi-kotak input is-small " type="text" />
+                <div class="media-content">
+                  <button
+                    class="button is-info is-small"
+                    @click.prevent="editProfile"
+                  >
+                    edit
+                  </button>
                 </div>
               </div>
             </div>
@@ -69,24 +70,90 @@
         </div>
       </div>
     </div>
+    <Modal v-if="showModal" @close="handleModal">
+      <!-- <h3 slot="header">Custom header</h3> -->
+      <header
+        slot="header"
+        class="modal-card-head fadeInUp"
+        v-wow
+        data-wow-duration="1s"
+      >
+        <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
+          Modal title
+        </p>
+        <button
+          class="delete"
+          aria-label="close"
+          @click.prevent="handleModal"
+        ></button>
+      </header>
+      <section
+        slot="body"
+        class="modal-card-body  fadeInUp"
+        v-wow
+        data-wow-duration="1s"
+      >
+        <div class="content">
+          <div class="kotak">
+            <label class="isi-kotak" for="input">Nama </label>
+            <input
+              class="isi-kotak input is-small"
+              type="text"
+              v-model="user.name"
+            />
+          </div>
+          <div class="kotak">
+            <label class="isi-kotak" for="input">Email </label>
+            <input
+              class="isi-kotak input is-small "
+              type="text"
+              v-model="user.email"
+            />
+          </div>
+        </div>
+      </section>
+      <footer
+        slot="footer"
+        class="modal-card-foot  fadeInUp"
+        v-wow
+        data-wow-duration="1s"
+      >
+        <button
+          class="button is-success fadeInUp"
+          v-wow
+          data-wow-duration="1s"
+          @click.prevent="saveModal"
+          :disabled="disable"
+        >
+          Save changes
+        </button>
+        <button
+          class="button  fadeInUp"
+          v-wow
+          data-wow-duration="1s"
+          @click.prevent="handleModal"
+        >
+          Cancel
+        </button>
+      </footer>
+    </Modal>
   </div>
 </template>
 <script>
 // import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
 import * as auth from "../services/auth_service";
-// import myInput from "../components/element/myInput";
+import Modal from "../components/element/Modal.vue";
+
 export default {
   name: "profile",
-  // components: { myInput },
+  components: { Modal },
   data() {
     return {
       user: "",
-      displayImage: "",
-      editAvatar: "",
-      imageUrl: "",
-      imageName: ""
-      // files: []
+      showModal: false, // modal tampil atau tidak
+      errors: [],
+      disable: false
     };
   },
 
@@ -101,6 +168,7 @@ export default {
       //=============================================================
       this.$store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
       this.user = response.data;
+      this.errors = [];
     } catch (error) {
       console.log("", error);
     }
@@ -123,13 +191,38 @@ export default {
     // }
   },
   methods: {
-    previewFiles(event) {
-      // this.files = this.$refs.myFiles.files;
-      console.log(event);
+    editProfile() {
+      this.showModal = true;
+      this.disable = false;
     },
-    cobaLah(event) {
-      // this.imageUrl = this.$refs.editAvatar;
-      console.log(event.target.files);
+    handleModal() {
+      this.showModal = false;
+    },
+    saveModal: async function() {
+      try {
+        this.disable = true;
+        const response = await auth.updateProfile(this.user.id, this.user);
+        this.flashMessage.success({
+          message: "Profile Updated successfully!",
+          time: 5000
+        });
+        this.user = response.data;
+        // this.getProfile()
+      } catch (error) {
+        switch (error.response.status) {
+          case 422:
+            this.errors = error.response.data.errors;
+            break;
+
+          default:
+            this.flashMessage.error({
+              message: "Some error occured, Please Try Again!",
+              time: 5000
+            });
+            break;
+        }
+      }
+      this.showModal = false;
     },
     getProfile() {
       console.log("Profile Updated ", this.profile);
@@ -142,24 +235,16 @@ export default {
       }
     },
 
-    pickFile() {
-      const fileInput = document.querySelector("#gambar input[type=file]");
-      fileInput.onchange = () => {
-        if (fileInput.files.length > 0) {
-          const fileName = document.querySelector("#gambar .file-name");
-          fileName.textContent = fileInput.files[0].name;
-        }
-      };
-    },
     attachImage: async function() {
-      console.log("Ane jalan bos, situ salah");
       this.user.image = this.$refs.editAvatar.files[0];
+      console.log(this.$refs.editAvatar);
       let reader = new FileReader();
 
       reader.addEventListener(
         "load",
         function() {
           this.$refs.displayAvatarImage.src = reader.result;
+          this.$refs.miniDisplayAvatarImage.src = reader.result;
         }.bind(this),
         false
       );
@@ -185,54 +270,13 @@ export default {
       }
     }
   }
-  // updated() {
-  //   this.getProfile();
-  // },
-  // created() {
-  //   this.getProfile();
-  //   // this.$store.dispatch("retrieveName");
-  //   //   getProfile()
-  //   //     .then(response => {
-  //   //       this.user = response.data;
-  //   //     })
-  //   //     .catch(error => {
-  //   //       switch (error.response.status) {
-  //   //         case 422:
-  //   //           this.errors = error.response.data.errors;
-  //   //           break;
-  //   //         case 500:
-  //   //           this.flashMessage.error({
-  //   //             message: error.response.data.message,
-  //   //             time: 5000
-  //   //           });
-  //   //           break;
-  //   //         case 401:
-  //   //           this.flashMessage.error({
-  //   //             message: error.response.data.message,
-  //   //             time: 5000
-  //   //           });
-  //   //           break;
-  //   //         case 404:
-  //   //           this.flashMessage.error({
-  //   //             message: error.response.data.message,
-  //   //             time: 5000
-  //   //           });
-  //   //           break;
-  //   //         default:
-  //   //           this.flashMessage.error({
-  //   //             message: "Some error occured, Please Try Again!",
-  //   //             time: 5000
-  //   //           });
-  //   //           break;
-  //   //       }
-  //   // });
-  // }
 };
 </script>
 <style scoped>
-/* .gambar {
-  padding: 1rem 1rem 0rem 1rem;
-} */
+.profile {
+  padding: 3rem 0.3rem 3rem 0.3rem;
+}
+
 .kotak {
   display: flex;
   flex-wrap: nowrap;
