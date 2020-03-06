@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <!-- <section id="app" class="hero is-danger is-small">
-    <div class="hero-head"> -->
     <FlashMessage
       position="right top"
       style="z-index: 19999 !important; position: fixed;"
@@ -9,8 +7,6 @@
     <transition class="slideInLeft" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
-    <!-- </div>
-  </section> -->
   </div>
 </template>
 <script>

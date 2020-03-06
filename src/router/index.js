@@ -206,6 +206,21 @@ const routes = [
       }
     }
   },
+  {
+    path: "/dompet",
+    name: "dompet",
+    component: () => import("../views/Dompet.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
   // {
   //   path: "/card",
   //   name: "card",

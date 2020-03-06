@@ -1,87 +1,47 @@
 <template>
-  <nav
-    class="navbar is-fixed-bottom-touch fadeInUp is-hidden-desktop "
-    v-wow
-    data-wow-duration="2s"
-  >
+  <nav class="navbar is-fixed-bottom-touch is-hidden-desktop ">
     <div class="container">
       <div class="navbar-brand level is-mobile">
-        <div class="btn_nav_item level-item has-text-centered active">
+        <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]">
           <router-link :to="{ path: '/home' }">
-            <i class="fas fa-home slide" v-wow data-wow-duration="2s" />
-            <p class="subtitle is-7 slideInLeft" v-wow data-wow-duration="2s">
+            <i class="fas fa-home" />
+            <p class="subtitle is-7 ">
               Beranda
             </p>
           </router-link>
         </div>
-        <div class="btn_nav_item level-item has-text-centered">
-          <router-link :to="{ path: '/' }">
-            <i
-              class="fas fa-wallet slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.5s"
-            ></i>
-            <p
-              class="subtitle is-7 slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.5s"
-            >
+        <div
+          :class="['btn_nav_item', 'level-item', 'has-text-centered', dompet]"
+        >
+          <router-link :to="{ path: '/dompet' }">
+            <i class="fas fa-wallet"></i>
+            <p class="subtitle is-7">
               Dompet
             </p>
           </router-link>
         </div>
-        <div class="btn_nav_item level-item has-text-centered">
+        <div
+          :class="['btn_nav_item', 'level-item', 'has-text-centered', profile]"
+        >
           <router-link :to="{ path: '/profile' }">
-            <i
-              class="fas fa-user-tie slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.7s"
-            ></i>
-            <p
-              class="subtitle is-7 slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.7s"
-            >
+            <i class="fas fa-user-tie"></i>
+            <p class="subtitle is-7">
               Profile
             </p>
           </router-link>
         </div>
         <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/login' }">
-            <i
-              class="fas fa-sign-in-alt slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.9s"
-            ></i>
-            <p
-              class="subtitle is-7 slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.9s"
-            >
+            <i class="fas fa-sign-in-alt"></i>
+            <p class="subtitle is-7">
               Login
             </p>
           </router-link>
         </div>
         <div v-if="loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/logout' }">
-            <i
-              class="fas fa-sign-out-alt slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.9s"
-            ></i>
-            <p
-              class="subtitle is-7 slide"
-              v-wow
-              data-wow-duration="2s"
-              data-wow-delay="0.9s"
-            >
+            <i class="fas fa-sign-out-alt"></i>
+            <p class="subtitle is-7">
               Logout
             </p>
           </router-link>
@@ -94,15 +54,46 @@
 <script>
 export default {
   name: "footnav",
+  data() {
+    return { home: "", dompet: "", profile: "" };
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
-    },
+    }
+  },
+  watch: {
+    lokasi: {
+      immediate: true,
+      handler() {
+        this.isActive();
+      }
+    }
+  },
+  methods: {
     isActive() {
-      let active;
-      let me = window.location;
-      console.log("Location: ", me);
-      return active;
+      let me = window.location.pathname;
+      console.log("Location: ", me.split("/")[1]);
+      switch (me.split("/")[1]) {
+        case "home":
+          this.home = "active";
+          this.dompet = "";
+          this.profile = "";
+          break;
+        case "dompet":
+          this.home = "";
+          this.dompet = "active";
+          this.profile = "";
+          break;
+        case "profile":
+          this.home = "";
+          this.dompet = "";
+          this.profile = "active";
+          break;
+
+        default:
+          break;
+      }
     }
   }
 };
