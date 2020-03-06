@@ -1,5 +1,5 @@
 <template>
-  <div class="body-mitra has-shadow">
+  <div class="content-body has-shadow">
     <Mitra />
   </div>
 </template>
@@ -13,8 +13,8 @@ export default {
 };
 </script>
 <style scoped>
-.body-mitra {
-  box-shadow: 0 2px 0 0 whitesmoke;
+.content-body{
+  background: whitesmoke;
 }
 .VueCarousel {
   border-radius: 20px !important;

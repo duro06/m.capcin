@@ -1,5 +1,5 @@
 <template>
-  <div class="welcome-body">
+  <div class="content-body">
     <div class=" fadeInUp" v-wow data-wow-duration="1s" name="welcome">
       <h1 class="judul-component">Info Capcin</h1>
       <carousel
@@ -48,10 +48,8 @@ export default {
 };
 </script>
 <style scoped>
-.welcome-body {
-  padding: 10px;
-  margin-top:10px;
-  box-shadow: 0 2px 0 0 whitesmoke;
+.content-body {
+  margin-top: 10px;
 }
 .dat {
   height: 120px;

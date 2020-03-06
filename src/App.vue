@@ -52,8 +52,18 @@ export default {
 };
 </script>
 <style lang="scss">
+.content-body {
+  padding: 10px;
+  box-shadow: 0 2px 0 0 whitesmoke;
+}
 .rata-kanan {
   text-align: right;
+}
+.rata-kiri {
+  text-align: left;
+}
+.rata-tengah {
+  text-align: center;
 }
 .link-color {
   color: #ee1846;
