@@ -1,11 +1,7 @@
 <template>
   <div class="content-body has-shadow">
     <h1 class="judul-component">Product to Order</h1>
-    <div
-      v-for="(item, apem) in products"
-      :key="apem"
-      class="infinite-list-item"
-    >
+    <div v-for="(item, apem) in items" :key="apem" class="infinite-list-item">
       <Mitra
         class="produksi fadeInUp"
         v-wow
@@ -23,7 +19,7 @@
       v-infinite-scroll="Scroll"
       infinite-scroll-disabled="busy"
       infinite-scroll-distance="5"
-      infinite-scroll-throttle-delay="500"
+      infinite-scroll-throttle-delay="2000"
     ></div>
   </div>
 </template>
@@ -38,7 +34,7 @@ export default {
   },
   data() {
     return {
-      products: {}, // data products
+      items: {}, // data items
 
       loading: "", // ini untuk loading spinner input search
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
@@ -75,14 +71,14 @@ export default {
         const response = await prod.loadData(params);
         console.log(response);
         let getData = response.data.data; // masukkan data response ke getData
-        this.products = getData.data; //ambil data yang dibutuhkan
-        this.$store.dispatch("productIn", getData.data); // masukkan data ke state
+        this.items = getData.data; //ambil data yang dibutuhkan
+        // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
         this.loading = ""; // loadng spinner berhenti
-        console.log(this.products); // nanti janagan lupa ini dihapus =============================
+        console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
@@ -148,9 +144,9 @@ export default {
         //==============================================
         // bedanya dengan fungsi request data awal, yang ini datanya di push
         getData.data.forEach(data => {
-          this.products.push(data);
+          this.items.push(data);
         });
-        this.$store.dispatch("productIn", getData.data); // push data ke state
+        // this.$store.dispatch("productPush", response.data.data.data); // push data ke state
         //============ambil data yang dibutuhkan=====================
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total;
@@ -160,7 +156,7 @@ export default {
         this.loading = ""; // matikan button loading spinner
         // ==================== jangan lupa ini nanti di hapus ===================
         console.log("Busy response :  ", this.busy);
-        console.log(this.products);
+        console.log(this.items);
         //==============================================================
         // biar more_exist nilainya di update oleh fungsi updated saja
         this.more_exist = false;
@@ -215,6 +211,7 @@ export default {
 <style scoped>
 .content-body {
   background: whitesmoke;
+  padding: 0px 5px 55px 5px;
 }
 .VueCarousel {
   border-radius: 20px !important;

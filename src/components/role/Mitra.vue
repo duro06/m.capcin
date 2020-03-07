@@ -35,11 +35,11 @@
 export default {
   name: "mitra",
   props: { data: Object },
-  // created() {
-  //   if (this.data) {
-  //     return this.$store.dispatch("productIn", this.data);
-  //   }
-  // },
+  created() {
+    if (this.data) {
+      return this.$store.dispatch("productPush", this.data);
+    }
+  },
   computed: {
     productName() {
       if (this.data.name) {

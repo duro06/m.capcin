@@ -14,6 +14,14 @@
                 <span class="tag is-danger">1</span>
               </a>
             </li>
+            <!-- <li id="top-menu-2" class="one-icon mega-li">
+              <a href="javascript:void(0)" class="mega-link">
+                <span class="mega-icon"
+                  ><i class="fas fa-shopping-cart"></i
+                ></span>
+                <span class="tag is-danger">1</span>
+              </a>
+            </li> -->
           </ul>
         </div>
       </div>

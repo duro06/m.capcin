@@ -21,12 +21,12 @@
               <div class="media">
                 <div class="media-content">
                   <p class="title is-6" style="color: black">
-                    {{ product().name }}
+                    {{ barang.name }}
                   </p>
                   <p class="subtitle is-7" style="color: black">
                     {{ harga }} <br />
-                    Tersedia {{ product().stok_awal }} <br />
-                    {{ product().description }}
+                    Tersedia {{ barang.stok_awal }} <br />
+                    {{ barang.description }}
                   </p>
                 </div>
               </div>
@@ -112,23 +112,24 @@ export default {
       showModal: false, // modal tampil atau tidak
       errors: [],
       kdisable: true,
-      disable: false
+      disable: false,
+      barang: ""
     };
   },
 
   computed: {
     ...mapState(["products", "profile"]),
     displayImage() {
-      if (this.product().image) {
-        return this.product().image;
+      if (this.barang.image) {
+        return this.barang.image;
       } else {
+        console.log("computed");
         return "../img/no-image.jpg";
       }
     },
     harga() {
-      if (this.product().harga) {
-        let harga =
-          "Rp " + new Intl.NumberFormat().format(this.product().harga);
+      if (this.barang.harga) {
+        let harga = "Rp " + new Intl.NumberFormat().format(this.barang.harga);
         return harga;
       } else {
         return "data tidak ditemukan";
@@ -169,7 +170,7 @@ export default {
     addToCart() {
       let order = {
         order: {
-          product: this.product().id,
+          product: this.barang.id,
           qty: this.jumlahPesanan,
           user: this.profile.id
         }
@@ -178,14 +179,14 @@ export default {
       // localStorage.setItem("order", order);
     },
     orderNow: async function() {
-      let jumlah = this.jumlahPesanan * this.product().harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
+      let jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
       let order = new FormData();
 
       order.append("total", jumlah);
-      order.append("product_id", this.product().id);
+      order.append("product_id", this.barang.id);
       order.append("qty", this.jumlahPesanan);
       order.append("user_id", this.profile.id);
-      order.append("harga", this.product().harga);
+      order.append("harga", this.barang.harga);
 
       console.log(order);
       try {
@@ -211,6 +212,7 @@ export default {
       }
     },
     product() {
+      // alert("product");
       // let product;
       const id = new Intl.NumberFormat().format(this.$route.params.id);
       console.log("route : ", this.$route.params.id);
@@ -218,12 +220,20 @@ export default {
       for (let index = 0; index < this.products.length; index++) {
         if (this.products[index].id == id) {
           console.log("products : ", this.products[index]);
-          return this.products[index];
+          this.barang = this.products[index];
+          // return this.products[index];
         }
         // console.log("product : ", product);
         // return product;
       }
     }
+  },
+  updated() {
+    console.log("Updadted");
+  },
+  mounted() {
+    console.log("Mounted");
+    this.product();
   }
 };
 </script>
