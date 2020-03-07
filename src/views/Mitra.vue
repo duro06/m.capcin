@@ -22,8 +22,8 @@
     <div
       v-infinite-scroll="Scroll"
       infinite-scroll-disabled="busy"
-      infinite-scroll-distance="12"
-      infinite-scroll-throttle-delay="2000"
+      infinite-scroll-distance="5"
+      infinite-scroll-throttle-delay="500"
     ></div>
   </div>
 </template>
@@ -42,7 +42,7 @@ export default {
 
       loading: "", // ini untuk loading spinner input search
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
-      per_page: 4, //DEFAULT LOAD PERPAGE ADALAH 8
+      per_page: 6, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
       sortBy: "id", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING

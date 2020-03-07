@@ -2,13 +2,16 @@
   <div>
     <div class="card">
       <div class="card-content">
-        <router-link to="/order_detail" class="detail-items">
+        <router-link
+          :to="{ path: '/order_detail/' + data.id }"
+          class="detail-items"
+        >
           <div class="columns is-mobile">
             <div class="column is-3 space-img">
               <img :src="productImage" alt="product" />
             </div>
             <div class="column is-5">
-              <p class="rata-kiri">{{ data.id }} {{ productName }}</p>
+              <p class="rata-kiri">{{ productName }}</p>
             </div>
             <div class="column is-4">
               <p class="rata-kanan">
@@ -83,7 +86,7 @@ export default {
 }
 .detail-items {
   font-size: 14px;
-  color:black;
+  color: black;
 }
 .space-img {
   padding: 0px;

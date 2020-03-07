@@ -207,24 +207,9 @@ const routes = [
     }
   },
   {
-    path: "/order_detail",
+    path: "/order_detail/:id",
     name: "order_detail",
     component: () => import("../views/DetailOrder.vue"),
-    beforeEnter: (to, from, next) => {
-      console.log("logged get ", store.getters.loggedIn);
-      if (store.getters.loggedIn) {
-        next();
-      } else if (store.getters.waitingVerified) {
-        next("/waiting");
-      } else {
-        next("/login");
-      }
-    }
-  },
-  {
-    path: "/product_detail/:id",
-    name: "product_detail",
-    component: () => import("../views/ProductDetail.vue"),
     beforeEnter: (to, from, next) => {
       console.log("logged get ", store.getters.loggedIn);
       if (store.getters.loggedIn) {
@@ -233,6 +218,21 @@ const routes = [
         } else {
           next("/home/" + localStorage.getItem("level"));
         }
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
+  {
+    path: "/keranjang",
+    name: "keranjang",
+    component: () => import("../views/Keranjang.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
       } else if (store.getters.waitingVerified) {
         next("/waiting");
       } else {

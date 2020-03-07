@@ -4,30 +4,19 @@
       <div>
         <div>
           <div class="card">
-            <div class="avatar-profile">
-              <div class="card-image">
-                <figure class="image is-480x480">
-                  <img
-                    class="avatar-ku"
-                    :src="displayImage"
-                    ref="displayAvatarImage"
-                    alt="avatar"
-                  />
-                </figure>
-              </div>
-            </div>
-
             <div class="card-content">
               <div class="media">
                 <div class="media-content">
                   <p class="title is-6" style="color: black">
-                    id : {{ product().id }} Nama :
-                    {{ product().name }}
+                    <!-- id : {{ product().id }} Nama :
+                    {{ product().name }} -->
+                    isi nanti dah
                   </p>
                   <p class="subtitle is-7" style="color: black">
-                    {{ harga }} <br />
+                    <!-- {{ harga }} <br />
                     Tersedia {{ product().stok_awal }} <br />
-                    {{ product().description }}
+                    {{ product().description }} -->
+                    yang penting ente kelihatan
                   </p>
                 </div>
               </div>
@@ -48,7 +37,7 @@ import { mapState } from "vuex";
 import Footer from "../components/element/bulmaFooter";
 
 export default {
-  name: "Product Detail",
+  name: "Keranjang",
   components: {
     //  Modal,
     Footer
@@ -63,23 +52,23 @@ export default {
   },
 
   computed: {
-    ...mapState(["products"]),
-    displayImage() {
-      if (this.product().image) {
-        return this.product().image;
-      } else {
-        return "../img/no-image.jpg";
-      }
-    },
-    harga() {
-      if (this.product().harga) {
-        let harga =
-          "Rp " + new Intl.NumberFormat().format(this.product().harga);
-        return harga;
-      } else {
-        return "data tidak ditemukan";
-      }
-    }
+    ...mapState(["products"])
+    // displayImage() {
+    //   if (this.product().image) {
+    //     return this.product().image;
+    //   } else {
+    //     return "../img/no-image.jpg";
+    //   }
+    // },
+    // harga() {
+    //   if (this.product().harga) {
+    //     let harga =
+    //       "Rp " + new Intl.NumberFormat().format(this.product().harga);
+    //     return harga;
+    //   } else {
+    //     return "data tidak ditemukan";
+    //   }
+    // }
   },
   watch: {
     // user: {
@@ -96,20 +85,20 @@ export default {
     // }
   },
   methods: {
-    product() {
-      // let product;
-      const id = new Intl.NumberFormat().format(this.$route.params.id);
-      console.log("route : ", this.$route.params.id);
-      console.log("id : ", id);
-      for (let index = 0; index < this.products.length; index++) {
-        if (this.products[index].id == id) {
-          console.log("products : ", this.products[index]);
-          return this.products[index];
-        }
-        // console.log("product : ", product);
-        // return product;
-      }
-    }
+    // product() {
+    //   // let product;
+    //   const id = new Intl.NumberFormat().format(this.$route.params.id);
+    //   console.log("route : ", this.$route.params.id);
+    //   console.log("id : ", id);
+    //   for (let index = 0; index < this.products.length; index++) {
+    //     if (this.products[index].id == id) {
+    //       console.log("products : ", this.products[index]);
+    //       return this.products[index];
+    //     }
+    //     // console.log("product : ", product);
+    //     // return product;
+    //   }
+    // }
   }
 };
 </script>
