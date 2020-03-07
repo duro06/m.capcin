@@ -2,9 +2,9 @@
   <div>
     <div class="card">
       <div class="card-content">
-        <router-link to="/order_detail">
+        <router-link to="/order_detail" class="detail-items">
           <div class="columns is-mobile">
-            <div class="column is-3">
+            <div class="column is-3 space-img">
               <img :src="productImage" alt="product" />
             </div>
             <div class="column is-5">
@@ -18,13 +18,13 @@
           </div>
         </router-link>
       </div>
-      <footer class="card-footer">
+      <!-- <footer class="card-footer">
         <router-link :to="{ path: '/product_detail/' + data.id }">
           <p class="rata-kanan">
             <span> Details </span>
           </p>
         </router-link>
-      </footer>
+      </footer> -->
     </div>
   </div>
 </template>
@@ -70,7 +70,9 @@ export default {
 </script>
 <style scoped>
 .card {
-  border-radius: 0 12px 0 12px;
+  border-radius: 0 15px 0 15px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 .card-content {
   padding: 10px !important;
@@ -79,8 +81,11 @@ export default {
   display: block !important;
   padding: 5px 10px 5px 5px;
 }
-.item-product {
-  font-size: 1.3rem;
-  font-weight: bold;
+.detail-items {
+  font-size: 14px;
+  color:black;
+}
+.space-img {
+  padding: 0px;
 }
 </style>

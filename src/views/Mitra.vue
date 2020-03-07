@@ -17,7 +17,7 @@
       v-if="this.more_exist"
       class="button is-info is-fullwidth is-loading fadeInUp"
     >
-      Button loading
+      loading ...
     </button>
     <div
       v-infinite-scroll="Scroll"

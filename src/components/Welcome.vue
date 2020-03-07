@@ -48,10 +48,8 @@ export default {
 };
 </script>
 <style scoped>
-.welcome-body {
-  padding: 10px;
+.content-body {
   margin-top: 10px;
-  box-shadow: 0 2px 0 0 whitesmoke;
 }
 .dat {
   height: 120px;
