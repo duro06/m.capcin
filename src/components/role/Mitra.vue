@@ -8,7 +8,7 @@
               <img :src="productImage" alt="product" />
             </div>
             <div class="column is-5">
-              <p class="rata-kiri">{{ productName }}</p>
+              <p class="rata-kiri">{{ data.id }} {{ productName }}</p>
             </div>
             <div class="column is-4">
               <p class="rata-kanan">
@@ -32,11 +32,11 @@
 export default {
   name: "mitra",
   props: { data: Object },
-  created() {
-    if (this.data) {
-      return this.$store.dispatch("productIn", this.data);
-    }
-  },
+  // created() {
+  //   if (this.data) {
+  //     return this.$store.dispatch("productIn", this.data);
+  //   }
+  // },
   computed: {
     productName() {
       if (this.data.name) {

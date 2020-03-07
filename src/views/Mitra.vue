@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     req: async function() {
+      this.$store.dispatch("productOut"); //kosongkan state product
       this.loading = "is-loading";
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
@@ -75,6 +76,7 @@ export default {
         console.log(response);
         let getData = response.data.data; // masukkan data response ke getData
         this.products = getData.data; //ambil data yang dibutuhkan
+        this.$store.dispatch("productIn", getData.data); // masukkan data ke state
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
@@ -148,6 +150,7 @@ export default {
         getData.data.forEach(data => {
           this.products.push(data);
         });
+        this.$store.dispatch("productIn", getData.data); // push data ke state
         //============ambil data yang dibutuhkan=====================
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total;

@@ -6,6 +6,9 @@ export default {
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },
+  productPush(context, payload) {
+    context.commit("pushProduct", payload, { root: true });
+  },
   productOut(context) {
     context.commit("delProduct", { root: true });
   },

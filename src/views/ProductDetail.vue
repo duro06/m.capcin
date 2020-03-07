@@ -48,7 +48,7 @@ import { mapState } from "vuex";
 import Footer from "../components/element/bulmaFooter";
 
 export default {
-  name: "profile",
+  name: "Product Detail",
   components: {
     //  Modal,
     Footer

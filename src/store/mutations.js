@@ -20,6 +20,9 @@ export default {
     state.token = null;
   },
   setProduct(state, payload) {
+    state.products = payload;
+  },
+  pushProduct(state, payload) {
     state.products.push(payload);
   },
   delProduct(state) {
