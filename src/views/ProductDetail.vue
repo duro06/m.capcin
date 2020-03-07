@@ -21,6 +21,7 @@
               <div class="media">
                 <div class="media-content">
                   <p class="title is-6" style="color: black">
+                    id : {{ product().id }} Nama :
                     {{ product().name }}
                   </p>
                   <p class="subtitle is-7" style="color: black">
@@ -96,8 +97,18 @@ export default {
   },
   methods: {
     product() {
-      const product = this.products[this.$route.params.id];
-      return product;
+      // let product;
+      const id = new Intl.NumberFormat().format(this.$route.params.id);
+      console.log("route : ", this.$route.params.id);
+      console.log("id : ", id);
+      for (let index = 0; index < this.products.length; index++) {
+        if (this.products[index].id == id) {
+          console.log("products : ", this.products[index]);
+          return this.products[index];
+        }
+        // console.log("product : ", product);
+        // return product;
+      }
     }
   }
 };

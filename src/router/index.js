@@ -228,7 +228,6 @@ const routes = [
     beforeEnter: (to, from, next) => {
       console.log("logged get ", store.getters.loggedIn);
       if (store.getters.loggedIn) {
-        console.log("product nya ", store.state.products);
         if (store.state.products != "") {
           next();
         } else {

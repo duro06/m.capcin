@@ -44,7 +44,7 @@ export default {
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
       per_page: 4, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
-      sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
+      sortBy: "id", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
       last_page: null
