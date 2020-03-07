@@ -3,6 +3,12 @@ import store from ".";
 import { setToken } from "../services/auth_service.js";
 
 export default {
+  productIn(context, payload) {
+    context.commit("setProduct", payload, { root: true });
+  },
+  productOut(context) {
+    context.commit("delProduct", { root: true });
+  },
   aunthenticate(context, payload) {
     context.commit("setAuthenticate", payload, { root: true });
     // localStorage.setItem("role", payload.role);

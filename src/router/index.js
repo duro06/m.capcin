@@ -207,6 +207,41 @@ const routes = [
     }
   },
   {
+    path: "/order_detail",
+    name: "order_detail",
+    component: () => import("../views/DetailOrder.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
+  {
+    path: "/product_detail/:id",
+    name: "product_detail",
+    component: () => import("../views/ProductDetail.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        console.log("product nya ", store.state.products);
+        if (store.state.products != "") {
+          next();
+        } else {
+          next("/home/" + localStorage.getItem("level"));
+        }
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
+  {
     path: "/dompet",
     name: "dompet",
     component: () => import("../views/Dompet.vue"),

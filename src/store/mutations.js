@@ -18,5 +18,11 @@ export default {
   },
   setDestroyToken(state) {
     state.token = null;
+  },
+  setProduct(state, payload) {
+    state.products.push(payload);
+  },
+  delProduct(state) {
+    state.products = [];
   }
 };

@@ -2,7 +2,7 @@
   <div>
     <div class="card">
       <div class="card-content">
-        <router-link to="/detailPemesanan">
+        <router-link to="/order_detail">
           <div class="columns is-mobile">
             <div class="column is-3">
               <img :src="productImage" alt="product" />
@@ -19,7 +19,7 @@
         </router-link>
       </div>
       <footer class="card-footer">
-        <router-link to="/detailProduct">
+        <router-link :to="{ path: '/product_detail/' + data.id }">
           <p class="rata-kanan">
             <span> Details </span>
           </p>
@@ -32,6 +32,11 @@
 export default {
   name: "mitra",
   props: { data: Object },
+  created() {
+    if (this.data) {
+      return this.$store.dispatch("productIn", this.data);
+    }
+  },
   computed: {
     productName() {
       if (this.data.name) {
@@ -54,6 +59,11 @@ export default {
       } else {
         return "";
       }
+    }
+  },
+  methods: {
+    productDetail() {
+      alert(this.data.id);
     }
   }
 };

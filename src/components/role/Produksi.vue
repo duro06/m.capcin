@@ -17,17 +17,6 @@
             :load="loading"
           />
         </div>
-
-        <div class="level-item has-text-centered ">
-          <p class="subtitle is-7 fadeInUp" v-wow data-wow-duration="1s">
-            Data ke {{ meta.from }} sampai {{ meta.to }}, dari total
-            {{ meta.total }} data ditemukan
-          </p>
-          <p class="subtitle is-7 fadeInUp" v-wow data-wow-duration="1s">
-            Halaman ke {{ meta.current }} dari total {{ meta.last }}
-            halaman
-          </p>
-        </div>
       </div>
       <div class="content">
         <div class="iterasi is-hidden-desktop">
@@ -165,18 +154,6 @@ export default {
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        // masukkan data meta
-        // ini perlu di cermati nanti, kira-kira meta ini dibutuhka  atau tidak
-        //===============================  !!!! ==================================
-        this.meta = {
-          total: getData.total,
-          current: getData.current_page,
-          per_page: getData.per_page,
-          from: getData.from,
-          to: getData.to,
-          last: getData.last_page
-        };
-        //========================================!!!!!!=========================
         this.loading = ""; // loadng spinner berhenti
         console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
@@ -249,17 +226,6 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        // ====================== review lagi data meta butuh atau tidak ========
-        // masukkan data meta
-        this.meta = {
-          total: getData.total,
-          current: getData.current_page,
-          per_page: getData.per_page,
-          from: getData.from,
-          to: getData.to,
-          last: getData.last_page
-        };
-        //===========================================
         this.loading = ""; // matikan button loading spinner
         // ==================== jangan lupa ini nanti di hapus ===================
         console.log("Busy response :  ", this.busy);

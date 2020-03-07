@@ -10,13 +10,15 @@
         <div class="message-body">
           You are trying to type something
           <strong>That we not produce in normal state </strong>
-          <a>What exacly you are looking for? </a>
-          we suggest you to use our
-
-          <a @click="login"> Link </a>
-
-          To navigate to whatever you're looking for, if its not there, it means
-          you are not allowed to get it not there
+          What exacly you are looking for? we suggest you to use
+          <br />
+          <strong>
+            <a @click="login">This link </a>
+          </strong>
+          <br />
+          To navigate to our home page then look for whatever you want from
+          there, if its not there, it means you are not allowed to get in there.
+          or if you need another page, request it to our developer
         </div>
       </article>
     </div>
@@ -26,9 +28,56 @@
 <script>
 export default {
   name: "HelloWorld",
+  computed: {
+    role() {
+      return this.$store.getters.levelAccess;
+    }
+  },
   methods: {
     login() {
-      this.$router.replace({ name: "login" });
+      switch (this.role) {
+        case "Produksi":
+          this.$router.push({ name: "produksi" }, () => {});
+          break;
+        case "Packing":
+          this.$router.push({ name: "packing" }, () => {});
+          break;
+        case "Supplier":
+          this.$router.push({ name: "supplier" }, () => {});
+          break;
+        case "Mitra":
+          this.$router.push({ name: "mitra" }, () => {});
+          break;
+        default:
+          this.$store
+            .dispatch("destroyToken")
+            .then(
+              this.flashMessage.success({
+                message:
+                  "Mohon maaf Anda tidak diijinkan untuk login, silahkan hubungi Admin " +
+                  this.role,
+                time: 5000
+              }),
+              this.$router.replace(
+                this.$route.query.redirect || { name: "login" },
+                () => {}
+              )
+            )
+            .catch(
+              this.flashMessage.success({
+                message:
+                  "Mohon maaf Anda tidak diijinkan untuk login, silahkan hubungi Admin " +
+                  this.role,
+                time: 5000
+              }),
+              this.$router.replace(
+                this.$route.query.redirect || { name: "login" },
+                () => {}
+              )
+            );
+
+          break;
+      }
     }
   }
 };

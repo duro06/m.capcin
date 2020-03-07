@@ -15,44 +15,19 @@
                   />
                 </figure>
               </div>
-              <div class="edit-avatar">
-                <input
-                  type="file"
-                  ref="editAvatar"
-                  id="image"
-                  @change="attachImage"
-                />
-                <!-- <input type="file" id="image" @change="previewFiles" /> -->
-                <label for="image"> Change Avatar </label>
-                <!-- <myInput id="image" @input="onFilePicked" /> -->
-              </div>
             </div>
 
             <div class="card-content">
               <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img
-                      :src="displayImage"
-                      alt="avatar"
-                      ref="miniDisplayAvatarImage"
-                    />
-                  </figure>
-                </div>
                 <div class="media-content">
-                  <p class="title is-6" style="color: black">{{ user.name }}</p>
-                  <p class="subtitle is-7" style="color: black">
-                    {{ user.email }}<br />
-                    {{ user.role }} Capcin
+                  <p class="title is-6" style="color: black">
+                    {{ product().name }}
                   </p>
-                </div>
-                <div class="media-content">
-                  <button
-                    class="button is-info is-small"
-                    @click.prevent="editProfile"
-                  >
-                    edit
-                  </button>
+                  <p class="subtitle is-7" style="color: black">
+                    {{ harga }} <br />
+                    Tersedia {{ product().stok_awal }} <br />
+                    {{ product().description }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -60,85 +35,23 @@
         </div>
       </div>
     </div>
-    <Modal v-if="showModal" @close="handleModal">
-      <header
-        slot="header"
-        class="modal-card-head fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
-        <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
-          Update Profile
-        </p>
-        <button
-          class="delete"
-          aria-label="close"
-          @click.prevent="handleModal"
-        ></button>
-      </header>
-      <section
-        slot="body"
-        class="modal-card-body  fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
-        <div class="content">
-          <div class="kotak">
-            <label class="isi-kotak" for="input">Nama </label>
-            <input
-              class="isi-kotak input is-small"
-              type="text"
-              v-model="user.name"
-            />
-          </div>
-          <div class="kotak">
-            <label class="isi-kotak" for="input">Email </label>
-            <input
-              class="isi-kotak input is-small "
-              type="text"
-              v-model="user.email"
-            />
-          </div>
-        </div>
-      </section>
-      <footer
-        slot="footer"
-        class="modal-card-foot  fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
-        <button
-          class="button is-success fadeInUp is-small"
-          v-wow
-          data-wow-duration="1s"
-          @click.prevent="saveModal"
-          :disabled="disable"
-        >
-          Save changes
-        </button>
-        <button
-          class="button  fadeInUp is-small"
-          v-wow
-          data-wow-duration="1s"
-          @click.prevent="handleModal"
-        >
-          Cancel
-        </button>
-      </footer>
-    </Modal>
+
     <Footer class="navbar" />
   </div>
 </template>
 <script>
 // import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
-import * as auth from "../services/auth_service";
-import Modal from "../components/element/Modal.vue";
+// import * as auth from "../services/auth_service";
+// import Modal from "../components/element/Modal.vue";
 import Footer from "../components/element/bulmaFooter";
 
 export default {
   name: "profile",
-  components: { Modal, Footer },
+  components: {
+    //  Modal,
+    Footer
+  },
   data() {
     return {
       user: "",
@@ -148,32 +61,32 @@ export default {
     };
   },
 
-  beforeCreate: async function() {
-    //===================jangan lupa ini nanti dihapus=============
-    console.log("Profile Get Profile");
-    //=============================================================
-    try {
-      const response = await auth.getProfile(); // ambil profile
-      //===================jangan lupa ini nanti dihapus=============
-      console.log(response);
-      //=============================================================
-      this.$store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
-      this.user = response.data;
-      this.errors = [];
-    } catch (error) {
-      console.log("", error);
-    }
-  },
   computed: {
-    ...mapState(["profile", "serverImage", "token"])
-  },
-  watch: {
-    user: {
-      immediate: true,
-      handler() {
-        this.getProfile();
+    ...mapState(["products"]),
+    displayImage() {
+      if (this.product().image) {
+        return this.product().image;
+      } else {
+        return "../img/no-image.jpg";
+      }
+    },
+    harga() {
+      if (this.product().harga) {
+        let harga =
+          "Rp " + new Intl.NumberFormat().format(this.product().harga);
+        return harga;
+      } else {
+        return "data tidak ditemukan";
       }
     }
+  },
+  watch: {
+    // user: {
+    //   immediate: true,
+    //   handler() {
+    //     this.getProfile();
+    //   }
+    // }
     // imageName: {
     //   immediate: true,
     //   handler() {
@@ -182,84 +95,9 @@ export default {
     // }
   },
   methods: {
-    editProfile() {
-      this.showModal = true;
-      this.disable = false;
-    },
-    handleModal() {
-      this.showModal = false;
-    },
-    saveModal: async function() {
-      try {
-        this.disable = true;
-        const response = await auth.updateProfile(this.user.id, this.user);
-        this.flashMessage.success({
-          message: "Profile Updated successfully!",
-          time: 5000
-        });
-        this.user = response.data;
-        // this.getProfile()
-      } catch (error) {
-        switch (error.response.status) {
-          case 422:
-            this.errors = error.response.data.errors;
-            break;
-
-          default:
-            this.flashMessage.error({
-              message: "Some error occured, Please Try Again!",
-              time: 5000
-            });
-            break;
-        }
-      }
-      this.showModal = false;
-    },
-    getProfile() {
-      console.log("Profile Updated ", this.profile);
-      let user = this.profile;
-      this.user = user;
-      if (user.image != null || user.image != " null") {
-        console.log("user image", user.image);
-        this.displayImage = this.serverImage + user.image;
-      } else {
-        this.displayImage = this.serverImage + "galleries_images/nouser.png";
-      }
-    },
-
-    attachImage: async function() {
-      this.user.image = this.$refs.editAvatar.files[0];
-      console.log(this.$refs.editAvatar.files[0]);
-      let reader = new FileReader();
-
-      reader.addEventListener(
-        "load",
-        function() {
-          this.$refs.displayAvatarImage.src = reader.result;
-          this.$refs.miniDisplayAvatarImage.src = reader.result;
-        }.bind(this),
-        false
-      );
-
-      reader.readAsDataURL(this.user.image);
-
-      const formData = new FormData();
-      formData.append("image", this.user.image);
-      formData.append("_method", "put");
-
-      try {
-        const response = await auth.updateImage(this.user.id, formData);
-        this.flashMessage.success({
-          message: "Avatar has been updated successfully!",
-          time: 5000
-        });
-        this.user.image = response.data.image;
-      } catch (error) {
-        this.flashMessage.error({
-          message: error.response.data.message,
-          time: 5000
-        });
-      }
+    product() {
+      const product = this.products[this.$route.params.id];
+      return product;
     }
   }
 };

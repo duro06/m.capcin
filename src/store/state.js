@@ -4,5 +4,6 @@ export default {
   serverImage: "http://localhost:8000/storage/",
   token: localStorage.getItem("access_token") || null,
   adminVerified: localStorage.getItem("waiting_verivication") || null,
-  profile: {}
+  profile: {},
+  products: []
 };
