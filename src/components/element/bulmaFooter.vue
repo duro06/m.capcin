@@ -3,42 +3,12 @@
     <div class="container">
       <div class="navbar-brand level is-mobile">
         <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]">
-          <router-link
-            v-if="level == 'Produksi'"
-            :to="{ path: '/home/produksi' }"
-          >
+          <a @click="role">
             <i class="fas fa-home" />
             <p class="subtitle is-7 ">
               Beranda
             </p>
-          </router-link>
-          <router-link
-            v-else-if="level == 'Packing'"
-            :to="{ path: '/home/packing' }"
-          >
-            <i class="fas fa-home" />
-            <p class="subtitle is-7 ">
-              Beranda
-            </p>
-          </router-link>
-          <router-link
-            v-else-if="level == 'Mitra'"
-            :to="{ path: '/home/mitra' }"
-          >
-            <i class="fas fa-home" />
-            <p class="subtitle is-7 ">
-              Beranda
-            </p>
-          </router-link>
-          <router-link
-            v-else-if="level == 'Supplier'"
-            :to="{ path: '/home/supplier' }"
-          >
-            <i class="fas fa-home" />
-            <p class="subtitle is-7 ">
-              Beranda
-            </p>
-          </router-link>
+          </a>
         </div>
         <div
           :class="['btn_nav_item', 'level-item', 'has-text-centered', dompet]"
@@ -125,6 +95,50 @@ export default {
           break;
 
         default:
+          break;
+      }
+    },
+    role() {
+      switch (this.level) {
+        case "Produksi":
+          this.$router.push({ name: "produksi" }, () => {});
+          break;
+        case "Packing":
+          this.$router.push({ name: "packing" }, () => {});
+          break;
+        case "Supplier":
+          this.$router.push({ name: "supplier" }, () => {});
+          break;
+        case "Mitra":
+          this.$router.push({ name: "mitra" }, () => {});
+          break;
+        default:
+          this.$store
+            .dispatch("destroyToken")
+            .then(
+              this.flashMessage.success({
+                message:
+                  "Mohon maaf Anda tidak diijinkan untuk login, silahkan hubungi Admin " +
+                  this.role,
+                time: 5000
+              }),
+              this.$router.replace(
+                this.$route.query.redirect || { name: "login" },
+                () => {}
+              )
+            )
+            .catch(
+              this.flashMessage.success({
+                message:
+                  "Mohon maaf Anda tidak diijinkan untuk login, silahkan hubungi Admin " +
+                  this.role,
+                time: 5000
+              }),
+              this.$router.replace(
+                this.$route.query.redirect || { name: "login" },
+                () => {}
+              )
+            );
           break;
       }
     }

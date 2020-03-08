@@ -22,7 +22,7 @@ Vue.use(infiniteScroll);
 // Vue.use(BulmaCarousel)
 
 // const _urlOriginApi = "http://192.168.43.231/capcin/";
-const _LurlApi = "http://localhost:8000/api/";
+// const _LurlApi = "http://localhost:8000/api/";
 // const _LurlApi = "http://localhost/capcin/";
 // const _LurlApi = "http://192.168.1.100/capcin/";
 // const _LurlApi = "http://localhost/capcin-copy/";
@@ -30,7 +30,7 @@ const _LurlApi = "http://localhost:8000/api/";
 // const _newUrlUser = _LurlApi + "user/login";
 // const _newUrlApiLogin = _LurlApi + "apilogin";
 
-axios.defaults.baseURL = _LurlApi;
+// axios.defaults.baseURL = _LurlApi;
 
 window.addEventListener("beforeunload", function() {
   if (store.getters.loggedIn) {

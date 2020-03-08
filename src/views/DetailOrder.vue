@@ -182,18 +182,31 @@ export default {
     orderNow: async function() {
       let jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
       // let order = new FormData();
-      let order = new URLSearchParams();
+      // let order = new URLSearchParams();
 
-      order.append("total", jumlah);
-      order.append("product_id", this.barang.id);
-      order.append("qty", this.jumlahPesanan);
-      order.append("user_id", this.profile.id);
-      order.append("harga", this.barang.harga);
+      // order.append("total", jumlah);
+      // order.append("product_id", this.barang.id);
+      // order.append("qty", this.jumlahPesanan);
+      // order.append("user_id", this.profile.id);
+      // order.append("harga", this.barang.harga);
+
+      let order = {
+        order: {
+          product_id: this.barang.id,
+          qty: this.jumlahPesanan,
+          user_id: this.profile.id,
+          harga: this.barang.harga,
+          total: jumlah
+        }
+      };
 
       console.log(order);
       try {
         const response = await prod.purchase(order);
         console.log(response);
+        if (response.status === 200) {
+          this.$router.replace({ name: "berhasil" }, () => {});
+        }
         // let getData = response.data.data; // masukkan data response ke getData
         // this.products = getData.data; //ambil data yang dibutuhkan
         // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
