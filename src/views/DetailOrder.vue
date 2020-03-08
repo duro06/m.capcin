@@ -214,19 +214,17 @@ export default {
       }
     },
     product() {
-      // alert("product");
-      // let product;
-      // const id = new Intl.NumberFormat().format(this.$route.params.id);
       console.log("route : ", this.$route.params.id);
-      // console.log("id : ", id);
 
-      this.products.forEach(data => {
-        // if (data.id == id) {
-        if (data.id == this.$route.params.id) {
-          console.log("data = ", data);
-          this.barang = data;
-        }
-      });
+      // cari data yang id-nya sama dengan parameter
+      // cara ini menghasilkan array
+      const barang = this.products.filter(
+        data => data.id == this.$route.params.id
+      );
+      // jadi karena hasilnya hanya ada satu array( karena tiap barang id-nya tidak mugnkin sama)
+      // maka ambil array pertama
+      this.barang = barang[0];
+      console.log("barang : ", this.barang);
     }
   },
   updated() {
