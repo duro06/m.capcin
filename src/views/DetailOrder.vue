@@ -176,11 +176,13 @@ export default {
         }
       };
       console.log(order);
+      this.$router.replace({ name: "berhasil" }, () => {});
       // localStorage.setItem("order", order);
     },
     orderNow: async function() {
       let jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
-      let order = new FormData();
+      // let order = new FormData();
+      let order = new URLSearchParams();
 
       order.append("total", jumlah);
       order.append("product_id", this.barang.id);
@@ -214,18 +216,17 @@ export default {
     product() {
       // alert("product");
       // let product;
-      const id = new Intl.NumberFormat().format(this.$route.params.id);
+      // const id = new Intl.NumberFormat().format(this.$route.params.id);
       console.log("route : ", this.$route.params.id);
-      console.log("id : ", id);
-      for (let index = 0; index < this.products.length; index++) {
-        if (this.products[index].id == id) {
-          console.log("products : ", this.products[index]);
-          this.barang = this.products[index];
-          // return this.products[index];
+      // console.log("id : ", id);
+
+      this.products.forEach(data => {
+        // if (data.id == id) {
+        if (data.id == this.$route.params.id) {
+          console.log("data = ", data);
+          this.barang = data;
         }
-        // console.log("product : ", product);
-        // return product;
-      }
+      });
     }
   },
   updated() {

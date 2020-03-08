@@ -210,6 +210,7 @@ const routes = [
     path: "/order_detail/:id",
     name: "order_detail",
     component: () => import("../views/DetailOrder.vue"),
+
     beforeEnter: (to, from, next) => {
       console.log("logged get ", store.getters.loggedIn);
       if (store.getters.loggedIn) {
@@ -229,6 +230,21 @@ const routes = [
     path: "/keranjang",
     name: "keranjang",
     component: () => import("../views/Keranjang.vue"),
+    beforeEnter: (to, from, next) => {
+      console.log("logged get ", store.getters.loggedIn);
+      if (store.getters.loggedIn) {
+        next();
+      } else if (store.getters.waitingVerified) {
+        next("/waiting");
+      } else {
+        next("/login");
+      }
+    }
+  },
+  {
+    path: "/berhasil",
+    name: "berhasil",
+    component: () => import("../views/SuccessOrder.vue"),
     beforeEnter: (to, from, next) => {
       console.log("logged get ", store.getters.loggedIn);
       if (store.getters.loggedIn) {
