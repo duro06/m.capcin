@@ -33,7 +33,9 @@ export function httpNot() {
     baseURL: store.state.serverApi,
     headers: {
       Authorization: "Bearer " + auth.getAccessToken(),
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "aplication/json"
-    }
+    },
+    crossdomain: true
   });
 }
