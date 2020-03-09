@@ -93,7 +93,7 @@ const routes = [
     component: () => import("../components/HelloWorld.vue"),
     meta: {
       loggedIn: true,
-      waitingVerified: false,
+      waitingVerified: true,
       visitor: true,
       verified: true
     }
@@ -105,7 +105,7 @@ const routes = [
     meta: {
       loggedIn: true,
       waitingVerified: false,
-      visitor: true,
+      visitor: false,
       verified: true
     }
   },
@@ -116,7 +116,7 @@ const routes = [
     meta: {
       loggedIn: true,
       waitingVerified: false,
-      visitor: true,
+      visitor: false,
       verified: true
     }
   },
@@ -127,7 +127,7 @@ const routes = [
     meta: {
       loggedIn: true,
       waitingVerified: false,
-      visitor: true,
+      visitor: false,
       verified: true
     }
   },
@@ -138,7 +138,7 @@ const routes = [
     meta: {
       loggedIn: true,
       waitingVerified: false,
-      visitor: true,
+      visitor: false,
       verified: true
     }
   },
@@ -149,7 +149,7 @@ const routes = [
     meta: {
       loggedIn: true,
       waitingVerified: false,
-      visitor: true,
+      visitor: false,
       verified: true
     }
   },

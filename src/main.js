@@ -118,6 +118,8 @@ router.beforeEach((to, from, next) => {
           next({ path: "/home" });
           break;
       }
+    } else if (store.getters.waitingVerified) {
+      next({ path: "/waiting" });
     } else {
       next();
     }
