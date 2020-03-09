@@ -88,8 +88,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <Footer class="navbar" /> -->
   </div>
 </template>
 <script>

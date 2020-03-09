@@ -2,7 +2,6 @@
   <nav class="navbar is-fixed-bottom-touch is-hidden-desktop ">
     <div class="container">
       <div class="navbar-brand level is-mobile">
-        <!-- <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]"> -->
         <div
           :class="[
             'btn_nav_item',
@@ -18,9 +17,7 @@
             </p>
           </a>
         </div>
-        <!-- <div
-          :class="['btn_nav_item', 'level-item', 'has-text-centered', dompet]"
-        > -->
+
         <div
           :class="[
             'btn_nav_item',
@@ -36,9 +33,7 @@
             </p>
           </router-link>
         </div>
-        <!-- <div
-          :class="['btn_nav_item', 'level-item', 'has-text-centered', profile]"
-        > -->
+
         <div
           :class="[
             'btn_nav_item',
@@ -79,7 +74,9 @@
 export default {
   name: "footnav",
   data() {
-    return { home: "", dompet: "", profile: "", activeClass: "active" };
+    return {
+      activeClass: "active"
+    };
   },
   computed: {
     loggedIn() {
@@ -93,41 +90,8 @@ export default {
       return this.$route.path;
     }
   },
-  watch: {
-    lokasi: {
-      immediate: true,
-      handler() {
-        this.isActive();
-      }
-    }
-  },
-  methods: {
-    isActive() {
-      console.log("rute path ", this.$route.path);
-      // console.log("rute path include", this.$route.path.include("home"));
-      let me = window.location.pathname;
-      console.log("Location: ", me.split("/")[1]);
-      switch (me.split("/")[1]) {
-        case "home":
-          this.home = "active";
-          this.dompet = "";
-          this.profile = "";
-          break;
-        case "dompet":
-          this.home = "";
-          this.dompet = "active";
-          this.profile = "";
-          break;
-        case "profile":
-          this.home = "";
-          this.dompet = "";
-          this.profile = "active";
-          break;
 
-        default:
-          break;
-      }
-    },
+  methods: {
     role() {
       switch (this.level) {
         case "Produksi":
@@ -197,9 +161,9 @@ export default {
 .btn_nav_item.active p {
   color: #ee1846 !important;
 }
-.router-link-exact-active {
+/* .router-link-exact-active {
   color: #ee1846 !important;
-}
+} */
 
 p.subtitle {
   padding-top: 0px;
