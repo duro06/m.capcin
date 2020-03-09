@@ -200,7 +200,7 @@ export default {
 
       console.log(order);
       try {
-        const response = await prod.purchase(order);
+        const response = await prod.Beli(order);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
@@ -236,14 +236,28 @@ export default {
       // maka ambil array pertama
       this.barang = barang[0];
       console.log("barang : ", this.barang);
+    },
+    getProdectById: async function() {
+      let id = this.$route.params.id;
+      console.log("Get By id", id);
+      try {
+        const response = await prod.getById(id);
+        if (response.status == 200) {
+          this.barang = response.data.data;
+        }
+        console.log(this.barang);
+      } catch (error) {
+        console.log("", error);
+      }
     }
   },
   updated() {
     console.log("Updadted");
   },
-  mounted() {
+  created() {
     console.log("Mounted");
-    this.product();
+    // this.product();
+    this.getProdectById();
   }
 };
 </script>
