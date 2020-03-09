@@ -3,15 +3,15 @@
     <div class="container">
       <p>Ini halaman Dompet</p>
     </div>
-    <Footer class="navbar" />
+    <!-- <Footer class="navbar" /> -->
   </div>
 </template>
 <script>
-import Footer from "../components/element/bulmaFooter";
+// import Footer from "../components/element/bulmaFooter";
 export default {
   name: "dompet",
   components: {
-    Footer
+    // Footer
   }
 };
 </script>

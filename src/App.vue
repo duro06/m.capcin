@@ -7,15 +7,26 @@
     <transition class="slideInLeft" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
+    <Footer class="navbar" v-if="loggedIn" />
   </div>
 </template>
 <script>
 import * as auth from "./services/auth_service";
 import store from "./store";
+import Footer from "./components/element/bulmaFooter";
+
 // import router from "./router";
 export default {
   name: "app",
+  components: {
+    Footer
+  },
 
+  computed: {
+    loggedIn() {
+      return this.$store.getters.loggedIn;
+    }
+  },
   beforeCreate: async function() {
     localStorage.removeItem("level"); // hapus temporary local storege level
     //===================jangan lupa ini nanti dihapus=============

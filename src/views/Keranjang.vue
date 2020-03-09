@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <Footer class="navbar" />
+    <!-- <Footer class="navbar" /> -->
   </div>
 </template>
 <script>
@@ -34,13 +34,13 @@
 import { mapState } from "vuex";
 // import * as auth from "../services/auth_service";
 // import Modal from "../components/element/Modal.vue";
-import Footer from "../components/element/bulmaFooter";
+// import Footer from "../components/element/bulmaFooter";
 
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    Footer
+    // Footer
   },
   data() {
     return {

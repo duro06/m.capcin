@@ -6,15 +6,15 @@
 </template>
 <script>
 import Produksi from "@/components/role/Produksi.vue";
-import Footer from "@/components/element/bulmaFooter.vue";
+// import Footer from "@/components/element/bulmaFooter.vue";
 // import store from "../store";
 // import * as auth from "../services/auth_service";
 
 export default {
   name: "produksi",
   components: {
-    Produksi,
-    Footer
+    Produksi
+    // Footer
   }
   // beforeRouteLeave(to, from, next) {
   //   const answer = window.confirm(

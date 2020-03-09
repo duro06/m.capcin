@@ -2,28 +2,52 @@
   <nav class="navbar is-fixed-bottom-touch is-hidden-desktop ">
     <div class="container">
       <div class="navbar-brand level is-mobile">
-        <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]">
-          <a @click="role">
+        <!-- <div :class="['btn_nav_item', 'level-item', 'has-text-centered', home]"> -->
+        <div
+          :class="[
+            'btn_nav_item',
+            'level-item',
+            'has-text-centered',
+            currentPage.includes('home') ? activeClass : ''
+          ]"
+        >
+          <a @click="role" exact>
             <i class="fas fa-home" />
             <p class="subtitle is-7 ">
               Beranda
             </p>
           </a>
         </div>
-        <div
+        <!-- <div
           :class="['btn_nav_item', 'level-item', 'has-text-centered', dompet]"
+        > -->
+        <div
+          :class="[
+            'btn_nav_item',
+            'level-item',
+            'has-text-centered',
+            currentPage.includes('dompet') ? activeClass : ''
+          ]"
         >
-          <router-link :to="{ path: '/dompet' }">
+          <router-link :to="{ path: '/dompet' }" exact>
             <i class="fas fa-wallet"></i>
             <p class="subtitle is-7">
               Dompet
             </p>
           </router-link>
         </div>
-        <div
+        <!-- <div
           :class="['btn_nav_item', 'level-item', 'has-text-centered', profile]"
+        > -->
+        <div
+          :class="[
+            'btn_nav_item',
+            'level-item',
+            'has-text-centered',
+            currentPage.includes('profile') ? activeClass : ''
+          ]"
         >
-          <router-link :to="{ path: '/profile' }">
+          <router-link :to="{ path: '/profile' }" exact>
             <i class="fas fa-user-tie"></i>
             <p class="subtitle is-7">
               Profile
@@ -31,7 +55,7 @@
           </router-link>
         </div>
         <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
-          <router-link :to="{ path: '/login' }">
+          <router-link :to="{ path: '/login' }" exact>
             <i class="fas fa-sign-in-alt"></i>
             <p class="subtitle is-7">
               Login
@@ -39,7 +63,7 @@
           </router-link>
         </div>
         <div v-if="loggedIn" class="btn_nav_item level-item has-text-centered">
-          <router-link :to="{ path: '/logout' }">
+          <router-link :to="{ path: '/logout' }" exact>
             <i class="fas fa-sign-out-alt"></i>
             <p class="subtitle is-7">
               Logout
@@ -55,7 +79,7 @@
 export default {
   name: "footnav",
   data() {
-    return { home: "", dompet: "", profile: "" };
+    return { home: "", dompet: "", profile: "", activeClass: "active" };
   },
   computed: {
     loggedIn() {
@@ -63,6 +87,10 @@ export default {
     },
     level() {
       return this.$store.getters.levelAccess;
+    },
+    currentPage() {
+      console.log("rute path ", this.$route.path);
+      return this.$route.path;
     }
   },
   watch: {
@@ -75,6 +103,8 @@ export default {
   },
   methods: {
     isActive() {
+      console.log("rute path ", this.$route.path);
+      // console.log("rute path include", this.$route.path.include("home"));
       let me = window.location.pathname;
       console.log("Location: ", me.split("/")[1]);
       switch (me.split("/")[1]) {
@@ -165,6 +195,9 @@ export default {
   color: #ee1846 !important;
 }
 .btn_nav_item.active p {
+  color: #ee1846 !important;
+}
+.router-link-exact-active {
   color: #ee1846 !important;
 }
 
