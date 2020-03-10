@@ -3,7 +3,10 @@
     <div class="card">
       <div class="card-content">
         <router-link
-          :to="{ path: '/order_detail/' + data.id }"
+          :to="{
+            name: 'mitra.detail_product_order',
+            params: { id: this.data.id }
+          }"
           class="detail-items"
         >
           <div class="columns is-mobile">

@@ -1,10 +1,10 @@
 import axios from "axios";
-import * as auth from "./auth_service";
 import store from "../store";
+import * as auth from "./auth_service";
 
 export function http() {
   return axios.create({
-    baseURL: store.state.serverApi,
+    baseURL: store.state.serverApiAnyar,
     headers: {
       Authorization: "Bearer " + auth.getAccessToken()
     }
