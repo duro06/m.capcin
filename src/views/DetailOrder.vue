@@ -112,7 +112,7 @@ export default {
       errors: [],
       kdisable: true,
       disable: false,
-      barang: ""
+      barang: {}
     };
   },
 
@@ -198,11 +198,7 @@ export default {
       // };
 
       try {
-<<<<<<< HEAD
-        const response = await prod.purchase(order);
-=======
         const response = await prod.purchase(formData);
->>>>>>> sukses ordering from mitra
         console.log(response);
         // if (response.status === 200) {
         //   this.$router.replace({ name: "berhasil" }, () => {});

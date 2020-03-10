@@ -9,11 +9,7 @@ export function loadMore(page) {
 }
 
 export function purchase(params) {
-<<<<<<< HEAD
-  return httpNot().post(`user/mitra-ordered`, params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
-=======
-  return http().post("user/mitra-ordered", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
->>>>>>> sukses ordering from mitra
+  return http().post("user/orders", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
 }
 export function beli(params) {
   return http().post(`user/orders`, params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)

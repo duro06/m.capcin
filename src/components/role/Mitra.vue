@@ -4,7 +4,7 @@
       <div class="card-content">
         <router-link
           :to="{
-            name: 'mitra.detail_product_order',
+            name: 'order_detail',
             params: { id: this.data.id }
           }"
           class="detail-items"

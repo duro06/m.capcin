@@ -37,7 +37,7 @@ export default {
           let getData = response.data.data;
           console.dir(getData);
           this.id = getData.id;
-          this.nama = getData.nama;
+          this.name = getData.nama;
           this.harga = getData.harga;
         });
     },

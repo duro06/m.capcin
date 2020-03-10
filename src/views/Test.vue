@@ -7,7 +7,7 @@
             class="input is-primary"
             type="text"
             placeholder="Primary input"
-            v-model="data.satu"
+            v-model="data.id"
           />
         </div>
       </div>
@@ -17,7 +17,7 @@
             class="input is-primary"
             type="text"
             placeholder="Primary input"
-            v-model="data.dua"
+            v-model="data.name"
           />
         </div>
       </div>
@@ -27,7 +27,7 @@
             class="input is-primary"
             type="text"
             placeholder="Primary input"
-            v-model="data.tiga"
+            v-model="data.harga"
           />
         </div>
       </div>
@@ -37,7 +37,17 @@
             class="input is-primary"
             type="text"
             placeholder="Primary input"
-            v-model="data.empat"
+            v-model="data.stok_awal"
+          />
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <input
+            class="input is-primary"
+            type="text"
+            placeholder="Primary input"
+            v-model="data.qty"
           />
         </div>
       </div>
@@ -60,18 +70,21 @@ export default {
   data() {
     return {
       data: {
-        satu: 1111111,
-        dua: 2222222,
-        tiga: 3333333,
-        empat: 4444444
+        id: "",
+        name: "",
+        harga: "",
+        stok_awal: "",
+        qty: ""
       }
     };
   },
   created() {
     console.log("Guue jalan bang");
+
+    this.getProdectById();
     // this.submit();
     // this.submitLagi();
-    this.kirimAgain();
+    // this.kirimAgain();
     // this.kirim();
   },
   methods: {
@@ -95,15 +108,24 @@ export default {
       this.kirimAgain();
     },
     kirimAgain: function() {
+      let total = this.data.qty * this.data.harga;
+      let formData = new FormData();
+      formData.append("product_id", this.data.id);
+      formData.append("harga", this.data.harga);
+      formData.append("qty", this.data.qty);
+      formData.append("total", total);
+      formData.append("user_id", this.$store.state.profile.id);
+
       axios({
         method: `post`,
-        url: `http://localhost:8000/api/user/mitra-ordered`,
+        url: `http://localhost:8000/api/user/orders`,
         // httpAgent
         headers: {
           Authorization: "Bearer " + auth.getAccessToken()
         },
+        data: formData
         // isSameOrigin: true
-        Authorization: "Bearer " + auth.getAccessToken()
+        // Authorization: "Bearer " + auth.getAccessToken()
       })
         .then(response => {
           console.log(response);
@@ -121,7 +143,23 @@ export default {
         .catch(manuk => {
           console.log(manuk);
         });
+    },
+    getProdectById: async function() {
+      let id = 3;
+      console.log("Get By id", id);
+      try {
+        const response = await prod.getById(id);
+        if (response.status == 200) {
+          this.data = response.data.data;
+          console.log(this.data);
+        }
+        console.log(this.barang);
+      } catch (error) {
+        console.log("", error);
+      }
     }
   }
+  // beforeCreate() {
+  // }
 };
 </script>
