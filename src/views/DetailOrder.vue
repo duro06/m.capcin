@@ -200,7 +200,7 @@ export default {
 
       console.log(order);
       try {
-        const response = await prod.Beli(order);
+        const response = await prod.purchase(order);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});

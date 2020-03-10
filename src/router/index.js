@@ -153,6 +153,18 @@ const routes = [
       verified: true
     }
   },
+
+  {
+    path: "/test",
+    name: "test",
+    component: () => import("../views/Test.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
   {
     path: "/logout",
     name: "logout",

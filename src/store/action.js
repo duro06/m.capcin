@@ -108,5 +108,31 @@ export default {
           }
         });
     });
+  },
+  retrieveOrder(context, credentials) {
+    return new Promise((resolve, reject) => {
+      console.log(credentials);
+      http()
+        .post(`user/orders`, credentials)
+        .then(response => {
+          console.log(response);
+          setToken(response.data);
+          this.flashMessage.success({
+            message: response.data.message,
+            time: 2000
+          });
+          resolve(response);
+        })
+        .catch(error => {
+          // console.log(error)
+          if (error.response != undefined) {
+            this.flashMessage.success({
+              message: error.response.message,
+              time: 2000
+            });
+            reject(error);
+          }
+        });
+    });
   }
 };

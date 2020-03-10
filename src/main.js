@@ -15,6 +15,7 @@ import "bulma-badge/dist/css/bulma-badge.min.css";
 import "vue-loading-overlay/dist/vue-loading.css";
 Vue.use(Vuex, axios);
 // Vue.use(axios);
+// Vue.use(Vuex);
 Vue.use(vWow);
 Vue.use(FlashMessage);
 Vue.use(VueCarousel);

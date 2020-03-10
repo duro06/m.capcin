@@ -1,0 +1,6 @@
+#Header set Content-Security-Policy "default-src 'self';"
+Header always set Access-Control-Allow-Origin "http://localhost:8080"
+Header always set Access-Control-Allow-Headers "Content-Type, Accept-Language, X-Access-Token, X-Client-Id, X-Secret-Id, X-GR-Token"
+Header always set Access-Control-Allow-Methods "GET,POST,OPTIONS"
+Header always set Access-Control-Expose-Headers "X-Access-Token, X-Refresh-Token,X-Access-Token-Expire, X-Pagination-Current-Page, X-Pagination-Page-Count,X-Pagination-Per-Page, X-Pagination-Total-Count, X-Payload"
+Header always set Access-Control-Allow-Credentials "true"
