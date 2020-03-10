@@ -1,4 +1,4 @@
-import { http, httpNot } from "./http_service.js";
+import { http } from "./http_service.js";
 
 export function loadData(params) {
   return http().get("user/products", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
@@ -9,7 +9,7 @@ export function loadMore(page) {
 }
 
 export function purchase(params) {
-  return httpNot().post("user/orders", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
+  return http().post("user/mitra-ordered", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
 }
 export function Beli(params) {
   return http().post("user/orders", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)

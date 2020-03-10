@@ -83,6 +83,13 @@ const routes = [
         name: "mitra",
         component: () => import("../views/Mitra.vue"),
         meta: { role: "Mitra" }
+        // children: [
+        //   {
+        //     path: "detail_product_order/:id",
+        //     name: "mitra.detail_product_order",
+        //     component: () => import("../views/mitra/DetailProductOrder.vue")
+        //   }
+        // ]
       }
     ]
   },
@@ -113,6 +120,17 @@ const routes = [
     path: "/order_detail/:id",
     name: "order_detail",
     component: () => import("../views/DetailOrder.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/detail_product_order/:id",
+    name: "mitra.detail_product_order",
+    component: () => import("../views/mitra/DetailProductOrder.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,

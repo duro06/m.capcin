@@ -74,6 +74,7 @@
                       Tambah ke kenranjang <i class="fas fa-cart-plus"></i>
                     </button>
                     <button
+                      type="submit"
                       class="button is-success is-small is-rounded"
                       @click.prevent="orderNow"
                       :disabled="disable"
@@ -97,7 +98,7 @@ import { mapState } from "vuex";
 // import Modal from "../components/element/Modal.vue";
 // import Footer from "../components/element/bulmaFooter";
 
-import * as prod from "../services/product_service.js";
+import * as prod from "../services/product_service";
 export default {
   name: "Detail_Order",
   components: {
@@ -178,33 +179,30 @@ export default {
       // localStorage.setItem("order", order);
     },
     orderNow: async function() {
-      let jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
-      // let order = new FormData();
-      // let order = new URLSearchParams();
+      const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
+      console.log(jumlah);
+      const formData = new FormData();
+      formData.append("total", jumlah);
+      formData.append("product_id", this.barang.id);
+      formData.append("qty", this.jumlahPesanan);
+      formData.append("user_id", this.profile.id);
+      formData.append("harga", this.barang.harga);
+      // let order = {
+      //   order: {
+      //     product_id: this.barang.id,
+      //     qty: this.jumlahPesanan,
+      //     user_id: this.profile.id,
+      //     harga: this.barang.harga,
+      //     total: jumlah
+      //   }
+      // };
 
-      // order.append("total", jumlah);
-      // order.append("product_id", this.barang.id);
-      // order.append("qty", this.jumlahPesanan);
-      // order.append("user_id", this.profile.id);
-      // order.append("harga", this.barang.harga);
-
-      let order = {
-        order: {
-          product_id: this.barang.id,
-          qty: this.jumlahPesanan,
-          user_id: this.profile.id,
-          harga: this.barang.harga,
-          total: jumlah
-        }
-      };
-
-      console.log(order);
       try {
-        const response = await prod.Beli(order);
+        const response = await prod.purchase(formData);
         console.log(response);
-        if (response.status === 200) {
-          this.$router.replace({ name: "berhasil" }, () => {});
-        }
+        // if (response.status === 200) {
+        //   this.$router.replace({ name: "berhasil" }, () => {});
+        // }
         // let getData = response.data.data; // masukkan data response ke getData
         // this.products = getData.data; //ambil data yang dibutuhkan
         // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
