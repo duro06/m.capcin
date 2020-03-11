@@ -97,8 +97,10 @@ import { mapState } from "vuex";
 // import * as auth from "../services/auth_service";
 // import Modal from "../components/element/Modal.vue";
 // import Footer from "../components/element/bulmaFooter";
+// import capcin from "../components/element/Capcin";
 
 import * as prod from "../services/product_service";
+import CapcinVue from "../components/element/Capcin.vue";
 export default {
   name: "Detail_Order",
   components: {
@@ -112,7 +114,14 @@ export default {
       errors: [],
       kdisable: true,
       disable: false,
-      barang: {}
+      barang: {},
+      loader: this.$loading.show(
+        {},
+        {
+          default: this.$createElement(CapcinVue),
+          before: this.$createElement("h1", "Loading ...")
+        }
+      )
     };
   },
 
@@ -236,6 +245,8 @@ export default {
       console.log("barang : ", this.barang);
     },
     getProdectById: async function() {
+      this.loader;
+      // this.$loading.show();
       let id = this.$route.params.id;
       console.log("Get By id", id);
       try {
@@ -243,6 +254,7 @@ export default {
         if (response.status == 200) {
           this.barang = response.data.data;
         }
+        this.loader.hide();
         console.log(this.barang);
       } catch (error) {
         console.log("", error);
