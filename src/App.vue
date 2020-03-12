@@ -18,6 +18,7 @@ import * as auth from "./services/auth_service";
 import store from "./store";
 import Footer from "./components/element/bulmaFooter";
 import Capcin from "./components/element/Capcin.vue";
+// kalo pake komponen Capcin di bawah ini di buang aja, ngebek2i coding..
 import Loading from "vue-loading-overlay";
 import Vue from "vue";
 Vue.use(
