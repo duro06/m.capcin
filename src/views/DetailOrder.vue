@@ -92,15 +92,9 @@
   </div>
 </template>
 <script>
-// import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
-// import * as auth from "../services/auth_service";
-// import Modal from "../components/element/Modal.vue";
-// import Footer from "../components/element/bulmaFooter";
-// import capcin from "../components/element/Capcin";
 
 import * as prod from "../services/product_service";
-// import CapcinVue from "../components/element/Capcin.vue";
 export default {
   name: "Detail_Order",
   components: {
@@ -110,7 +104,6 @@ export default {
   data() {
     return {
       jumlahPesanan: 1,
-      showModal: false, // modal tampil atau tidak
       errors: [],
       kdisable: true,
       disable: false,
@@ -146,20 +139,6 @@ export default {
         return "data tidak ditemukan";
       }
     }
-  },
-  watch: {
-    // user: {
-    //   immediate: true,
-    //   handler() {
-    //     this.getProfile();
-    //   }
-    // }
-    // imageName: {
-    //   immediate: true,
-    //   handler() {
-    //     this.pickFile();
-    //   }
-    // }
   },
   methods: {
     kurang() {
@@ -199,22 +178,13 @@ export default {
       formData.append("qty", this.jumlahPesanan);
       formData.append("user_id", this.profile.id);
       formData.append("harga", this.barang.harga);
-      // let order = {
-      //   order: {
-      //     product_id: this.barang.id,
-      //     qty: this.jumlahPesanan,
-      //     user_id: this.profile.id,
-      //     harga: this.barang.harga,
-      //     total: jumlah
-      //   }
-      // };
 
       try {
         const response = await prod.purchase(formData);
         console.log(response);
-        // if (response.status === 200) {
-        //   this.$router.replace({ name: "berhasil" }, () => {});
-        // }
+        if (response.status === 200) {
+          this.$router.replace({ name: "berhasil" }, () => {});
+        }
         // let getData = response.data.data; // masukkan data response ke getData
         // this.products = getData.data; //ambil data yang dibutuhkan
         // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
@@ -234,19 +204,7 @@ export default {
         });
       }
     },
-    product() {
-      console.log("route : ", this.$route.params.id);
 
-      // cari data yang id-nya sama dengan parameter
-      // cara ini menghasilkan array
-      const barang = this.products.filter(
-        data => data.id == this.$route.params.id
-      );
-      // jadi karena hasilnya hanya ada satu array( karena tiap barang id-nya tidak mugnkin sama)
-      // maka ambil array pertama
-      this.barang = barang[0];
-      console.log("barang : ", this.barang);
-    },
     getProdectById: async function() {
       this.loader;
       // this.$loading.show();
@@ -255,7 +213,7 @@ export default {
       try {
         const response = await prod.getById(id);
         if (response.status == 200) {
-          this.barang = response.data.data;
+          this.barang = response.data.data; // masukkan data yang di dapat ke barang
         }
         this.loader.hide();
         console.log(this.barang);

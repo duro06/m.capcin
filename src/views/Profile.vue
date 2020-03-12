@@ -169,6 +169,15 @@ export default {
   },
   computed: {
     ...mapState(["profile", "serverImage", "token"])
+    // loading() {
+    //   if (this.user.image != "" || this.user.image != undefined) {
+    //     console.log("not Loading");
+    //     return this.$store.commit("notLoading");
+    //   } else {
+    //     console.log("not Loading");
+    //     return this.$store.commit("loading", "terserah");
+    //   }
+    // }
   },
   watch: {
     user: {
@@ -184,6 +193,9 @@ export default {
     //   }
     // }
   },
+  mounted() {
+    this.$store.commit("loading", "isi");
+  },
   methods: {
     editProfile() {
       this.showModal = true;
@@ -193,9 +205,11 @@ export default {
       this.showModal = false;
     },
     saveModal: async function() {
+      this.$store.commit("loading", "a");
       try {
         this.disable = true;
         const response = await auth.updateProfile(this.user.id, this.user);
+        this.$store.commit("notLoading");
         this.flashMessage.success({
           message: "Profile Updated successfully!",
           time: 5000
@@ -222,15 +236,21 @@ export default {
       console.log("Profile Updated ", this.profile);
       let user = this.profile;
       this.user = user;
-      if (user.image != null || user.image != " null") {
+      if (
+        user.image != undefined &&
+        user.image != null &&
+        user.image != "null"
+      ) {
         console.log("user image", user.image);
         this.displayImage = this.serverImage + user.image;
+        this.$store.commit("notLoading");
       } else {
-        this.displayImage = this.serverImage + "galleries_images/nouser.png";
+        this.displayImage = "@/assets/nouser.png";
       }
     },
 
     attachImage: async function() {
+      this.$store.commit("loading", "apem");
       this.user.image = this.$refs.editAvatar.files[0];
       console.log(this.$refs.editAvatar.files[0]);
       let reader = new FileReader();
@@ -252,6 +272,7 @@ export default {
 
       try {
         const response = await auth.updateImage(this.user.id, formData);
+        this.$store.commit("notLoading");
         this.flashMessage.success({
           message: "Avatar has been updated successfully!",
           time: 5000
