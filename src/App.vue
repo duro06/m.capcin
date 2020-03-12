@@ -4,7 +4,7 @@
       position="right top"
       style="z-index: 19999 !important; position: fixed;"
     ></FlashMessage>
-    <!-- <Loading /> -->
+    <Capcin />
     <div class="vld-parent" ref="formContainer"></div>
     <!-- <button @click="submit">Login</button> -->
     <transition class="slideInLeft" v-wow data-wow-duration="1s">
@@ -17,11 +17,12 @@
 import * as auth from "./services/auth_service";
 import store from "./store";
 import Footer from "./components/element/bulmaFooter";
+import Capcin from "./components/element/Capcin.vue";
 import Loading from "vue-loading-overlay";
 import Vue from "vue";
 Vue.use(
   Loading,
-  { color: "#42b549", opacity: 0.9, useSlot: true }
+  { color: "#42b549", opacity: 0.7, useSlot: true }
   // {
   // before: this.$createElement("h1", "Loading ...")
   // after: this.$createElement(capcin)
@@ -37,8 +38,8 @@ Vue.use(
 export default {
   name: "app",
   components: {
-    Footer
-    // capcin,
+    Footer,
+    Capcin
     // loading
   },
   beforeCreate: async function() {
@@ -57,6 +58,7 @@ export default {
         console.log(response);
         //=============================================================
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+
         //jika tidak
       } else {
         //===================jangan lupa ini nanti dihapus=============
@@ -127,8 +129,40 @@ export default {
 }
 // kelas loading
 .vld-icon {
+  height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
+// .vld-icon > img {
+//   opacity: 0.6;
+//   position: relative;
+//   /* top: 50%; */
+//   /* left: 50%; */
+//   /* right: 10%; */
+//   width: 100px;
+//   height: 100px;
+//   margin: 0px 0 0 0px;
+//   -webkit-animation: spin 4s linear infinite;
+//   -moz-animation: spin 4s linear infinite;
+//   animation: spin 4s linear infinite;
+// }
+
+// @-moz-keyframes spin {
+//   100% {
+//     -moz-transform: rotate(360deg);
+//   }
+// }
+// @-webkit-keyframes spin {
+//   100% {
+//     -webkit-transform: rotate(360deg);
+//   }
+// }
+// @keyframes spin {
+//   100% {
+//     -webkit-transform: rotate(360deg);
+//     transform: rotate(360deg);
+//   }
+// }
 </style>

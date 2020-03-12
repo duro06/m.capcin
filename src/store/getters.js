@@ -15,5 +15,8 @@ export default {
   myProfile(state) {
     console.log("Returning profile state");
     return state.profile;
+  },
+  loading(state) {
+    return state.loadShow !== "";
   }
 };

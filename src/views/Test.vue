@@ -58,6 +58,9 @@
     <button class="button is-info" type="submit" @click="kirimAgain">
       http
     </button>
+    <button class="button is-info" type="submit" @click="testLoad">
+      Test Load
+    </button>
   </div>
 </template>
 <script>
@@ -88,6 +91,12 @@ export default {
     // this.kirim();
   },
   methods: {
+    testLoad() {
+      this.$store.commit("loading", "isi");
+      setTimeout(() => {
+        this.$store.commit("notLoading");
+      }, 5000);
+    },
     submit: async function() {
       try {
         const response = await prod.purchase(this.data);

@@ -100,7 +100,7 @@ import { mapState } from "vuex";
 // import capcin from "../components/element/Capcin";
 
 import * as prod from "../services/product_service";
-import CapcinVue from "../components/element/Capcin.vue";
+// import CapcinVue from "../components/element/Capcin.vue";
 export default {
   name: "Detail_Order",
   components: {
@@ -118,7 +118,10 @@ export default {
       loader: this.$loading.show(
         {},
         {
-          default: this.$createElement(CapcinVue),
+          after: this.$createElement("img", {
+            attrs: { src: require("@/assets/logocapcin.png") }
+          }),
+          // default: this.$createElement(CapcinVue),
           before: this.$createElement("h1", "Loading ...")
         }
       )

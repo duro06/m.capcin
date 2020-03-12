@@ -37,17 +37,17 @@
             v-infinite-scroll="Scroll"
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="12"
-            infinite-scroll-throttle-delay="2000"
+            infinite-scroll-throttle-delay="1500"
           ></div>
         </div>
-        <button
+        <!-- <button
           v-if="this.more_exist"
           class="button is-info is-fullwidth is-loading fadeInUp"
           v-wow
           data-wow-duration="1s"
         >
           Button loading
-        </button>
+        </button> -->
         <Modal v-if="showModal" @close="handleModal">
           <!-- <h3 slot="header">Custom header</h3> -->
           <header
@@ -106,6 +106,7 @@ export default {
   components: {
     Produksi,
     Modal,
+
     Search
   },
   data() {
@@ -122,7 +123,17 @@ export default {
       sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
+      last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
+      loader: this.$loading.show(
+        {},
+        {
+          after: this.$createElement("img", {
+            attrs: { src: require("@/assets/logocapcin.png") }
+          }),
+          // default: this.$createElement(CapcinVue),
+          before: this.$createElement("h1", "Loading ...")
+        }
+      )
     };
   },
   created() {
@@ -131,7 +142,7 @@ export default {
   },
   methods: {
     req: async function() {
-      this.loading = "is-loading";
+      this.loader;
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
         //kalo ga ada params servernya ga mau.. karena sudah di setting gitu..
@@ -154,7 +165,7 @@ export default {
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.loading = ""; // loadng spinner berhenti
+        this.loader.hide(); // loadng spinner berhenti
         console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
@@ -178,12 +189,23 @@ export default {
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
+
       if (this.more_exist && this.last_page != null) {
         this.loadMore(); //jalankan fungsi Load more
       }
     },
     // load lebih banyak data
     loadMore: async function() {
+      let loader = this.$loading.show(
+        {},
+        {
+          after: this.$createElement("img", {
+            attrs: { src: require("@/assets/logocapcin.png") }
+          }),
+          // default: this.$createElement(CapcinVue),
+          before: this.$createElement("h1", "Loading ...")
+        }
+      );
       //================jangan lupa nanti di hapus =================
       console.log("Busy Load more :  ", this.busy);
       //================================================
@@ -213,6 +235,7 @@ export default {
         // ngene iki lho carane lek gawe async await hehehe
         const response = await itemService.loadData(params);
         //================================jangan lupa ini nanti dihapus ===============
+        loader.hide();
         console.log(response);
         //==============================================
         let getData = response.data.data;
@@ -226,7 +249,7 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        this.loading = ""; // matikan button loading spinner
+        // matikan button loading spinner
         // ==================== jangan lupa ini nanti di hapus ===================
         console.log("Busy response :  ", this.busy);
         console.log(this.items);

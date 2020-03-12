@@ -6,7 +6,13 @@
         :can-cancel="false"
         :is-full-page="fullPage"
         :color="color"
-      ></loading>
+        :opacity="0.7"
+      >
+        <template v-slot:before>Loading...</template>
+        <template v-slot:after>
+          <img src="@/assets/logocapcin.png" alt="" />
+        </template>
+      </loading>
     </div>
     <h1 class="judul-component">Product to Order</h1>
     <div v-for="(item, apem) in items" :key="apem" class="infinite-list-item">
@@ -27,7 +33,7 @@
       v-infinite-scroll="Scroll"
       infinite-scroll-disabled="busy"
       infinite-scroll-distance="5"
-      infinite-scroll-throttle-delay="2000"
+      infinite-scroll-throttle-delay="1500"
     ></div>
   </div>
 </template>
@@ -55,7 +61,7 @@ export default {
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
       last_page: null,
       fullPage: true,
-      color: "#0CF"
+      color: "#42b549"
     };
   },
   created() {

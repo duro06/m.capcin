@@ -1,26 +1,48 @@
-<template v-slot:after>
+<template>
   <div class="capcin">
-    <div class="avatar ">
-      <!-- <h2>Nyoba lek</h2> -->
-      <img src="../../assets/logocapcin.png" alt="logo" />
+    <div class="vld-parent">
+      <loading
+        :active.sync="isLoading"
+        :can-cancel="false"
+        :is-full-page="true"
+        :color="color"
+        :opacity="0.7"
+      >
+        <template v-slot:before>Loading...</template>
+        <template v-slot:after>
+          <img src="@/assets/logocapcin.png" alt="" />
+        </template>
+      </loading>
     </div>
   </div>
 </template>
 <script>
-// import loading from "vue-loading-overlay";
+import loading from "vue-loading-overlay";
 // import Vue from 'vue'
 // Vue.use(Loading)
 export default {
-  name: "capcin"
+  name: "capcin",
+  components: { loading },
+
+  data() {
+    return {
+      color: "#42b549"
+    };
+  },
+  computed: {
+    isLoading() {
+      return this.$store.getters.loading;
+    }
+  }
 };
 </script>
 <style scoped>
-img {
+/* img {
   opacity: 0.6;
   position: relative;
-  /* top: 50%; */
-  /* left: 50%; */
-  /* right: 10%; */
+  top: 50%;
+  left: 50%;
+  right: 10%;
   width: 100px;
   height: 100px;
   margin: 0px 0 0 0px;
@@ -44,5 +66,5 @@ img {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
+} */
 </style>
