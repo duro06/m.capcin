@@ -31,6 +31,8 @@
                     :class="['input', className, 'is-small']"
                     type="name"
                     placeholder="Nama"
+                    name="name"
+                    autocomplete="on"
                     v-model="user.name"
                   />
                   <span class="icon is-small is-left">
@@ -55,6 +57,8 @@
                     @change="formValidation"
                     :class="['input', classDanger, 'is-small']"
                     type="email"
+                    name="email"
+                    autocomplete="on"
                     placeholder="Email"
                     v-model="user.email"
                   />

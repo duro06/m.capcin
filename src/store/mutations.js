@@ -27,5 +27,11 @@ export default {
   },
   delProduct(state) {
     state.products = [];
+  },
+  loading(state, payload) {
+    state.loadShow = payload;
+  },
+  notLoading(state) {
+    state.loadShow = "";
   }
 };

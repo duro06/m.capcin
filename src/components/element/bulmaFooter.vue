@@ -152,15 +152,6 @@ export default {
   background-color: #fff;
 }
 
-.btn_nav_item a {
-  color: #636e72;
-}
-.btn_nav_item.active a {
-  color: #ee1846 !important;
-}
-.btn_nav_item.active p {
-  color: #ee1846 !important;
-}
 /* .router-link-exact-active {
   color: #ee1846 !important;
 } */

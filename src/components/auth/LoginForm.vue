@@ -112,7 +112,7 @@
                       :class="[
                         'button',
                         'is-block',
-                        'is-danger',
+                        'warna-tema',
                         'is-small',
                         'is-fullwidth',
                         loading,
