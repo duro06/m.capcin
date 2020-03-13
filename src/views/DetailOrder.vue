@@ -159,8 +159,8 @@ export default {
         const response = await prod.toChart(formData);
         console.log(response);
         if (response.status === 200) {
-          this.$router.replace({ name: "berhasil" }, () => {});
-          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+          this.$router.replace({ name: "mitra" }, () => {});
+          // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
         console.log(response);
       } catch (e) {

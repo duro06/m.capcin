@@ -6,7 +6,7 @@
           <div class="columns is-mobile">
             <div class="column is-3 has-text-centered">
               <p class="title is-6" style="color: black">
-                {{ nama }}
+                {{ item.product.name }}
               </p>
               <p class="subtitle is-7" style="color: black">
                 {{ harga }}
@@ -66,17 +66,17 @@ export default {
         return 0;
       }
     },
-    nama() {
-      if (this.item.product_id && this.products) {
-        console.log("Products ", this.products);
-        const barang = this.products.filter(e => e.id === this.item.product_id);
-        console.log("Barang ", barang);
-        console.log("Product id ", this.item.product_id);
-        return barang[0].name;
-      } else {
-        return "data tidak ditemukan";
-      }
-    },
+    // nama() {
+    //   if (this.item.product_id && this.products) {
+    //     console.log("Products ", this.products);
+    //     const barang = this.products.filter(e => e.id === this.item.product_id);
+    //     console.log("Barang ", barang);
+    //     console.log("Product id ", this.item.product_id);
+    //     return barang[0].name;
+    //   } else {
+    //     return "data tidak ditemukan";
+    //   }
+    // },
     subTotal() {
       if (this.item.harga && this.item.qty) {
         let sub =

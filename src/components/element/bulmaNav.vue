@@ -2,27 +2,30 @@
   <div>
     <nav
       class="navbar has-shadow is-fixed-top fadeIn"
+      role="navigation"
       v-wow
       data-wow-duration="2s"
     >
       <div class="container is-fullwidth">
-        <div class="navbar-dropdown is-pulled-right">
-          <ul class="mega-ul">
-            <li id="top-menu-1" class="one-icon mega-li">
-              <a href="javascript:void(0)" class="mega-link">
-                <span class="mega-icon"><i class="fa fa-bell"></i></span>
-                <span class="tag is-danger">1</span>
-              </a>
-            </li>
-            <!-- <li id="top-menu-2" class="one-icon mega-li">
-              <a href="javascript:void(0)" class="mega-link">
-                <span class="mega-icon"
-                  ><i class="fas fa-shopping-cart"></i
-                ></span>
-                <span class="tag is-danger">1</span>
-              </a>
-            </li> -->
-          </ul>
+        <div class="navbar-end">
+          <div class="navbar-dropdown is-pulled-right">
+            <ul class="mega-ul">
+              <li class="one-icon mega-li navbar-item">
+                <a href="javascript:void(0)" class="mega-link">
+                  <span class="mega-icon"><i class="fa fa-bell"></i></span>
+                  <span class="tag is-danger">1</span>
+                </a>
+              </li>
+              <li class="one-icon mega-li navbar-item">
+                <router-link to="/keranjang" class="mega-link">
+                  <span class="mega-icon"
+                    ><i class="fas fa-shopping-cart"></i
+                  ></span>
+                  <span class="tag is-danger">1</span>
+                </router-link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -156,6 +159,8 @@ export default {
 .navbar-dropdown .mega-li {
   margin: 0;
   padding: 0;
+  display: flex;
+  /* flex-direction: column; */
 }
 .navbar-dropdown .mega-li {
   list-style: none;

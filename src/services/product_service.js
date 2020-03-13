@@ -16,6 +16,11 @@ export function loadMore(page) {
 export function purchase(params) {
   return http().post("user/orders", params);
 }
+
+export function chartOrder(params) {
+  return http().post("user/chart-orders", params);
+}
+
 export function beli(params) {
   return http().post(`user/orders`, params);
 }

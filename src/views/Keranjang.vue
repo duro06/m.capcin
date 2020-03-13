@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="pengulangan" v-for="(item, n) in items" :key="n">
-      <Card v-if="products.length == items.length" :anu="item" />
+      <Card v-if="items.length" :anu="item" />
     </div>
     <div class="card-footer">
       <div class="card">
@@ -74,7 +74,30 @@ export default {
     // }
   },
   methods: {
-    orderNow() {},
+    orderNow: async function() {
+      // post total sama user_id
+      let total = this.items.reduce((t, me) => t + me.harga * me.qty, 0);
+      console.log("total", total);
+      console.log("user_id", this.profile.id);
+      const formData = new FormData();
+      formData.append("total", total);
+      formData.append("user_id", this.profile.id);
+      try {
+        const response = await prod.chartOrder(formData);
+        console.log(response);
+        if (response.status === 200) {
+          this.$router.replace({ name: "berhasil" }, () => {});
+          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+        }
+      } catch (error) {
+        // this.more_exist = false; //apapun hasilnya, more exist false dulu
+        console.log("" + error); // jangan lupa di hapus nanti ======================================
+        this.flashMessage.error({
+          message: "" + error, // kirim flash Message
+          time: 5000
+        });
+      }
+    },
     getItemsbyId: async function() {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
@@ -86,9 +109,9 @@ export default {
         this.items = response.data.data.data;
         this.$store.commit("notLoading");
         console.log(this.items);
-        this.items.forEach(e => {
-          this.product(e.product_id);
-        });
+        // this.items.forEach(e => {
+        //   this.product(e.product_id);
+        // });
       } catch (errors) {
         this.$store.commit("notLoading");
         console.log("", errors);
