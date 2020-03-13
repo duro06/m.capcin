@@ -123,17 +123,7 @@ export default {
       sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
-      loader: this.$loading.show(
-        {},
-        {
-          after: this.$createElement("img", {
-            attrs: { src: require("@/assets/logocapcin.png") }
-          }),
-          // default: this.$createElement(CapcinVue),
-          before: this.$createElement("h1", "Loading ...")
-        }
-      )
+      last_page: null // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
     };
   },
   created() {
@@ -142,7 +132,7 @@ export default {
   },
   methods: {
     req: async function() {
-      this.loader;
+      this.$store.commit("loading");
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
         //kalo ga ada params servernya ga mau.. karena sudah di setting gitu..
@@ -165,7 +155,7 @@ export default {
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.loader.hide(); // loadng spinner berhenti
+        this.$store.commit("notLoading"); // loadng spinner berhenti
         console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
@@ -180,11 +170,6 @@ export default {
 
     //jika ada scroll event
     Scroll() {
-      //================= development mode ===========================
-      console.log("Last page  :  ", this.last_page);
-      console.log("Current page  :  ", this.current_page);
-      console.log("Busy Scroll :  ", this.busy);
-      //================ jangan lupa nanti di hapus =========================
       this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
@@ -196,16 +181,7 @@ export default {
     },
     // load lebih banyak data
     loadMore: async function() {
-      let loader = this.$loading.show(
-        {},
-        {
-          after: this.$createElement("img", {
-            attrs: { src: require("@/assets/logocapcin.png") }
-          }),
-          // default: this.$createElement(CapcinVue),
-          before: this.$createElement("h1", "Loading ...")
-        }
-      );
+      this.$store.commit("loading");
       //================jangan lupa nanti di hapus =================
       console.log("Busy Load more :  ", this.busy);
       //================================================
@@ -235,7 +211,7 @@ export default {
         // ngene iki lho carane lek gawe async await hehehe
         const response = await itemService.loadData(params);
         //================================jangan lupa ini nanti dihapus ===============
-        loader.hide();
+        this.$store.commit("notLoading");
         console.log(response);
         //==============================================
         let getData = response.data.data;
@@ -317,7 +293,7 @@ export default {
   /* height: 500px; */
 }
 .iterasi > div {
-  background-color: #f14668;
+  background-color: #42b549;
   width: 50%;
   height: auto;
 }

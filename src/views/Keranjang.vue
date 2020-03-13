@@ -1,74 +1,69 @@
 <template>
   <div class="profile">
-    <div class="has-text-centered">
-      <div>
-        <div>
-          <div class="card">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-6" style="color: black">
-                    <!-- id : {{ product().id }} Nama :
-                    {{ product().name }} -->
-                    isi nanti dah
-                  </p>
-                  <p class="subtitle is-7" style="color: black">
-                    <!-- {{ harga }} <br />
-                    Tersedia {{ product().stok_awal }} <br />
-                    {{ product().description }} -->
-                    yang penting ente kelihatan
-                  </p>
-                </div>
+    <div class="pengulangan" v-for="(item, n) in items" :key="n">
+      <Card v-if="products.length == items.length" :anu="item" />
+    </div>
+    <div class="card-footer">
+      <div class="card">
+        <div class="card-content">
+          <div class="columns is-mobile">
+            <div class="column is-5">
+              <p>
+                Jumlah harga <br />
+                {{ total }}
+              </p>
+            </div>
+            <div class="column is-6">
+              <div class="rata-kanan">
+                <button @click="orderNow" class="button is-success">
+                  Pesan
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <Footer class="navbar" /> -->
   </div>
 </template>
 <script>
 // import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
-// import * as auth from "../services/auth_service";
+import * as prod from "../services/product_service";
 // import Modal from "../components/element/Modal.vue";
-// import Footer from "../components/element/bulmaFooter";
+import Card from "../components/element/CartProduct";
 
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    // Footer
+    Card
   },
   data() {
     return {
-      user: "",
+      items: [],
+      jumlahPesanan: 0,
       showModal: false, // modal tampil atau tidak
       errors: [],
       disable: false
     };
   },
-
+  created() {
+    this.getItemsbyId();
+  },
+  mounted() {
+    console.log("items ", this.items);
+  },
   computed: {
-    ...mapState(["products"])
-    // displayImage() {
-    //   if (this.product().image) {
-    //     return this.product().image;
-    //   } else {
-    //     return "../img/no-image.jpg";
-    //   }
-    // },
-    // harga() {
-    //   if (this.product().harga) {
-    //     let harga =
-    //       "Rp " + new Intl.NumberFormat().format(this.product().harga);
-    //     return harga;
-    //   } else {
-    //     return "data tidak ditemukan";
-    //   }
-    // }
+    ...mapState(["products", "profile"]),
+    total() {
+      const total =
+        "Rp " +
+        new Intl.NumberFormat().format(
+          this.items.reduce((t, me) => t + me.harga * me.qty, 0)
+        );
+      return total;
+    }
   },
   watch: {
     // user: {
@@ -77,28 +72,42 @@ export default {
     //     this.getProfile();
     //   }
     // }
-    // imageName: {
-    //   immediate: true,
-    //   handler() {
-    //     this.pickFile();
-    //   }
-    // }
   },
   methods: {
-    // product() {
-    //   // let product;
-    //   const id = new Intl.NumberFormat().format(this.$route.params.id);
-    //   console.log("route : ", this.$route.params.id);
-    //   console.log("id : ", id);
-    //   for (let index = 0; index < this.products.length; index++) {
-    //     if (this.products[index].id == id) {
-    //       console.log("products : ", this.products[index]);
-    //       return this.products[index];
-    //     }
-    //     // console.log("product : ", product);
-    //     // return product;
-    //   }
-    // }
+    orderNow() {},
+    getItemsbyId: async function() {
+      this.$store.dispatch("productOut");
+      this.$store.commit("loading");
+      console.log("ID saya sepertinya telat pak kalo di refresh");
+      // if (this.profile.id) {
+      let id = this.profile.id;
+      try {
+        const response = await prod.getChart(id);
+        this.items = response.data.data.data;
+        this.$store.commit("notLoading");
+        console.log(this.items);
+        this.items.forEach(e => {
+          this.product(e.product_id);
+        });
+      } catch (errors) {
+        this.$store.commit("notLoading");
+        console.log("", errors);
+      }
+      // }
+    },
+    product: async function(id) {
+      this.$store.commit("loading");
+      try {
+        const response = await prod.getById(id);
+        let data = response.data.data;
+        this.$store.dispatch("productPush", data);
+        console.log(data);
+        this.$store.commit("notLoading");
+      } catch (e) {
+        this.$store.commit("notLoading");
+        console.log("", e);
+      }
+    }
   }
 };
 </script>
@@ -189,5 +198,21 @@ img.avatar-ku {
   right: 0;
   text-align: center;
   margin: auto;
+}
+.card {
+  border-radius: 0 15px 0 15px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.card-content {
+  padding: 10px !important;
+}
+.card-footer {
+  display: block !important;
+  padding: 5px 10px 5px 5px;
+}
+.detail-items {
+  font-size: 14px;
+  color: black;
 }
 </style>

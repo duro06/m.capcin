@@ -6,24 +6,6 @@
           <img :src="dataImageBig" alt="Placeholder image" />
         </figure>
       </div>
-      <!-- <div class="card-content">
-        <div class="media">
-           <div class="media-left">
-      <figure class="image is-48x48">
-       <img :src="dataImageSmall" alt="Placeholder image" />
-      </figure>
-     </div>
-          <div class="media-content">
-            <p class="title is-6" style="color: black">{{ name }}</p>
-            <p class="subtitle is-7" style="color: black">{{ email }}</p>
-          </div>
-        </div>
-        <div class="content">
-          {{ message }}
-          <br />
-          <time datetime="now"></time>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>

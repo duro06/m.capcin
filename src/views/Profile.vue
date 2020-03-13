@@ -194,7 +194,7 @@ export default {
     // }
   },
   mounted() {
-    this.$store.commit("loading", "isi");
+    this.$store.commit("loading");
   },
   methods: {
     editProfile() {
@@ -205,7 +205,7 @@ export default {
       this.showModal = false;
     },
     saveModal: async function() {
-      this.$store.commit("loading", "a");
+      this.$store.commit("loading");
       try {
         this.disable = true;
         const response = await auth.updateProfile(this.user.id, this.user);
@@ -250,7 +250,7 @@ export default {
     },
 
     attachImage: async function() {
-      this.$store.commit("loading", "apem");
+      this.$store.commit("loading");
       this.user.image = this.$refs.editAvatar.files[0];
       console.log(this.$refs.editAvatar.files[0]);
       let reader = new FileReader();

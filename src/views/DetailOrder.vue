@@ -107,17 +107,7 @@ export default {
       errors: [],
       kdisable: true,
       disable: false,
-      barang: {},
-      loader: this.$loading.show(
-        {},
-        {
-          after: this.$createElement("img", {
-            attrs: { src: require("@/assets/logocapcin.png") }
-          }),
-          // default: this.$createElement(CapcinVue),
-          before: this.$createElement("h1", "Loading ...")
-        }
-      )
+      barang: {}
     };
   },
 
@@ -157,19 +147,28 @@ export default {
         this.kdisable = false;
       }
     },
-    addToCart() {
-      let order = {
-        order: {
-          product: this.barang.id,
-          qty: this.jumlahPesanan,
-          user: this.profile.id
+    addToCart: async function() {
+      this.$store.commit("loading");
+      const formData = new FormData();
+      formData.append("product_id", this.barang.id);
+      formData.append("qty", this.jumlahPesanan);
+      formData.append("user_id", this.profile.id);
+      formData.append("harga", this.barang.harga);
+
+      try {
+        const response = await prod.toChart(formData);
+        console.log(response);
+        if (response.status === 200) {
+          this.$router.replace({ name: "berhasil" }, () => {});
+          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
-      };
-      console.log(order);
-      this.$router.replace({ name: "berhasil" }, () => {});
-      // localStorage.setItem("order", order);
+        console.log(response);
+      } catch (e) {
+        console.log("", e);
+      }
     },
     orderNow: async function() {
+      this.$store.commit("loading");
       const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
       console.log(jumlah);
       const formData = new FormData();
@@ -184,16 +183,9 @@ export default {
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
+          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
-        // let getData = response.data.data; // masukkan data response ke getData
-        // this.products = getData.data; //ambil data yang dibutuhkan
-        // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
-        // this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
-        // this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
-        // this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.loading = ""; // loadng spinner berhenti
-        // console.log(this.products); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         // this.more_exist = false; //apapun hasilnya, more exist false dulu
@@ -206,8 +198,7 @@ export default {
     },
 
     getProdectById: async function() {
-      this.loader;
-      // this.$loading.show();
+      this.$store.commit("loading");
       let id = this.$route.params.id;
       console.log("Get By id", id);
       try {
@@ -215,7 +206,7 @@ export default {
         if (response.status == 200) {
           this.barang = response.data.data; // masukkan data yang di dapat ke barang
         }
-        this.loader.hide();
+        this.$store.commit("notLoading");
         console.log(this.barang);
       } catch (error) {
         console.log("", error);

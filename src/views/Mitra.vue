@@ -1,19 +1,5 @@
 <template>
   <div class="content-body has-shadow">
-    <div class="vld-parent">
-      <loading
-        :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"
-        :color="color"
-        :opacity="0.7"
-      >
-        <template v-slot:before>Loading...</template>
-        <template v-slot:after>
-          <img src="@/assets/logocapcin.png" alt="" />
-        </template>
-      </loading>
-    </div>
     <h1 class="judul-component">Product to Order</h1>
     <div v-for="(item, apem) in items" :key="apem" class="infinite-list-item">
       <Mitra
@@ -40,38 +26,34 @@
 <script>
 import Mitra from "@/components/role/Mitra.vue";
 import * as prod from "../services/product_service.js";
-import loading from "vue-loading-overlay";
 
 export default {
   name: "mitra",
   components: {
-    Mitra,
-    loading
+    Mitra
   },
   data() {
     return {
       items: {}, // data items
-
-      isLoading: false, // ini untuk loading spinner input search
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
       per_page: 6, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
       sortBy: "id", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null,
-      fullPage: true,
-      color: "#42b549"
+      last_page: null
     };
   },
   created() {
     // panggil data awal
     this.req();
+    // kosongkan state SuccessOrder
+    this.$store.commit("delSuccessOrder");
   },
   methods: {
     req: async function() {
+      this.$store.commit("loading");
       this.$store.dispatch("productOut"); //kosongkan state product
-      this.isLoading = true;
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
         //kalo ga ada params servernya ga mau.. karena sudah di setting gitu..
@@ -95,7 +77,7 @@ export default {
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.isLoading = false; // loadng spinner berhenti
+        this.$store.commit("notLoading"); // loadng spinner berhenti
         console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
@@ -119,13 +101,13 @@ export default {
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
       if (this.more_exist && this.last_page != null) {
-        this.isLoading = true;
+        this.$store.commit("loading");
         this.loadMore(); //jalankan fungsi Load more
       }
     },
     // load lebih banyak data
     loadMore: async function() {
-      this.isLoading = true;
+      // this.$store.commit("loading");
       //================jangan lupa nanti di hapus =================
       console.log("Busy Load more :  ", this.busy);
       //================================================
@@ -172,7 +154,7 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        this.isLoading = false; // matikan button loading spinner
+        this.$store.commit("notLoading"); // matikan button loading spinner
         // ==================== jangan lupa ini nanti di hapus ===================
         console.log("Busy response :  ", this.busy);
         console.log(this.items);
@@ -190,20 +172,6 @@ export default {
         });
       }
     }
-    //jika ada emmit jumlah data tiap halaman
-    // handleSearch(val) {
-    //   this.current_page = 1; //reset halaman ke halaman satu
-    //   this.search = val; // masukkan nilai search
-    //   this.req(); //reload data
-    // },
-    // // fungsi untuk nutup modal, bukanya dari $emit komponen modal
-    // handleModal() {
-    //   this.showModal = false;
-    // },
-    // // fungsi menampilkan modal dari $emit data item @edit
-    // handleEdit() {
-    //   this.showModal = true;
-    // }
   },
   // sementara hanya digunakan untuk ngecek masih ada data yang perlu di load lagi tau tidak
   updated() {

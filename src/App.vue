@@ -4,9 +4,7 @@
       position="right top"
       style="z-index: 19999 !important; position: fixed;"
     ></FlashMessage>
-    <Capcin />
-    <div class="vld-parent" ref="formContainer"></div>
-    <!-- <button @click="submit">Login</button> -->
+    <LoadingCapcin />
     <transition class="slideInLeft" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
@@ -17,30 +15,13 @@
 import * as auth from "./services/auth_service";
 import store from "./store";
 import Footer from "./components/element/bulmaFooter";
-import Capcin from "./components/element/Capcin.vue";
-// kalo pake komponen Capcin di bawah ini di buang aja, ngebek2i coding..
-import Loading from "vue-loading-overlay";
-import Vue from "vue";
-Vue.use(
-  Loading,
-  { color: "#42b549", opacity: 0.7, useSlot: true }
-  // {
-  // before: this.$createElement("h1", "Loading ...")
-  // after: this.$createElement(capcin)
-  // }
-);
+import LoadingCapcin from "./components/element/Capcin.vue";
 
-// import capcin from "./components/element/Capcin.vue";
-// import loading from "vue-loading-overlay";
-
-// import Loading from "./components/element/Loading";
-
-// import router from "./router";
 export default {
   name: "app",
   components: {
     Footer,
-    Capcin
+    LoadingCapcin
     // loading
   },
   beforeCreate: async function() {

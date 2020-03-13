@@ -28,10 +28,16 @@ export default {
   delProduct(state) {
     state.products = [];
   },
-  loading(state, payload) {
-    state.loadShow = payload;
+  loading(state) {
+    state.loadShow = "payload";
   },
   notLoading(state) {
     state.loadShow = "";
+  },
+  setSuccessOrder(state, payload) {
+    state.successOrder = payload;
+  },
+  delSuccessOrder(state) {
+    state.successOrder = {};
   }
 };

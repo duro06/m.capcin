@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     testLoad() {
-      this.$store.commit("loading", "isi");
+      this.$store.commit("loading");
       setTimeout(() => {
         this.$store.commit("notLoading");
       }, 5000);
