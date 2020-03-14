@@ -13,9 +13,12 @@
 </template>
 <script>
 import * as auth from "./services/auth_service";
+import * as cart from "./services/cart_service";
 import store from "./store";
+
 import Footer from "./components/element/bulmaFooter";
 import LoadingCapcin from "./components/element/Capcin.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "app",
@@ -54,20 +57,34 @@ export default {
       store.dispatch("destroyToken");
     }
   },
+  created() {
+    this.getCart();
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    ...mapState(["profile"])
+  },
+  methods: {
+    getCart: async function() {
+      let id = this.profile.id;
+
+      try {
+        const res = await cart.getChart(id);
+        let panjang = res.data.data.data.length;
+        if (panjang > 0) {
+          store.commit("setCart", panjang);
+        } else {
+          store.commit("setCart", 0);
+        }
+        console.log("cart :", res);
+        console.log("data :", panjang);
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
-  // methods: {
-  //   submit() {
-  //     let loader = this.$loading.show();
-  //     // simulate AJAX
-  //     setTimeout(() => {
-  //       loader.hide();
-  //     }, 5000);
-  //   }
-  // }
 };
 </script>
 <style lang="scss">

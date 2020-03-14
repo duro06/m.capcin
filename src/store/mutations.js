@@ -39,5 +39,8 @@ export default {
   },
   delSuccessOrder(state) {
     state.successOrder = {};
+  },
+  setCart(state, payload) {
+    state.cart = payload;
   }
 };

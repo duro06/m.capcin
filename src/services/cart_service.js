@@ -10,6 +10,6 @@ export function toChart(params) {
 export function delChart(params) {
   return http().post(`user/charts`, params);
 }
-export function modChart(params) {
-  return http().post(`user/charts`, params);
+export function updateChart(chart, params) {
+  return http().put(`user/update-charts-qty/${chart}`, params);
 }

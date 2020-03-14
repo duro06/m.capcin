@@ -61,7 +61,7 @@
                 </span>
               </button>
               <button
-                @click="simpanN"
+                @click.prevent="simpan"
                 class="button is-success is-outlined"
                 :style="{ display: kelihatan }"
               >
@@ -81,7 +81,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import * as prod from "../../services/product_service";
+import * as c from "../../services/cart_service";
 export default {
   name: "cart",
   props: { anu: Object },
@@ -126,26 +126,34 @@ export default {
     //persiapan async untuk simpan
     simpan: async function() {
       this.kelihatan = "none";
+      this.$store.commit("loading");
       let formData = new FormData();
-      formData.append("id ", this.anu.id);
-      formData.append("qty ", this.anu.qty);
-      formData.append("user_id ", this.profile.id);
+      formData.append("status_id", this.anu.id);
+      // formData.append("qty ", this.anu.qty);
+      // formData.append("user_id ", this.profile.id);
       try {
-        const response = await prod.modChart(formData);
+        const response = await c.updateChart(this.anu.id, {
+          qty: this.anu.qty
+        });
+        this.$store.commit("notLoading");
         console.log(response);
       } catch (e) {
+        this.$store.commit("notLoading");
         console.log("", e);
       }
     },
     //persiapan async untuk hapus
     hapus: async function() {
+      this.$store.commit("loading");
       let formData = new FormData();
       formData.append("id ", this.anu.id);
       formData.append("user_id ", this.profile.id);
       try {
-        const res = await prod.delChart(formData);
+        const res = await c.delChart(formData);
         console.log(res);
+        this.$store.commit("notLoading");
       } catch (e) {
+        this.$store.commit("notLoading");
         console.log("", e);
       }
     },

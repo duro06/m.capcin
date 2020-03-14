@@ -21,7 +21,7 @@
                   <span class="mega-icon"
                     ><i class="fas fa-shopping-cart"></i
                   ></span>
-                  <span class="tag is-danger">1</span>
+                  <span class="tag is-danger" v-if="cart > 0">{{ cart }}</span>
                 </router-link>
               </li>
             </ul>
@@ -131,6 +131,9 @@ export default {
     },
     check() {
       return console.log(this.level);
+    },
+    cart() {
+      return this.$store.state.cart;
     }
   },
   methods: {

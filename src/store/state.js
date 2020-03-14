@@ -9,5 +9,6 @@ export default {
   profile: {},
   products: [],
   loadShow: "",
-  successOrder: {}
+  successOrder: {},
+  cart: 0
 };
