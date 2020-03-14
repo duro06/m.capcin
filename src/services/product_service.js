@@ -36,3 +36,9 @@ export function getChart(params) {
 export function toChart(params) {
   return http().post(`user/charts`, params);
 }
+export function delChart(params) {
+  return http().post(`user/charts`, params);
+}
+export function modChart(params) {
+  return http().post(`user/charts`, params);
+}
