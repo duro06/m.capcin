@@ -117,6 +117,17 @@ const routes = [
     }
   },
   {
+    path: "/order",
+    name: "order",
+    component: () => import("../views/Order.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
     path: "/order_detail/:id",
     name: "order_detail",
     component: () => import("../views/DetailOrder.vue"),

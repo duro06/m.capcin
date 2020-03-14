@@ -94,7 +94,10 @@
 <script>
 import { mapState } from "vuex";
 
+import * as order from "../services/order_service";
+import * as cart from "../services/cart_service";
 import * as prod from "../services/product_service";
+
 export default {
   name: "Detail_Order",
   components: {
@@ -156,7 +159,7 @@ export default {
       formData.append("harga", this.barang.harga);
 
       try {
-        const response = await prod.toChart(formData);
+        const response = await cart.toChart(formData);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "mitra" }, () => {});
@@ -179,7 +182,7 @@ export default {
       formData.append("harga", this.barang.harga);
 
       try {
-        const response = await prod.purchase(formData);
+        const response = await order.purchase(formData);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});

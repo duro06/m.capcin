@@ -64,7 +64,8 @@
   </div>
 </template>
 <script>
-import * as prod from "../services/product_service.js";
+import * as order from "../services/order_service";
+import * as prod from "../services/product_service";
 import * as auth from "../services/auth_service.js";
 // import axios from "axios";
 const axios = require("axios").default;
@@ -99,7 +100,7 @@ export default {
     },
     submit: async function() {
       try {
-        const response = await prod.purchase(this.data);
+        const response = await order.purchase(this.data);
         console.log(response);
       } catch (error) {
         console.log("", error);
@@ -109,7 +110,7 @@ export default {
     },
     submitLagi: async function() {
       try {
-        const response = await prod.beli(this.data);
+        const response = await order.beli(this.data);
         console.log(response);
       } catch (error) {
         console.log("", error);

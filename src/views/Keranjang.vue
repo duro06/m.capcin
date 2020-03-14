@@ -29,7 +29,7 @@
 <script>
 // import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
-import * as prod from "../services/product_service";
+import * as cart from "../services/cart_service";
 // import Modal from "../components/element/Modal.vue";
 import Card from "../components/element/CartProduct";
 
@@ -83,7 +83,7 @@ export default {
       formData.append("total", total);
       formData.append("user_id", this.profile.id);
       try {
-        const response = await prod.chartOrder(formData);
+        const response = await cart.chartOrder(formData);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
@@ -102,10 +102,10 @@ export default {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
       console.log("ID saya sepertinya telat pak kalo di refresh");
-      // if (this.profile.id) {
+
       let id = this.profile.id;
       try {
-        const response = await prod.getChart(id);
+        const response = await cart.getChart(id);
         this.items = response.data.data.data;
         this.$store.commit("notLoading");
         console.log(this.items);

@@ -39,6 +39,21 @@
             'btn_nav_item',
             'level-item',
             'has-text-centered',
+            currentPage.includes('order') ? activeClass : ''
+          ]"
+        >
+          <router-link :to="{ path: '/order' }" exact>
+            <i class="fas fa-folder"></i>
+            <p class="subtitle is-7">
+              Order
+            </p>
+          </router-link>
+        </div>
+        <div
+          :class="[
+            'btn_nav_item',
+            'level-item',
+            'has-text-centered',
             currentPage.includes('profile') ? activeClass : ''
           ]"
         >
@@ -49,7 +64,7 @@
             </p>
           </router-link>
         </div>
-        <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
+        <!-- <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/login' }" exact>
             <i class="fas fa-sign-in-alt"></i>
             <p class="subtitle is-7">
@@ -63,8 +78,8 @@
             <p class="subtitle is-7">
               Logout
             </p>
-          </router-link>
-        </div>
+          </router-link> 
+        </div>-->
       </div>
     </div>
   </nav>
