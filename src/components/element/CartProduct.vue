@@ -20,7 +20,7 @@
                 <div class="field is-grouped">
                   <!-- <div class="column is-3"> -->
                   <button
-                    class="button is-info is-small is-rounded"
+                    class="button is-primary is-small is-rounded is-outlined"
                     @click.prevent="kurang"
                     :disabled="disable"
                   >
@@ -29,14 +29,15 @@
                   <!-- </div>
                   <div class="column is-4"> -->
                   <input
-                    class="isi-kotak input is-small is-5 has-text-centered"
+                    class="isi-kotak input has-text-centered"
                     type="text"
                     v-model="pesanan"
+                    @change="change"
                   />
                   <!-- </div>
                   <div class="column is-5"> -->
                   <button
-                    class="button is-info is-small is-rounded"
+                    class="button is-primary is-small is-rounded is-outlined"
                     @click.prevent="tambah"
                   >
                     <i class="fas fa-plus"></i>
@@ -59,7 +60,11 @@
                   Hapus
                 </span>
               </button>
-              <button @click="simpanN" class="button is-success is-outlined">
+              <button
+                @click="simpanN"
+                class="button is-success is-outlined"
+                :style="{ display: kelihatan }"
+              >
                 <span class="icon is-left is-danger">
                   <i class="fas fa-check"></i>
                 </span>
@@ -83,7 +88,7 @@ export default {
   data() {
     return {
       item: this.anu,
-
+      kelihatan: "none",
       disable: false
     };
   },
@@ -120,6 +125,7 @@ export default {
   methods: {
     //persiapan async untuk simpan
     simpan: async function() {
+      this.kelihatan = "none";
       let formData = new FormData();
       formData.append("id ", this.anu.id);
       formData.append("qty ", this.anu.qty);
@@ -144,6 +150,7 @@ export default {
       }
     },
     simpanN() {
+      this.kelihatan = "none";
       console.log("id ", this.anu.id);
       console.log("qty ", this.anu.qty);
       console.log("user_id ", this.profile.id);
@@ -152,7 +159,11 @@ export default {
       console.log("id ", this.anu.id);
       console.log("user_id ", this.profile.id);
     },
+    change() {
+      this.kelihatan = "inherit";
+    },
     kurang() {
+      this.change();
       if (this.anu.qty <= 2) {
         // this.anu.qty = this.anu.qty;
         this.disable = true;
@@ -163,6 +174,7 @@ export default {
       }
     },
     tambah() {
+      this.change();
       this.anu.qty = this.anu.qty + 1;
       if (this.anu.qty > 0) {
         this.disable = false;
@@ -175,6 +187,9 @@ export default {
 .field > input {
   padding: 0px;
   height: auto;
+  border-color: white;
+  border-bottom-color: turquoise;
+  border-width: unset;
 }
 .field > button {
   padding: 0px 5px;
