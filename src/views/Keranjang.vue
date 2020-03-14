@@ -30,6 +30,7 @@
 // import { getProfile } from "../services/auth_service";
 import { mapState } from "vuex";
 import * as cart from "../services/cart_service";
+import * as order from "../services/order_service";
 // import Modal from "../components/element/Modal.vue";
 import Card from "../components/element/CartProduct";
 
@@ -75,6 +76,7 @@ export default {
   },
   methods: {
     orderNow: async function() {
+      this.$store.commit("loading");
       // post total sama user_id
       let total = this.items.reduce((t, me) => t + me.harga * me.qty, 0);
       console.log("total", total);
@@ -83,7 +85,7 @@ export default {
       formData.append("total", total);
       formData.append("user_id", this.profile.id);
       try {
-        const response = await cart.chartOrder(formData);
+        const response = await order.chartOrder(formData);
         console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});

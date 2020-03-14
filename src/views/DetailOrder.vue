@@ -134,25 +134,25 @@ export default {
     }
   },
   methods: {
-    getCart: async function() {
-      let id = this.profile.id;
+    // getCart: async function() {
+    //   let id = this.profile.id;
 
-      try {
-        const res = await cart.getChart(id);
-        let panjang = res.data.data.data.length;
-        if (panjang > 0) {
-          this.$store.commit("setCart", panjang);
-        } else {
-          this.$store.commit("setCart", 0);
-        }
-        this.$router.replace({ name: "mitra" }, () => {});
-        console.log("cart :", res);
-        console.log("data :", panjang);
-      } catch (e) {
-        this.$router.replace({ name: "mitra" }, () => {});
-        console.log(e);
-      }
-    },
+    //   try {
+    //     const res = await cart.getChart(id);
+    //     let panjang = res.data.data.data.length;
+    //     if (panjang > 0) {
+    //       this.$store.commit("setCart", panjang);
+    //     } else {
+    //       this.$store.commit("setCart", 0);
+    //     }
+    //     this.$router.replace({ name: "mitra" }, () => {});
+    //     console.log("cart :", res);
+    //     console.log("data :", panjang);
+    //   } catch (e) {
+    //     this.$router.replace({ name: "mitra" }, () => {});
+    //     console.log(e);
+    //   }
+    // },
     kurang() {
       if (this.jumlahPesanan <= 2) {
         // this.jumlahPesanan = this.jumlahPesanan;
@@ -181,8 +181,8 @@ export default {
         const response = await cart.toChart(formData);
         console.log(response);
         if (response.status === 200) {
-          this.getCart();
-
+          this.$router.replace({ name: "mitra" }, () => {});
+          // this.getCart();
           // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
         console.log(response);

@@ -122,9 +122,14 @@
   </nav> -->
 </template>
 <script>
+import { mapState } from "vuex";
+import * as c from "../../services/cart_service";
 export default {
   name: "navbar",
   data: () => ({ isActive: false }),
+  created() {
+    this.getCart();
+  },
   computed: {
     level() {
       return this.$store.getters.myProfile.role;
@@ -132,13 +137,33 @@ export default {
     check() {
       return console.log(this.level);
     },
-    cart() {
-      return this.$store.state.cart;
-    }
+    // cart() {
+    //   return this.$store.state.cart;
+    // },
+    ...mapState(["profile", "cart"])
   },
   methods: {
     switchMenu() {
       this.isActive = !this.isActive;
+    },
+    getCart: async function() {
+      let id = this.profile.id;
+
+      try {
+        const res = await c.getChart(id);
+        let panjang = res.data.data.data.length;
+        if (panjang > 0) {
+          this.$store.commit("setCart", panjang);
+        } else {
+          this.$store.commit("setCart", 0);
+        }
+        this.$router.replace({ name: "mitra" }, () => {});
+        console.log("cart :", res);
+        console.log("data :", panjang);
+      } catch (e) {
+        this.$router.replace({ name: "mitra" }, () => {});
+        console.log(e);
+      }
     }
   }
 };

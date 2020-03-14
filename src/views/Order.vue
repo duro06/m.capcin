@@ -41,3 +41,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.order {
+  padding-bottom: 55px;
+}
+</style>
