@@ -103,11 +103,16 @@ export default {
     getItemsbyId: async function() {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
-      console.log("ID saya sepertinya telat pak kalo di refresh");
+      // console.log("ID saya sepertinya telat pak kalo di refresh");
 
       let id = this.profile.id;
+      let params = {
+        params: {
+          q: id
+        }
+      };
       try {
-        const response = await cart.getChart(id);
+        const response = await cart.getChart(params);
         this.items = response.data.data.data;
         this.$store.commit("notLoading");
         console.log(this.items);

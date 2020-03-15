@@ -5,13 +5,17 @@ export function order(params) {
 }
 
 export function purchase(params) {
-  return http().post("user/orders", params);
+  return http().post(`user/orders`, params);
 }
 
 export function chartOrder(params) {
-  return http().post("user/chart-orders", params);
+  return http().post(`user/chart-orders`, params);
 }
 
-export function beli(params) {
-  return http().post(`user/orders`, params);
+export function detail(params) {
+  return http().get(`user/detail-orders`, params);
+}
+
+export function getDetail(data) {
+  return http().get(`user/detail-orders`, data);
 }

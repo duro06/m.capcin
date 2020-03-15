@@ -148,9 +148,13 @@ export default {
     },
     getCart: async function() {
       let id = this.profile.id;
-
+      let params = {
+        params: {
+          q: id
+        }
+      };
       try {
-        const res = await c.getChart(id);
+        const res = await c.getChart(params);
         let panjang = res.data.data.data.length;
         if (panjang > 0) {
           this.$store.commit("setCart", panjang);

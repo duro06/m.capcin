@@ -52,7 +52,7 @@
         </div>
       </div>
     </form>
-    <button class="button is-info" type="submit" @click="submit">
+    <button class="button is-info" type="submit" @click="submitLagi">
       httpNot
     </button>
     <button class="button is-info" type="submit" @click="kirimAgain">
@@ -85,9 +85,9 @@ export default {
   created() {
     console.log("Guue jalan bang");
 
-    this.getProdectById();
+    // this.getProdectById();
     // this.submit();
-    // this.submitLagi();
+    this.submitLagi();
     // this.kirimAgain();
     // this.kirim();
   },
@@ -109,36 +109,58 @@ export default {
       this.submitLagi();
     },
     submitLagi: async function() {
+      let order_id = 32;
+      let params = {
+        params: {
+          // page: state.page,
+          // per_page: state.per_page,
+          q: order_id
+          // sortby: state.sortBy,
+          // sortbydesc: sorting
+        }
+      };
       try {
-        const response = await order.beli(this.data);
+        const response = await order.detail(params);
         console.log(response);
       } catch (error) {
         console.log("", error);
       }
-      this.kirimAgain();
+      // this.kirimAgain();
     },
     kirimAgain: function() {
-      let total = this.data.qty * this.data.harga;
-      let formData = new FormData();
-      formData.append("product_id", this.data.id);
-      formData.append("harga", this.data.harga);
-      formData.append("qty", this.data.qty);
-      formData.append("total", total);
-      formData.append("user_id", this.$store.state.profile.id);
+      // let total = this.data.qty * this.data.harga;
+      // let formData = new FormData();
+      // formData.append("product_id", this.data.id);
+      // formData.append("harga", this.data.harga);
+      // formData.append("qty", this.data.qty);
+      // formData.append("total", total);
+      // formData.append("user_id", this.$store.state.profile.id);
 
+      // formData.append("q", 32);
+
+      let params = {
+        params: {
+          // page: state.page,
+          // per_page: state.per_page,
+          q: 32
+          // sortby: state.sortBy,
+          // sortbydesc: sorting
+        }
+      };
       axios({
-        method: `post`,
-        url: `http://localhost:8000/api/user/orders`,
+        method: `get`,
+        url: `http://localhost:8000/api/user/detail-orders`,
         // httpAgent
         headers: {
-          Authorization: "Bearer " + auth.getAccessToken()
+          Authorization: "Bearer " + auth.getAccessToken(),
+          "Content-Type": "application/json"
         },
-        data: formData
+        data: params
         // isSameOrigin: true
         // Authorization: "Bearer " + auth.getAccessToken()
       })
         .then(response => {
-          console.log(response);
+          console.log("Res", response);
         })
         .catch(error => {
           console.log(error);

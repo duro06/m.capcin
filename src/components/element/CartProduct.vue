@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class="column tambah-gaya is-5 has-text-centered">
-              <button @click="hapusN" class="button is-danger is-outlined">
+              <button @click="hapus" class="button is-danger is-outlined">
                 <span class="icon is-left is-danger">
                   <i class="fas fa-trash-alt"></i>
                 </span>
@@ -127,8 +127,8 @@ export default {
     simpan: async function() {
       this.kelihatan = "none";
       this.$store.commit("loading");
-      let formData = new FormData();
-      formData.append("status_id", this.anu.id);
+      // let formData = new FormData();
+      // formData.append("status_id", this.anu.id);
       // formData.append("qty ", this.anu.qty);
       // formData.append("user_id ", this.profile.id);
       try {
@@ -145,11 +145,11 @@ export default {
     //persiapan async untuk hapus
     hapus: async function() {
       this.$store.commit("loading");
-      let formData = new FormData();
-      formData.append("id ", this.anu.id);
-      formData.append("user_id ", this.profile.id);
+      // let formData = new FormData();
+      // formData.append("id ", this.anu.id);
+      // formData.append("user_id ", this.profile.id);
       try {
-        const res = await c.delChart(formData);
+        const res = await c.delChart(this.anu.id);
         console.log(res);
         this.$store.commit("notLoading");
       } catch (e) {

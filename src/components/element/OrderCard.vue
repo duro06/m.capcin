@@ -1,7 +1,7 @@
 <template>
   <div class="order-container">
     <div class="card">
-      <div class="card-header">
+      <div class="card-header zoomIn" v-wow data-wow-duration="1s">
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div>
       <div class="card-content">
@@ -13,15 +13,30 @@
           class="detail-items"
         > -->
         <div :class="['columns', 'is-mobile', status]">
-          <div class="column is-3">
+          <div
+            @click="getDetail"
+            class="column is-3 zoomIn"
+            v-wow
+            data-wow-duration="1s"
+            data-wow-delay="0.4s"
+          >
             <p class="rata-kiri">Details</p>
-            <!-- <p class="rata-kiri">{{ item.created_at }}</p> -->
           </div>
-          <div class="column is-5">
+          <div
+            class="column is-5 zoomIn"
+            v-wow
+            data-wow-duration="1s"
+            data-wow-delay="0.7s"
+          >
             <p class="rata-kiri">Jumlah :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
-          <div class="column is-4">
+          <div
+            class="column is-4 zoomIn"
+            v-wow
+            data-wow-duration="1s"
+            data-wow-delay="1s"
+          >
             <p class="rata-kiri">
               <B>status :</B>
             </p>
@@ -33,14 +48,90 @@
         <!-- </router-link> -->
       </div>
     </div>
+    <div class="kalo" v-if="dataDetails.length">
+      <div class="card" :style="{ display: kelihatan }">
+        <div class="card-content">
+          <div class="columns is-mobile">
+            <div
+              class="column is-5 zoomIn"
+              v-wow
+              data-wow-duration="1s"
+              data-wow-delay="0s"
+            >
+              <p><B>Nama Produk</B></p>
+            </div>
+            <div
+              class="column is-3 zoomIn"
+              v-wow
+              data-wow-duration="1s"
+              data-wow-delay="0s"
+            >
+              <p><B>Harga</B></p>
+              <p><B>Subtotal</B></p>
+            </div>
+            <div
+              class="column is-4 zoomIn"
+              v-wow
+              data-wow-duration="1s"
+              data-wow-delay="0s"
+            >
+              <p><B>Jumlah</B></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pengulangan" v-for="(d, n) in dataDetails" :key="n">
+        <div class="card" :style="{ display: kelihatan }">
+          <div class="card-content">
+            <div class="columns is-mobile">
+              <div
+                class="column is-5 zoomIn"
+                v-wow
+                data-wow-duration="1s"
+                data-wow-delay="0.3s"
+              >
+                <p>{{ d.product.name }}</p>
+              </div>
+              <div
+                class="column is-3 zoomIn"
+                v-wow
+                data-wow-duration="1s"
+                data-wow-delay="0.6s"
+              >
+                <p>{{ d.harga }}</p>
+                <p>{{ d.harga * d.qty }}</p>
+              </div>
+              <div
+                class="column is-4 zoomIn"
+                v-wow
+                data-wow-duration="1s"
+                data-wow-delay="0.9s"
+              >
+                <p>{{ d.qty }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import * as ord from "../../services/order_service";
 export default {
   name: "card",
-  props: { data: Object, test: Number },
+  props: { data: Object, detail: Array },
   data() {
-    return { item: this.data, kelas: this.test };
+    return {
+      item: this.data,
+      details: this.detail,
+      dataDetails: [],
+      kelihatan: "none",
+      isDisplay: false
+    };
+  },
+  created() {
+    // this.detail;
   },
   computed: {
     status() {
@@ -50,8 +141,45 @@ export default {
       let sub = "Rp " + new Intl.NumberFormat().format(this.item.total);
       return sub;
     }
+    // Ddetail() {
+    //   const detail = this.details.filter(e => e.order_id === this.item.id);
+    //   console.log("detail ", detail);
+    //   return detail;
+    // }
   },
-  methods: {}
+  methods: {
+    getDetail() {
+      this.ambilDetail();
+      this.isDisplay = !this.isDisplay;
+      this.kelihatan = this.isDisplay ? "inherit" : "none";
+      console.log("display ", this.isDisplay);
+      console.log("kelihatan ", this.kelihatan);
+    },
+    ambilDetail: async function() {
+      this.$store.commit("loading");
+      let id = this.item.id;
+      // let formData = new FormData();
+      // formData.append("q", id);
+      let params = {
+        params: {
+          q: id
+        }
+      };
+      console.log("param", id);
+      try {
+        const res = await ord.getDetail(params);
+        this.$store.commit("notLoading");
+        console.log("Res :", res);
+        if (res.status == 200) {
+          this.dataDetails = res.data.data;
+          console.log("details :", this.dataDetails);
+        }
+      } catch (e) {
+        this.$store.commit("notLoading");
+        console.log("", e);
+      }
+    }
+  }
 };
 </script>
 <style scoped>

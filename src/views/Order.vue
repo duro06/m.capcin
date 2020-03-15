@@ -15,7 +15,8 @@ export default {
   components: { OrderCard },
   data() {
     return {
-      items: []
+      items: [],
+      details: []
     };
   },
   created() {

@@ -58,7 +58,7 @@ export default {
     }
   },
   created() {
-    this.getCart();
+    // this.getCart();
   },
   computed: {
     loggedIn() {
@@ -69,9 +69,13 @@ export default {
   methods: {
     getCart: async function() {
       let id = this.profile.id;
-
+      let params = {
+        params: {
+          q: id
+        }
+      };
       try {
-        const res = await cart.getChart(id);
+        const res = await cart.getChart(params);
         let panjang = res.data.data.data.length;
         if (panjang > 0) {
           store.commit("setCart", panjang);

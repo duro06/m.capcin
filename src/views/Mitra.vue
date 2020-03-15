@@ -2,12 +2,7 @@
   <div class="content-body has-shadow">
     <h1 class="judul-component">Product to Order</h1>
     <div v-for="(item, apem) in items" :key="apem" class="infinite-list-item">
-      <Mitra
-        class="produksi fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-        :data="item"
-      />
+      <Mitra class="produksi " :data="item" />
     </div>
     <!-- <button
       v-if="this.more_exist"

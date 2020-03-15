@@ -4,6 +4,9 @@ import VueRouter from "vue-router";
 // import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
+// function lazyLoad(view){
+//   return() => import(`@/views/${view}.vue`)
+// }
 
 const routes = [
   {
@@ -83,13 +86,6 @@ const routes = [
         name: "mitra",
         component: () => import("../views/Mitra.vue"),
         meta: { role: "Mitra" }
-        // children: [
-        //   {
-        //     path: "detail_product_order/:id",
-        //     name: "mitra.detail_product_order",
-        //     component: () => import("../views/mitra/DetailProductOrder.vue")
-        //   }
-        // ]
       }
     ]
   },
@@ -138,17 +134,7 @@ const routes = [
       verified: true
     }
   },
-  {
-    path: "/detail_product_order/:id",
-    name: "mitra.detail_product_order",
-    component: () => import("../views/mitra/DetailProductOrder.vue"),
-    meta: {
-      loggedIn: true,
-      waitingVerified: false,
-      visitor: false,
-      verified: true
-    }
-  },
+
   {
     path: "/keranjang",
     name: "keranjang",
