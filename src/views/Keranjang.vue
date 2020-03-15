@@ -52,9 +52,6 @@ export default {
   created() {
     this.getItemsbyId();
   },
-  mounted() {
-    console.log("items ", this.items);
-  },
   computed: {
     ...mapState(["products", "profile"]),
     total() {
@@ -79,21 +76,17 @@ export default {
       this.$store.commit("loading");
       // post total sama user_id
       let total = this.items.reduce((t, me) => t + me.harga * me.qty, 0);
-      console.log("total", total);
-      console.log("user_id", this.profile.id);
       const formData = new FormData();
       formData.append("total", total);
       formData.append("user_id", this.profile.id);
       try {
         const response = await order.chartOrder(formData);
-        console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
       } catch (error) {
-        // this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
+        this.$store.commit("notLoading");
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -103,8 +96,6 @@ export default {
     getItemsbyId: async function() {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
-      // console.log("ID saya sepertinya telat pak kalo di refresh");
-
       let id = this.profile.id;
       let params = {
         params: {
@@ -115,10 +106,8 @@ export default {
         const response = await cart.getChart(params);
         this.items = response.data.data.data;
         this.$store.commit("notLoading");
-        console.log(this.items);
       } catch (errors) {
         this.$store.commit("notLoading");
-        console.log("", errors);
       }
     }
     // product: async function(id) {

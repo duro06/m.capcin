@@ -32,10 +32,8 @@ export default {
       try {
         const res = await order.order(id);
         this.items = res.data.data.data;
-        console.log(this.items);
         this.$store.commit("notLoading");
       } catch (e) {
-        console.log(e);
         this.$store.commit("notLoading");
       }
     }

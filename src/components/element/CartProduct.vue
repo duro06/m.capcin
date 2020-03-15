@@ -89,7 +89,9 @@ export default {
     return {
       item: this.anu,
       kelihatan: "none",
-      disable: false
+      disable: false,
+      res: "",
+      err: []
     };
   },
   computed: {
@@ -132,14 +134,12 @@ export default {
       // formData.append("qty ", this.anu.qty);
       // formData.append("user_id ", this.profile.id);
       try {
-        const response = await c.updateChart(this.anu.id, {
+        this.res = await c.updateChart(this.anu.id, {
           qty: this.anu.qty
         });
         this.$store.commit("notLoading");
-        console.log(response);
       } catch (e) {
         this.$store.commit("notLoading");
-        console.log("", e);
       }
     },
     //persiapan async untuk hapus
@@ -149,24 +149,22 @@ export default {
       // formData.append("id ", this.anu.id);
       // formData.append("user_id ", this.profile.id);
       try {
-        const res = await c.delChart(this.anu.id);
-        console.log(res);
+        this.res = await c.delChart(this.anu.id);
         this.$store.commit("notLoading");
       } catch (e) {
         this.$store.commit("notLoading");
-        console.log("", e);
       }
     },
-    simpanN() {
-      this.kelihatan = "none";
-      console.log("id ", this.anu.id);
-      console.log("qty ", this.anu.qty);
-      console.log("user_id ", this.profile.id);
-    },
-    hapusN() {
-      console.log("id ", this.anu.id);
-      console.log("user_id ", this.profile.id);
-    },
+    // simpanN() {
+    //   this.kelihatan = "none";
+    //   console.log("id ", this.anu.id);
+    //   console.log("qty ", this.anu.qty);
+    //   console.log("user_id ", this.profile.id);
+    // },
+    // hapusN() {
+    //   console.log("id ", this.anu.id);
+    //   console.log("user_id ", this.profile.id);
+    // },
     change() {
       this.kelihatan = "inherit";
     },

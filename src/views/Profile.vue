@@ -152,19 +152,13 @@ export default {
   },
 
   beforeCreate: async function() {
-    //===================jangan lupa ini nanti dihapus=============
-    console.log("Profile Get Profile");
-    //=============================================================
     try {
       const response = await auth.getProfile(); // ambil profile
-      //===================jangan lupa ini nanti dihapus=============
-      console.log(response);
-      //=============================================================
       this.$store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
       this.user = response.data;
       this.errors = [];
     } catch (error) {
-      console.log("", error);
+      this.errors = error;
     }
   },
   computed: {
@@ -233,7 +227,6 @@ export default {
       this.showModal = false;
     },
     getProfile() {
-      console.log("Profile Updated ", this.profile);
       let user = this.profile;
       this.user = user;
       if (
@@ -241,7 +234,6 @@ export default {
         user.image != null &&
         user.image != "null"
       ) {
-        console.log("user image", user.image);
         this.displayImage = this.serverImage + user.image;
         this.$store.commit("notLoading");
       } else {
@@ -252,7 +244,6 @@ export default {
     attachImage: async function() {
       this.$store.commit("loading");
       this.user.image = this.$refs.editAvatar.files[0];
-      console.log(this.$refs.editAvatar.files[0]);
       let reader = new FileReader();
 
       reader.addEventListener(

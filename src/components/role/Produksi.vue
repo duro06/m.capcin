@@ -148,7 +148,6 @@ export default {
       };
       try {
         const response = await itemService.loadData(params);
-        console.log(response);
         let getData = response.data.data; // masukkan data response ke getData
         this.items = getData.data; //ambil data yang dibutuhkan
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
@@ -156,11 +155,9 @@ export default {
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
         this.$store.commit("notLoading"); // loadng spinner berhenti
-        console.log(this.items); // nanti janagan lupa ini dihapus =============================
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -182,9 +179,6 @@ export default {
     // load lebih banyak data
     loadMore: async function() {
       this.$store.commit("loading");
-      //================jangan lupa nanti di hapus =================
-      console.log("Busy Load more :  ", this.busy);
-      //================================================
       // inisialisasi lokal halaman sekarang
       let current_page;
       current_page = this.current_page + 1; // request ke server halaman selanjutnya
@@ -204,16 +198,9 @@ export default {
       this.busy = false; // jalankan lagi fungsi VueInfineScroll
       try {
         this.busy = true; // selama request matikan InfiniteScroll
-        //==================== jangan lupa nanti dihapus =================
-        console.log("Busy try :  ", this.busy);
-        console.log("more exist  :  ", this.more_exist);
-        //========================================================
         // ngene iki lho carane lek gawe async await hehehe
         const response = await itemService.loadData(params);
-        //================================jangan lupa ini nanti dihapus ===============
         this.$store.commit("notLoading");
-        console.log(response);
-        //==============================================
         let getData = response.data.data;
         // bedanya dengan fungsi request data awal, yang ini datanya di push
         getData.data.forEach(data => {
@@ -225,18 +212,10 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        // matikan button loading spinner
-        // ==================== jangan lupa ini nanti di hapus ===================
-        console.log("Busy response :  ", this.busy);
-        console.log(this.items);
-        //==============================================================
         // biar more_exist nilainya di update oleh fungsi updated saja
         this.more_exist = false;
       } catch (error) {
         this.more_exist = false;
-        // ================= jangan lupa ini nanti di hapus ===================
-        console.log("" + error);
-        //=====================================================================
         this.flashMessage.error({
           message: "" + error,
           time: 5000
@@ -273,10 +252,6 @@ export default {
     } else {
       this.more_exist = false;
     }
-
-    //=====================jangan lupa ini nanti di hapus ============
-    console.log("Updated :  ", this.more_exist);
-    //======================================================
   }
 };
 </script>
