@@ -6,21 +6,19 @@
       data-wow-duration="1s"
       data-wow-delay="0.4s"
     >
-      <article class="message is-danger">
-        <div class="message-body">
-          You are trying to type something
-          <strong>That we not produce in normal state </strong>
-          What exacly you are looking for? we suggest you to use
-          <br />
-          <strong>
-            <a @click="login">This link </a>
-          </strong>
-          <br />
-          To navigate to our home page then look for whatever you want from
-          there, if its not there, it means you are not allowed to get in there.
-          or if you need another page, request it to our developer
+      <div class="card" @click="redirect">
+        <div class="card-image">
+          <figure class="image is-5by3">
+            <img :src="image" alt="Placeholder image" />
+          </figure>
         </div>
-      </article>
+        <div class="card-content">
+          <div class="halaman-isi">
+            <p class="tittle is-5">Halaman ini Kosong</p>
+            <p class="subtittle is-6">Memang tidak ada isi nya</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,13 +26,18 @@
 <script>
 export default {
   name: "HelloWorld",
+  data() {
+    return {
+      image: "../img/404.png"
+    };
+  },
   computed: {
     role() {
       return this.$store.getters.levelAccess;
     }
   },
   methods: {
-    login() {
+    redirect() {
       switch (this.role) {
         case "Produksi":
           this.$router.push({ name: "produksi" }, () => {});
@@ -83,19 +86,21 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
+<style scoped>
+.hello {
+  padding: 55px 20px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.halaman-isi {
+  border-radius: 10px;
+  text-align: center;
+  background-color: #42b549 !important;
+  color: white;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.card {
+  border-radius: 10px;
+  background-color: antiquewhite;
 }
-a {
-  color: #42b983;
+.image > img {
+  border-radius: 10px;
 }
 </style>
