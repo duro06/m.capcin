@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import Bilboard from "./element/ElementCard.vue";
+import Bilboard from "@/components/element/ElementCard.vue";
 export default {
   name: "welcome",
   components: {

@@ -12,12 +12,12 @@
   </div>
 </template>
 <script>
-import * as auth from "./services/auth_service";
-import * as cart from "./services/cart_service";
-import store from "./store";
+import * as auth from "@/services/auth_service";
+import * as cart from "@/services/cart_service";
+import store from "@/store";
 
-import Footer from "./components/element/bulmaFooter";
-import LoadingCapcin from "./components/element/Capcin.vue";
+import Footer from "@/components/element/bulmaFooter";
+import LoadingCapcin from "@/components/element/Loading.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -28,27 +28,16 @@ export default {
     // loading
   },
   beforeCreate: async function() {
-    localStorage.removeItem("level"); // hapus temporary local storege level
-    //===================jangan lupa ini nanti dihapus=============
-    console.log("App Get Profile");
-    //=============================================================
     try {
       //jika login maka
       if (store.getters.loggedIn) {
-        //===================jangan lupa ini nanti dihapus=============
-        console.log("Login = ", store.getters.loggedIn);
-        //=============================================================
         const response = await auth.getProfile(); // ambil profile
-        //===================jangan lupa ini nanti dihapus=============
-        console.log(response);
-        //=============================================================
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+        localStorage.removeItem("level"); // hapus temporary local storege level
+        localStorage.removeItem("mie"); // hapus temporary local storege level
 
         //jika tidak
       } else {
-        //===================jangan lupa ini nanti dihapus=============
-        console.log("Login = false");
-        //=============================================================
         store.dispatch("destroyToken"); //paggil action untuk menghapus authentifikasi
       }
       setTimeout(function() {}, 2000);
@@ -82,10 +71,8 @@ export default {
         } else {
           store.commit("setCart", 0);
         }
-        console.log("cart :", res);
-        console.log("data :", panjang);
       } catch (e) {
-        console.log(e);
+        store.commit("notLoading");
       }
     }
   }

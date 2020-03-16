@@ -64,9 +64,9 @@
   </div>
 </template>
 <script>
-import * as order from "../services/order_service";
-import * as prod from "../services/product_service";
-import * as auth from "../services/auth_service.js";
+import * as order from "@/services/order_service";
+import * as prod from "@/services/product_service";
+import * as auth from "@/services/auth_service.js";
 // import axios from "axios";
 const axios = require("axios").default;
 export default {

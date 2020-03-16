@@ -1,6 +1,6 @@
 import { http } from "./http_service.js";
 
-export function order(params) {
+export function getOrder(params) {
   return http().get(`user/orders-user`, params);
 }
 
@@ -16,6 +16,6 @@ export function detail(params) {
   return http().get(`user/detail-orders`, params);
 }
 
-export function getDetail(data) {
-  return http().get(`user/detail-orders`, data);
+export function getDetail(params) {
+  return http().get(`user/detail-orders`, params);
 }

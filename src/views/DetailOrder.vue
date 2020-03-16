@@ -94,9 +94,9 @@
 <script>
 import { mapState } from "vuex";
 
-import * as order from "../services/order_service";
-import * as cart from "../services/cart_service";
-import * as prod from "../services/product_service";
+import * as order from "@/services/order_service";
+import * as cart from "@/services/cart_service";
+import * as prod from "@/services/product_service";
 
 export default {
   name: "Detail_Order",
@@ -120,7 +120,6 @@ export default {
       if (this.barang.image) {
         return this.barang.image;
       } else {
-        console.log("computed");
         return "../img/no-image.jpg";
       }
     },
@@ -179,21 +178,18 @@ export default {
 
       try {
         const response = await cart.toChart(formData);
-        console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "mitra" }, () => {});
           // this.getCart();
           // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
-        console.log(response);
       } catch (e) {
-        console.log("", e);
+        this.errors = e;
       }
     },
     orderNow: async function() {
       this.$store.commit("loading");
       const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
-      console.log(jumlah);
       const formData = new FormData();
       formData.append("total", jumlah);
       formData.append("product_id", this.barang.id);
@@ -203,7 +199,6 @@ export default {
 
       try {
         const response = await order.purchase(formData);
-        console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
@@ -212,7 +207,6 @@ export default {
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         // this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -223,25 +217,19 @@ export default {
     getProdectById: async function() {
       this.$store.commit("loading");
       let id = this.$route.params.id;
-      console.log("Get By id", id);
+
       try {
         const response = await prod.getById(id);
         if (response.status == 200) {
           this.barang = response.data.data; // masukkan data yang di dapat ke barang
         }
         this.$store.commit("notLoading");
-        console.log(this.barang);
       } catch (error) {
-        console.log("", error);
+        this.errors = error;
       }
     }
   },
-  updated() {
-    console.log("Updadted");
-  },
   created() {
-    console.log("Mounted");
-    // this.product();
     this.getProdectById();
   }
 };

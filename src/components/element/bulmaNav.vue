@@ -123,10 +123,10 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import * as c from "../../services/cart_service";
+import * as c from "@/services/cart_service";
 export default {
   name: "navbar",
-  data: () => ({ isActive: false }),
+  data: () => ({ isActive: false, error: [] }),
   created() {
     this.getCart();
   },
@@ -134,9 +134,9 @@ export default {
     level() {
       return this.$store.getters.myProfile.role;
     },
-    check() {
-      return console.log(this.level);
-    },
+    // check() {
+    //   return console.log(this.level);
+    // },
     // cart() {
     //   return this.$store.state.cart;
     // },
@@ -162,11 +162,9 @@ export default {
           this.$store.commit("setCart", 0);
         }
         this.$router.replace({ name: "mitra" }, () => {});
-        console.log("cart :", res);
-        console.log("data :", panjang);
+        this.error = [];
       } catch (e) {
         this.$router.replace({ name: "mitra" }, () => {});
-        console.log(e);
       }
     }
   }

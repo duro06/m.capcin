@@ -1,44 +1,49 @@
 <template>
   <div class="profile">
-    <div class="pengulangan" v-for="(item, n) in items" :key="n">
-      <Card v-if="items.length" :anu="item" />
-    </div>
-    <div class="card-footer">
-      <div class="card">
-        <div class="card-content">
-          <div class="columns is-mobile">
-            <div class="column is-5">
-              <p>
-                Jumlah harga <br />
-                {{ total }}
-              </p>
-            </div>
-            <div class="column is-6">
-              <div class="rata-kanan">
-                <button @click="orderNow" class="button is-success">
-                  Pesan
-                </button>
+    <div class="isi" v-if="items.length">
+      <div class="pengulangan" v-for="(item, n) in items" :key="n">
+        <Card :anu="item" />
+      </div>
+      <div class="card-footer">
+        <div class="card">
+          <div class="card-content">
+            <div class="columns is-mobile">
+              <div class="column is-5">
+                <p>
+                  Jumlah harga <br />
+                  {{ total }}
+                </p>
+              </div>
+              <div class="column is-6">
+                <div class="rata-kanan">
+                  <button @click="orderNow" class="button is-success">
+                    Pesan
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="kosong" v-else><Empty /></div>
   </div>
 </template>
 <script>
-// import { getProfile } from "../services/auth_service";
+// import { getProfile } from "@/services/auth_service";
 import { mapState } from "vuex";
-import * as cart from "../services/cart_service";
-import * as order from "../services/order_service";
-// import Modal from "../components/element/Modal.vue";
-import Card from "../components/element/CartProduct";
+import * as cart from "@/services/cart_service";
+import * as order from "@/services/order_service";
+// import Modal from "@/components/element/Modal.vue";
+import Card from "@/components/element/CartProduct";
+import Empty from "@/components/element/EmptyPage";
 
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    Card
+    Card,
+    Empty
   },
   data() {
     return {
@@ -46,14 +51,12 @@ export default {
       jumlahPesanan: 0,
       showModal: false, // modal tampil atau tidak
       errors: [],
-      disable: false
+      disable: false,
+      id: null
     };
   },
   created() {
     this.getItemsbyId();
-  },
-  mounted() {
-    console.log("items ", this.items);
   },
   computed: {
     ...mapState(["products", "profile"]),
@@ -79,21 +82,17 @@ export default {
       this.$store.commit("loading");
       // post total sama user_id
       let total = this.items.reduce((t, me) => t + me.harga * me.qty, 0);
-      console.log("total", total);
-      console.log("user_id", this.profile.id);
       const formData = new FormData();
       formData.append("total", total);
       formData.append("user_id", this.profile.id);
       try {
         const response = await order.chartOrder(formData);
-        console.log(response);
         if (response.status === 200) {
           this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
       } catch (error) {
-        // this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
+        this.$store.commit("notLoading");
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -103,22 +102,26 @@ export default {
     getItemsbyId: async function() {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
-      // console.log("ID saya sepertinya telat pak kalo di refresh");
-
       let id = this.profile.id;
+      if (id) {
+        this.id = id;
+      } else {
+        this.id = localStorage.getItem("mie");
+      }
       let params = {
         params: {
-          q: id
+          q: this.id
         }
       };
+      console.log(params);
+      console.log(id);
+      console.log(localStorage.getItem("mie"));
       try {
         const response = await cart.getChart(params);
         this.items = response.data.data.data;
         this.$store.commit("notLoading");
-        console.log(this.items);
       } catch (errors) {
         this.$store.commit("notLoading");
-        console.log("", errors);
       }
     }
     // product: async function(id) {

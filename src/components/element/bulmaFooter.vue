@@ -101,7 +101,6 @@ export default {
       return this.$store.getters.levelAccess;
     },
     currentPage() {
-      console.log("rute path ", this.$route.path);
       return this.$route.path;
     }
   },

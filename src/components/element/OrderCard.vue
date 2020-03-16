@@ -117,7 +117,7 @@
   </div>
 </template>
 <script>
-import * as ord from "../../services/order_service";
+import * as ord from "@/services/order_service";
 export default {
   name: "card",
   props: { data: Object, detail: Array },
@@ -143,7 +143,6 @@ export default {
     }
     // Ddetail() {
     //   const detail = this.details.filter(e => e.order_id === this.item.id);
-    //   console.log("detail ", detail);
     //   return detail;
     // }
   },
@@ -152,31 +151,23 @@ export default {
       this.ambilDetail();
       this.isDisplay = !this.isDisplay;
       this.kelihatan = this.isDisplay ? "inherit" : "none";
-      console.log("display ", this.isDisplay);
-      console.log("kelihatan ", this.kelihatan);
     },
     ambilDetail: async function() {
       this.$store.commit("loading");
       let id = this.item.id;
-      // let formData = new FormData();
-      // formData.append("q", id);
       let params = {
         params: {
           q: id
         }
       };
-      console.log("param", id);
       try {
         const res = await ord.getDetail(params);
         this.$store.commit("notLoading");
-        console.log("Res :", res);
         if (res.status == 200) {
           this.dataDetails = res.data.data;
-          console.log("details :", this.dataDetails);
         }
       } catch (e) {
         this.$store.commit("notLoading");
-        console.log("", e);
       }
     }
   }
