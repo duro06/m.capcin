@@ -223,6 +223,9 @@ export default {
       this.showModal = false;
     },
     getProfile() {
+      if (!this.profile.length) {
+        this.$store.commit("loading");
+      }
       let user = this.profile;
       this.user = user;
       if (
@@ -230,7 +233,7 @@ export default {
         user.image != null &&
         user.image != "null"
       ) {
-        this.displayImage = this.serverImage + user.image;
+        this.displayImage = `${this.serverImage}` + `${user.image}`;
         this.$store.commit("notLoading");
       } else {
         this.displayImage = "@/assets/nouser.png";

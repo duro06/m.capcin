@@ -1,17 +1,17 @@
 <template>
   <div class="dompet">
     <div class="container">
-      <p>Ini halaman Dompet</p>
+      <Empty />
     </div>
     <!-- <Footer class="navbar" /> -->
   </div>
 </template>
 <script>
-// import Footer from "../components/element/bulmaFooter";
+import Empty from "@/components/element/EmptyPage";
 export default {
   name: "dompet",
   components: {
-    // Footer
+    Empty
   }
 };
 </script>

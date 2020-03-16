@@ -1,15 +1,19 @@
 <template>
   <div class="empty">
-    <div @click="redirect" class="card">
+    <div class="card">
       <div class="card-image">
         <figure class="image is-4by3">
           <img :src="image" alt="Placeholder image" />
         </figure>
       </div>
       <div class="card-content">
-        <div class="halaman-isi">
+        <div @click="redirect" class="halaman-isi" v-if="page">
           <p class="tittle is-5">Halaman ini Kosong</p>
           <p class="subtittle is-6">Silahkan lakukan transaksi</p>
+        </div>
+        <div class="halaman-isi" v-else>
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Belum saya isi</p>
         </div>
       </div>
     </div>
@@ -40,7 +44,14 @@ export default {
       }
     },
     page() {
-      return this.$route.path;
+      if (
+        this.$route.path.includes("order") ||
+        this.$route.path.includes("keranjang")
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
