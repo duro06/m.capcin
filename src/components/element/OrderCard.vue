@@ -117,7 +117,7 @@
   </div>
 </template>
 <script>
-import * as ord from "../../services/order_service";
+import * as ord from "@/services/order_service";
 export default {
   name: "card",
   props: { data: Object, detail: Array },

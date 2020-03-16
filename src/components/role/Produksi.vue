@@ -96,10 +96,10 @@
   </div>
 </template>
 <script>
-import Produksi from "../element/ProduksiEl.vue";
-import Search from "../element/Search.vue";
-import Modal from "../element/Modal.vue";
-import * as itemService from "../../services/item_service.js";
+import Produksi from "@/components/element/ProduksiEl.vue";
+import Search from "@/components/element/Search.vue";
+import Modal from "@/components/element/Modal.vue";
+import * as itemService from "@/services/item_service.js";
 
 export default {
   name: "produk",

@@ -12,12 +12,12 @@
   </div>
 </template>
 <script>
-import * as auth from "./services/auth_service";
-import * as cart from "./services/cart_service";
-import store from "./store";
+import * as auth from "@/services/auth_service";
+import * as cart from "@/services/cart_service";
+import store from "@/store";
 
-import Footer from "./components/element/bulmaFooter";
-import LoadingCapcin from "./components/element/Capcin.vue";
+import Footer from "@/components/element/bulmaFooter";
+import LoadingCapcin from "@/components/element/Loading.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -28,12 +28,13 @@ export default {
     // loading
   },
   beforeCreate: async function() {
-    localStorage.removeItem("level"); // hapus temporary local storege level
     try {
       //jika login maka
       if (store.getters.loggedIn) {
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+        localStorage.removeItem("level"); // hapus temporary local storege level
+        localStorage.removeItem("mie"); // hapus temporary local storege level
 
         //jika tidak
       } else {

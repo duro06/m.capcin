@@ -81,7 +81,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import * as c from "../../services/cart_service";
+import * as c from "@/services/cart_service";
 export default {
   name: "cart",
   props: { anu: Object },

@@ -152,7 +152,7 @@
 </template>
 <script>
 //import fungsi login dari auth_service
-import { login } from "../../services/auth_service";
+import { login } from "@/services/auth_service";
 export default {
   name: "Login",
   props: {

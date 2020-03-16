@@ -38,6 +38,7 @@ Vue.use(infiniteScroll);
 window.addEventListener("beforeunload", function() {
   if (store.getters.loggedIn) {
     localStorage.setItem("level", store.getters.levelAccess);
+    localStorage.setItem("mie", store.state.profile.id);
   }
 });
 

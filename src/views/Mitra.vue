@@ -20,7 +20,7 @@
 </template>
 <script>
 import Mitra from "@/components/role/Mitra.vue";
-import * as prod from "../services/product_service.js";
+import * as prod from "@/services/product_service.js";
 
 export default {
   name: "mitra",

@@ -1,44 +1,49 @@
 <template>
   <div class="profile">
-    <div class="pengulangan" v-for="(item, n) in items" :key="n">
-      <Card v-if="items.length" :anu="item" />
-    </div>
-    <div class="card-footer">
-      <div class="card">
-        <div class="card-content">
-          <div class="columns is-mobile">
-            <div class="column is-5">
-              <p>
-                Jumlah harga <br />
-                {{ total }}
-              </p>
-            </div>
-            <div class="column is-6">
-              <div class="rata-kanan">
-                <button @click="orderNow" class="button is-success">
-                  Pesan
-                </button>
+    <div class="isi" v-if="items.length">
+      <div class="pengulangan" v-for="(item, n) in items" :key="n">
+        <Card :anu="item" />
+      </div>
+      <div class="card-footer">
+        <div class="card">
+          <div class="card-content">
+            <div class="columns is-mobile">
+              <div class="column is-5">
+                <p>
+                  Jumlah harga <br />
+                  {{ total }}
+                </p>
+              </div>
+              <div class="column is-6">
+                <div class="rata-kanan">
+                  <button @click="orderNow" class="button is-success">
+                    Pesan
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="kosong" v-else><Empty /></div>
   </div>
 </template>
 <script>
-// import { getProfile } from "../services/auth_service";
+// import { getProfile } from "@/services/auth_service";
 import { mapState } from "vuex";
-import * as cart from "../services/cart_service";
-import * as order from "../services/order_service";
-// import Modal from "../components/element/Modal.vue";
-import Card from "../components/element/CartProduct";
+import * as cart from "@/services/cart_service";
+import * as order from "@/services/order_service";
+// import Modal from "@/components/element/Modal.vue";
+import Card from "@/components/element/CartProduct";
+import Empty from "@/components/element/EmptyPage";
 
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    Card
+    Card,
+    Empty
   },
   data() {
     return {
@@ -46,7 +51,8 @@ export default {
       jumlahPesanan: 0,
       showModal: false, // modal tampil atau tidak
       errors: [],
-      disable: false
+      disable: false,
+      id: null
     };
   },
   created() {
@@ -97,11 +103,19 @@ export default {
       this.$store.dispatch("productOut");
       this.$store.commit("loading");
       let id = this.profile.id;
+      if (id) {
+        this.id = id;
+      } else {
+        this.id = localStorage.getItem("mie");
+      }
       let params = {
         params: {
-          q: id
+          q: this.id
         }
       };
+      console.log(params);
+      console.log(id);
+      console.log(localStorage.getItem("mie"));
       try {
         const response = await cart.getChart(params);
         this.items = response.data.data.data;
