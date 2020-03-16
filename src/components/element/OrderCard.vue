@@ -50,7 +50,7 @@
     </div>
     <div class="kalo" v-if="dataDetails.length">
       <div class="card" :style="{ display: kelihatan }">
-        <div class="card-content">
+        <div class="isi-kartu">
           <div class="columns is-mobile">
             <div
               class="column is-5 zoomIn"
@@ -82,7 +82,7 @@
       </div>
       <div class="pengulangan" v-for="(d, n) in dataDetails" :key="n">
         <div class="card" :style="{ display: kelihatan }">
-          <div class="card-content">
+          <div class="isi-kartu">
             <div class="columns is-mobile">
               <div
                 class="column is-5 zoomIn"
@@ -148,9 +148,11 @@ export default {
   },
   methods: {
     getDetail() {
-      this.ambilDetail();
       this.isDisplay = !this.isDisplay;
       this.kelihatan = this.isDisplay ? "inherit" : "none";
+      if (this.isDisplay && !this.dataDetails.length) {
+        this.ambilDetail();
+      }
     },
     ambilDetail: async function() {
       this.$store.commit("loading");
@@ -174,6 +176,9 @@ export default {
 };
 </script>
 <style scoped>
+.isi-kartu {
+  padding: 0px 24px;
+}
 .order-container {
   padding: 5px 10px;
 }

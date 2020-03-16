@@ -1,60 +1,56 @@
 <template>
   <div class="profile">
     <div class="has-text-centered">
-      <div>
-        <div>
-          <div class="card">
-            <div class="avatar-profile">
-              <div class="card-image">
-                <figure class="image is-480x480">
-                  <img
-                    class="avatar-ku"
-                    :src="displayImage"
-                    ref="displayAvatarImage"
-                    alt="avatar"
-                  />
-                </figure>
-              </div>
-              <div class="edit-avatar">
-                <input
-                  type="file"
-                  ref="editAvatar"
-                  id="image"
-                  @change="attachImage"
-                />
-                <!-- <input type="file" id="image" @change="previewFiles" /> -->
-                <label for="image"> Change Avatar </label>
-                <!-- <myInput id="image" @input="onFilePicked" /> -->
-              </div>
-            </div>
+      <div class="card">
+        <div class="avatar-profile">
+          <div class="card-image">
+            <figure class="image is-480x480">
+              <img
+                class="avatar-ku"
+                :src="displayImage"
+                ref="displayAvatarImage"
+                alt="avatar"
+              />
+            </figure>
+          </div>
+          <div class="edit-avatar">
+            <input
+              type="file"
+              ref="editAvatar"
+              id="image"
+              @change="attachImage"
+            />
+            <!-- <input type="file" id="image" @change="previewFiles" /> -->
+            <label for="image"> Change Avatar </label>
+            <!-- <myInput id="image" @input="onFilePicked" /> -->
+          </div>
+        </div>
 
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img
-                      :src="displayImage"
-                      alt="avatar"
-                      ref="miniDisplayAvatarImage"
-                    />
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-6" style="color: black">{{ user.name }}</p>
-                  <p class="subtitle is-7" style="color: black">
-                    {{ user.email }}<br />
-                    {{ user.role }} Capcin
-                  </p>
-                </div>
-                <div class="media-content">
-                  <button
-                    class="button is-info is-small"
-                    @click.prevent="editProfile"
-                  >
-                    edit
-                  </button>
-                </div>
-              </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  :src="displayImage"
+                  alt="avatar"
+                  ref="miniDisplayAvatarImage"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-6" style="color: black">{{ user.name }}</p>
+              <p class="subtitle is-7" style="color: black">
+                {{ user.email }}<br />
+                {{ user.role }} Capcin
+              </p>
+            </div>
+            <div class="media-content">
+              <button
+                class="button is-info is-small"
+                @click.prevent="editProfile"
+              >
+                edit
+              </button>
             </div>
           </div>
         </div>

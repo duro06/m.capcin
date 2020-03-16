@@ -1,7 +1,6 @@
 export default {
   setAuthenticate(state, payload) {
     state.profile = payload;
-    console.log("Profile written");
   },
   delAuthenticate(state) {
     state.profile = {};
