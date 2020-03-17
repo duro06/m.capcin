@@ -24,6 +24,14 @@
                   <span class="tag is-danger" v-if="cart > 0">{{ cart }}</span>
                 </router-link>
               </li>
+              <li
+                class="one-icon mega-li navbar-item"
+                v-if="currentPage.includes('profile')"
+              >
+                <router-link to="/keranjang" class="mega-link">
+                  <span class="mega-icon"><i class="fas fa-cog"></i></span>
+                </router-link>
+              </li>
             </ul>
           </div>
         </div>
@@ -133,6 +141,9 @@ export default {
   computed: {
     level() {
       return this.$store.getters.myProfile.role;
+    },
+    currentPage() {
+      return this.$route.path;
     },
     // check() {
     //   return console.log(this.level);

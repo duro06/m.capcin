@@ -180,7 +180,7 @@ export default {
         const response = await cart.toChart(formData);
         if (response.status === 200) {
           this.$router.replace({ name: "mitra" }, () => {});
-          // this.getCart();
+          this.getCart();
           // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
       } catch (e) {
@@ -226,6 +226,28 @@ export default {
         this.$store.commit("notLoading");
       } catch (error) {
         this.errors = error;
+      }
+    },
+    getCart: async function() {
+      let id = this.profile.id;
+      let params = {
+        params: {
+          q: id
+        }
+      };
+      try {
+        const res = await cart.getChart(params);
+        let panjang = res.data.data.data.length;
+        if (panjang > 0) {
+          this.$store.commit("setCart", panjang);
+        } else {
+          this.$store.commit("setCart", 0);
+        }
+        // this.$router.replace({ name: "mitra" }, () => {});
+        this.error = [];
+      } catch (e) {
+        this.error = e;
+        // this.$router.replace({ name: "mitra" }, () => {});
       }
     }
   },

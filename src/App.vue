@@ -5,6 +5,7 @@
       style="z-index: 19999 !important; position: fixed;"
     ></FlashMessage>
     <LoadingCapcin />
+    <Nav class="navbar" v-if="loggedIn" />
     <transition class="slideInLeft" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
@@ -17,6 +18,7 @@ import * as cart from "@/services/cart_service";
 import store from "@/store";
 
 import Footer from "@/components/element/bulmaFooter";
+import Nav from "@/components/element/bulmaNav";
 import LoadingCapcin from "@/components/element/Loading.vue";
 import { mapState } from "vuex";
 
@@ -24,6 +26,7 @@ export default {
   name: "app",
   components: {
     Footer,
+    Nav,
     LoadingCapcin
     // loading
   },
@@ -125,6 +128,39 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+// Animmasi transition
+
+@-webkit-keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInLeft {
+  -webkit-animation-name: slideInLeft;
+  animation-name: slideInLeft;
+}
+
 // .vld-icon > img {
 //   opacity: 0.6;
 //   position: relative;
