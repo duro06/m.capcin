@@ -113,8 +113,6 @@ export default {
           q: this.id
         }
       };
-
-      console.log(localStorage.getItem("mie"));
       try {
         const response = await cart.getChart(params);
         this.items = response.data.data.data;
