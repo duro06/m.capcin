@@ -267,9 +267,6 @@ export default {
         vm.$store
           .dispatch("register", this.user)
           .then(response => {
-            //=====jangan lupa ini nanti di hapus -====================
-            console.log(response);
-            //=========================================================
             // panggil fungsi "retriveVerivie" di action nya Vuex, bawa apa aja buat di tarun d locak storage
             vm.$store.dispatch(
               "retrieveVerifie",
@@ -285,9 +282,6 @@ export default {
           })
           .catch(error => {
             if (error) {
-              //=====jangan lupa ini nanti di hapus -====================
-              console.log(error);
-              //=========================================================
               //jika email sudah ada yang pake kosongkan dah kasih tanda
               if (error.response.data.errors.email == "email") {
                 vm.classDanger = "is-danger";
@@ -340,11 +334,6 @@ export default {
           time: 5000
         });
       }
-    },
-    // ini sepertinya ga jadi dipake..
-    splitError(e) {
-      const data = e.split(":");
-      console.log(data);
     },
     //= ===================== ngisi pesan aja ===============
     mailString(kelas, visib, pesan, pass) {

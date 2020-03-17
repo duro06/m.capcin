@@ -10,13 +10,28 @@
           class="detail-items"
         >
           <div class="columns is-mobile">
-            <div class="column is-3 space-img">
+            <div
+              class="column is-3 space-img zoomIn"
+              v-wow
+              data-wow-delay="0.1s"
+              data-wow-duration="1s"
+            >
               <img :src="productImage" alt="product" />
             </div>
-            <div class="column is-5">
+            <div
+              class="column is-5 zoomIn"
+              v-wow
+              data-wow-delay="0.4s"
+              data-wow-duration="1s"
+            >
               <p class="rata-kiri">{{ productName }}</p>
             </div>
-            <div class="column is-4">
+            <div
+              class="column is-4 zoomIn"
+              v-wow
+              data-wow-delay="0.7s"
+              data-wow-duration="1s"
+            >
               <p class="rata-kanan">
                 <B>{{ harga }}</B>
               </p>

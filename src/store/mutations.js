@@ -1,7 +1,6 @@
 export default {
   setAuthenticate(state, payload) {
     state.profile = payload;
-    console.log("Profile written");
   },
   delAuthenticate(state) {
     state.profile = {};
@@ -28,10 +27,19 @@ export default {
   delProduct(state) {
     state.products = [];
   },
-  loading(state, payload) {
-    state.loadShow = payload;
+  loading(state) {
+    state.loadShow = "payload";
   },
   notLoading(state) {
     state.loadShow = "";
+  },
+  setSuccessOrder(state, payload) {
+    state.successOrder = payload;
+  },
+  delSuccessOrder(state) {
+    state.successOrder = {};
+  },
+  setCart(state, payload) {
+    state.cart = payload;
   }
 };

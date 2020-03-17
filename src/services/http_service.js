@@ -4,7 +4,7 @@ import * as auth from "./auth_service";
 
 export function http() {
   return axios.create({
-    baseURL: store.state.serverApiAnyar,
+    baseURL: store.state.serverApi2,
     headers: {
       Authorization: "Bearer " + auth.getAccessToken()
     }
@@ -30,7 +30,6 @@ export function httpFile() {
 
 export function httpNot() {
   return axios.create({
-    method: "POST",
     baseURL: store.state.serverApi2,
     headers: {
       // eslint-disable-next-line prettier/prettier

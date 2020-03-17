@@ -89,11 +89,9 @@ export default {
   },
   retrieveToken(context, credentials) {
     return new Promise((resolve, reject) => {
-      console.log(credentials);
       http()
         .post("auth/login", credentials)
         .then(response => {
-          console.log(response);
           setToken(response.data);
           this.flashMessage.success({
             message: "Login success",

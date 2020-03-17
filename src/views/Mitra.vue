@@ -1,27 +1,8 @@
 <template>
   <div class="content-body has-shadow">
-    <div class="vld-parent">
-      <loading
-        :active.sync="isLoading"
-        :can-cancel="false"
-        :is-full-page="fullPage"
-        :color="color"
-        :opacity="0.7"
-      >
-        <template v-slot:before>Loading...</template>
-        <template v-slot:after>
-          <img src="@/assets/logocapcin.png" alt="" />
-        </template>
-      </loading>
-    </div>
     <h1 class="judul-component">Product to Order</h1>
     <div v-for="(item, apem) in items" :key="apem" class="infinite-list-item">
-      <Mitra
-        class="produksi fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-        :data="item"
-      />
+      <Mitra class="produksi " :data="item" />
     </div>
     <!-- <button
       v-if="this.more_exist"
@@ -39,39 +20,35 @@
 </template>
 <script>
 import Mitra from "@/components/role/Mitra.vue";
-import * as prod from "../services/product_service.js";
-import loading from "vue-loading-overlay";
+import * as prod from "@/services/product_service.js";
 
 export default {
   name: "mitra",
   components: {
-    Mitra,
-    loading
+    Mitra
   },
   data() {
     return {
       items: {}, // data items
-
-      isLoading: false, // ini untuk loading spinner input search
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
       per_page: 6, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
       sortBy: "id", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null,
-      fullPage: true,
-      color: "#42b549"
+      last_page: null
     };
   },
   created() {
     // panggil data awal
     this.req();
+    // kosongkan state SuccessOrder
+    this.$store.commit("delSuccessOrder");
   },
   methods: {
     req: async function() {
+      this.$store.commit("loading");
       this.$store.dispatch("productOut"); //kosongkan state product
-      this.isLoading = true;
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
         //kalo ga ada params servernya ga mau.. karena sudah di setting gitu..
@@ -87,7 +64,6 @@ export default {
       };
       try {
         const response = await prod.loadData(params);
-        console.log(response);
         let getData = response.data.data; // masukkan data response ke getData
         this.items = getData.data; //ambil data yang dibutuhkan
         // this.$store.dispatch("productIn", getData.data); // masukkan data ke state
@@ -95,12 +71,10 @@ export default {
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.isLoading = false; // loadng spinner berhenti
-        console.log(this.items); // nanti janagan lupa ini dihapus =============================
+        this.$store.commit("notLoading"); // loadng spinner berhenti
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -109,26 +83,18 @@ export default {
     },
     //jika ada scroll event
     Scroll() {
-      //================= development mode ===========================
-      console.log("Last page  :  ", this.last_page);
-      console.log("Current page  :  ", this.current_page);
-      console.log("Busy Scroll :  ", this.busy);
-      //================ jangan lupa nanti di hapus =========================
       this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
       if (this.more_exist && this.last_page != null) {
-        this.isLoading = true;
+        this.$store.commit("loading");
         this.loadMore(); //jalankan fungsi Load more
       }
     },
     // load lebih banyak data
     loadMore: async function() {
-      this.isLoading = true;
-      //================jangan lupa nanti di hapus =================
-      console.log("Busy Load more :  ", this.busy);
-      //================================================
+      // this.$store.commit("loading");
       // inisialisasi lokal halaman sekarang
       let current_page;
       current_page = this.current_page + 1; // request ke server halaman selanjutnya
@@ -148,19 +114,9 @@ export default {
       this.busy = false; // jalankan lagi fungsi VueInfineScroll
       try {
         this.busy = true; // selama request matikan InfiniteScroll
-        //==================== jangan lupa nanti dihapus =================
-        console.log("Busy try :  ", this.busy);
-        console.log("more exist  :  ", this.more_exist);
-        //========================================================
         // ngene iki lho carane lek gawe async await hehehe
         const response = await prod.loadData(params);
-        //================================jangan lupa ini nanti dihapus ===============
-        console.log(response);
-        //==============================================
         let getData = response.data.data;
-        //================================jangan lupa ini nanti dihapus ===============
-        console.log(getData);
-        //==============================================
         // bedanya dengan fungsi request data awal, yang ini datanya di push
         getData.data.forEach(data => {
           this.items.push(data);
@@ -172,38 +128,17 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        this.isLoading = false; // matikan button loading spinner
-        // ==================== jangan lupa ini nanti di hapus ===================
-        console.log("Busy response :  ", this.busy);
-        console.log(this.items);
-        //==============================================================
+        this.$store.commit("notLoading"); // matikan button loading spinner
         // biar more_exist nilainya di update oleh fungsi updated saja
         this.more_exist = false;
       } catch (error) {
         this.more_exist = false;
-        // ================= jangan lupa ini nanti di hapus ===================
-        console.log("" + error);
-        //=====================================================================
         this.flashMessage.error({
           message: "" + error,
           time: 5000
         });
       }
     }
-    //jika ada emmit jumlah data tiap halaman
-    // handleSearch(val) {
-    //   this.current_page = 1; //reset halaman ke halaman satu
-    //   this.search = val; // masukkan nilai search
-    //   this.req(); //reload data
-    // },
-    // // fungsi untuk nutup modal, bukanya dari $emit komponen modal
-    // handleModal() {
-    //   this.showModal = false;
-    // },
-    // // fungsi menampilkan modal dari $emit data item @edit
-    // handleEdit() {
-    //   this.showModal = true;
-    // }
   },
   // sementara hanya digunakan untuk ngecek masih ada data yang perlu di load lagi tau tidak
   updated() {
@@ -220,10 +155,6 @@ export default {
     } else {
       this.more_exist = false;
     }
-
-    //=====================jangan lupa ini nanti di hapus ============
-    console.log("Updated :  ", this.more_exist);
-    //======================================================
   }
 };
 </script>

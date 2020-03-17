@@ -9,15 +9,15 @@
       <article class="message is-success">
         <div class="message-body">
           <h2 class="is-3">
-            Anda berhsail melakukan
-            <strong> pembelian </strong>
+            Anda {{ successOrder.status }} melakukan pembelian dengan referensi
+            <strong> {{ successOrder.message }} </strong>
             silahkan
             <br />
             <strong>
-              <a @click="login">kembali </a>
+              <a @click="login">click link ini </a>
             </strong>
             <br />
-            ke halaman sebelumya
+            untuk kembali ke halaman utama
           </h2>
         </div>
       </article>
@@ -25,15 +25,21 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name: "berhasil",
   computed: {
     role() {
       return this.$store.getters.levelAccess;
-    }
+    },
+    ...mapState(["successOrder"])
+  },
+  mounted() {
+    this.$store.commit("notLoading");
   },
   methods: {
     login() {
+      // this.$store.commit("delSuccessOrder");
       switch (this.role) {
         case "Produksi":
           this.$router.push({ name: "produksi" }, () => {});

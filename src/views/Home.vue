@@ -1,6 +1,6 @@
 <template>
   <div class="container is-fullhd">
-    <Navbar class="navbar" />
+    <!-- <Navbar class="navbar" /> -->
     <div class="has-text-centered">
       <Welcome />
       <router-view></router-view>
@@ -11,16 +11,16 @@
 
 <script>
 // @ is an alias to /src
-import Navbar from "@/components/element/bulmaNav.vue";
+// import Navbar from "@/components/element/bulmaNav.vue";
 // import Footer from "../components/element/bulmaFooter";
 import Welcome from "@/components/Welcome.vue";
 
 export default {
   name: "Home",
   components: {
-    Welcome,
+    Welcome
     // Footer,
-    Navbar
+    // Navbar
   },
   computed: {
     produksi() {

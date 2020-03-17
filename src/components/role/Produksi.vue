@@ -96,10 +96,10 @@
   </div>
 </template>
 <script>
-import Produksi from "../element/ProduksiEl.vue";
-import Search from "../element/Search.vue";
-import Modal from "../element/Modal.vue";
-import * as itemService from "../../services/item_service.js";
+import Produksi from "@/components/element/ProduksiEl.vue";
+import Search from "@/components/element/Search.vue";
+import Modal from "@/components/element/Modal.vue";
+import * as itemService from "@/services/item_service.js";
 
 export default {
   name: "produk",
@@ -123,17 +123,7 @@ export default {
       sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
-      loader: this.$loading.show(
-        {},
-        {
-          after: this.$createElement("img", {
-            attrs: { src: require("@/assets/logocapcin.png") }
-          }),
-          // default: this.$createElement(CapcinVue),
-          before: this.$createElement("h1", "Loading ...")
-        }
-      )
+      last_page: null // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
     };
   },
   created() {
@@ -142,7 +132,7 @@ export default {
   },
   methods: {
     req: async function() {
-      this.loader;
+      this.$store.commit("loading");
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
         //kalo ga ada params servernya ga mau.. karena sudah di setting gitu..
@@ -158,19 +148,16 @@ export default {
       };
       try {
         const response = await itemService.loadData(params);
-        console.log(response);
         let getData = response.data.data; // masukkan data response ke getData
         this.items = getData.data; //ambil data yang dibutuhkan
         this.units = response.data.data_unit; //untuk sementara ini ga usah ga papa sih, selama ga bikin data baru
         this.totaldata = getData.total; // input parameter, ada berapa total data yang ada
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
 
-        this.loader.hide(); // loadng spinner berhenti
-        console.log(this.items); // nanti janagan lupa ini dihapus =============================
+        this.$store.commit("notLoading"); // loadng spinner berhenti
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
-        console.log("" + error); // jangan lupa di hapus nanti ======================================
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -180,11 +167,6 @@ export default {
 
     //jika ada scroll event
     Scroll() {
-      //================= development mode ===========================
-      console.log("Last page  :  ", this.last_page);
-      console.log("Current page  :  ", this.current_page);
-      console.log("Busy Scroll :  ", this.busy);
-      //================ jangan lupa nanti di hapus =========================
       this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
@@ -196,19 +178,7 @@ export default {
     },
     // load lebih banyak data
     loadMore: async function() {
-      let loader = this.$loading.show(
-        {},
-        {
-          after: this.$createElement("img", {
-            attrs: { src: require("@/assets/logocapcin.png") }
-          }),
-          // default: this.$createElement(CapcinVue),
-          before: this.$createElement("h1", "Loading ...")
-        }
-      );
-      //================jangan lupa nanti di hapus =================
-      console.log("Busy Load more :  ", this.busy);
-      //================================================
+      this.$store.commit("loading");
       // inisialisasi lokal halaman sekarang
       let current_page;
       current_page = this.current_page + 1; // request ke server halaman selanjutnya
@@ -228,16 +198,9 @@ export default {
       this.busy = false; // jalankan lagi fungsi VueInfineScroll
       try {
         this.busy = true; // selama request matikan InfiniteScroll
-        //==================== jangan lupa nanti dihapus =================
-        console.log("Busy try :  ", this.busy);
-        console.log("more exist  :  ", this.more_exist);
-        //========================================================
         // ngene iki lho carane lek gawe async await hehehe
         const response = await itemService.loadData(params);
-        //================================jangan lupa ini nanti dihapus ===============
-        loader.hide();
-        console.log(response);
-        //==============================================
+        this.$store.commit("notLoading");
         let getData = response.data.data;
         // bedanya dengan fungsi request data awal, yang ini datanya di push
         getData.data.forEach(data => {
@@ -249,18 +212,10 @@ export default {
         this.current_page = getData.current_page; // jangan lupa current page dimasukkan juga..
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
-        // matikan button loading spinner
-        // ==================== jangan lupa ini nanti di hapus ===================
-        console.log("Busy response :  ", this.busy);
-        console.log(this.items);
-        //==============================================================
         // biar more_exist nilainya di update oleh fungsi updated saja
         this.more_exist = false;
       } catch (error) {
         this.more_exist = false;
-        // ================= jangan lupa ini nanti di hapus ===================
-        console.log("" + error);
-        //=====================================================================
         this.flashMessage.error({
           message: "" + error,
           time: 5000
@@ -297,10 +252,6 @@ export default {
     } else {
       this.more_exist = false;
     }
-
-    //=====================jangan lupa ini nanti di hapus ============
-    console.log("Updated :  ", this.more_exist);
-    //======================================================
   }
 };
 </script>
@@ -317,7 +268,7 @@ export default {
   /* height: 500px; */
 }
 .iterasi > div {
-  background-color: #f14668;
+  background-color: #42b549;
   width: 50%;
   height: auto;
 }

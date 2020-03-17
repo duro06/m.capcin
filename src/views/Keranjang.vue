@@ -1,23 +1,24 @@
 <template>
   <div class="profile">
-    <div class="has-text-centered">
-      <div>
-        <div>
-          <div class="card">
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-6" style="color: black">
-                    <!-- id : {{ product().id }} Nama :
-                    {{ product().name }} -->
-                    isi nanti dah
-                  </p>
-                  <p class="subtitle is-7" style="color: black">
-                    <!-- {{ harga }} <br />
-                    Tersedia {{ product().stok_awal }} <br />
-                    {{ product().description }} -->
-                    yang penting ente kelihatan
-                  </p>
+    <div class="isi" v-if="items.length">
+      <div class="pengulangan" v-for="(item, n) in items" :key="n">
+        <Card :anu="item" />
+      </div>
+      <div class="card-footer">
+        <div class="card">
+          <div class="card-content">
+            <div class="columns is-mobile">
+              <div class="column is-5">
+                <p>
+                  Jumlah harga <br />
+                  {{ total }}
+                </p>
+              </div>
+              <div class="column is-6">
+                <div class="rata-kanan">
+                  <button @click="orderNow" class="button is-success">
+                    Pesan
+                  </button>
                 </div>
               </div>
             </div>
@@ -25,50 +26,48 @@
         </div>
       </div>
     </div>
-
-    <!-- <Footer class="navbar" /> -->
+    <div class="kosong" v-else><Empty /></div>
   </div>
 </template>
 <script>
-// import { getProfile } from "../services/auth_service";
+// import { getProfile } from "@/services/auth_service";
 import { mapState } from "vuex";
-// import * as auth from "../services/auth_service";
-// import Modal from "../components/element/Modal.vue";
-// import Footer from "../components/element/bulmaFooter";
+import * as cart from "@/services/cart_service";
+import * as order from "@/services/order_service";
+// import Modal from "@/components/element/Modal.vue";
+import Card from "@/components/element/CartProduct";
+import Empty from "@/components/element/EmptyPage";
 
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    // Footer
+    Card,
+    Empty
   },
   data() {
     return {
-      user: "",
+      items: [],
+      jumlahPesanan: 0,
       showModal: false, // modal tampil atau tidak
       errors: [],
-      disable: false
+      disable: false,
+      id: null
     };
   },
-
+  created() {
+    this.getItemsbyId();
+  },
   computed: {
-    ...mapState(["products"])
-    // displayImage() {
-    //   if (this.product().image) {
-    //     return this.product().image;
-    //   } else {
-    //     return "../img/no-image.jpg";
-    //   }
-    // },
-    // harga() {
-    //   if (this.product().harga) {
-    //     let harga =
-    //       "Rp " + new Intl.NumberFormat().format(this.product().harga);
-    //     return harga;
-    //   } else {
-    //     return "data tidak ditemukan";
-    //   }
-    // }
+    ...mapState(["products", "profile"]),
+    total() {
+      const total =
+        "Rp " +
+        new Intl.NumberFormat().format(
+          this.items.reduce((t, me) => t + me.harga * me.qty, 0)
+        );
+      return total;
+    }
   },
   watch: {
     // user: {
@@ -77,26 +76,62 @@ export default {
     //     this.getProfile();
     //   }
     // }
-    // imageName: {
-    //   immediate: true,
-    //   handler() {
-    //     this.pickFile();
-    //   }
-    // }
   },
   methods: {
-    // product() {
-    //   // let product;
-    //   const id = new Intl.NumberFormat().format(this.$route.params.id);
-    //   console.log("route : ", this.$route.params.id);
-    //   console.log("id : ", id);
-    //   for (let index = 0; index < this.products.length; index++) {
-    //     if (this.products[index].id == id) {
-    //       console.log("products : ", this.products[index]);
-    //       return this.products[index];
-    //     }
-    //     // console.log("product : ", product);
-    //     // return product;
+    orderNow: async function() {
+      this.$store.commit("loading");
+      // post total sama user_id
+      let total = this.items.reduce((t, me) => t + me.harga * me.qty, 0);
+      const formData = new FormData();
+      formData.append("total", total);
+      formData.append("user_id", this.profile.id);
+      try {
+        const response = await order.chartOrder(formData);
+        if (response.status === 200) {
+          this.$router.replace({ name: "berhasil" }, () => {});
+          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+        }
+      } catch (error) {
+        this.$store.commit("notLoading");
+        this.flashMessage.error({
+          message: "" + error, // kirim flash Message
+          time: 5000
+        });
+      }
+    },
+    getItemsbyId: async function() {
+      this.$store.dispatch("productOut");
+      this.$store.commit("loading");
+      let id = this.profile.id;
+      if (id) {
+        this.id = id;
+      } else {
+        this.id = localStorage.getItem("mie");
+      }
+      let params = {
+        params: {
+          q: this.id
+        }
+      };
+      try {
+        const response = await cart.getChart(params);
+        this.items = response.data.data.data;
+        this.$store.commit("notLoading");
+      } catch (errors) {
+        this.$store.commit("notLoading");
+      }
+    }
+    // product: async function(id) {
+    //   this.$store.commit("loading");
+    //   try {
+    //     const response = await prod.getById(id);
+    //     let data = response.data.data;
+    //     this.$store.dispatch("productPush", data);
+    //     console.log(data);
+    //     this.$store.commit("notLoading");
+    //   } catch (e) {
+    //     this.$store.commit("notLoading");
+    //     console.log("", e);
     //   }
     // }
   }
@@ -107,87 +142,20 @@ export default {
   padding: 3rem 0.3rem 3rem 0.3rem;
 }
 
-.kotak {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-}
-.kotak > label {
-  text-align: left;
-  width: 30%;
-}
-.kotak > input {
-  width: 70%;
-  /* border-color: #dbdbdb;
-  border-radius: 2px;
-  font-size: 0.75rem;
-  clear: both;
-  border: 1px solid #dbdbdb; */
-}
-
-/* Avatar */
-.avatar-profile {
-  padding: 0.25rem;
+.card {
+  border-radius: 0 15px 0 15px;
+  margin-bottom: 10px;
   overflow: hidden;
-  background-color: white;
-  border-radius: 5px;
 }
-img.avatar-ku {
-  width: 100%;
-  border-radius: 5px;
+.card-content {
+  padding: 10px !important;
 }
-/* -=========================================================== */
-.edit-avatar {
-  position: absolute;
-  left: 11px;
-  top: 10px;
-  /* text-align: center;  */
+.card-footer {
+  display: block !important;
+  padding: 5px 10px 5px 5px;
 }
-
-.edit-avatar input {
-  display: none;
-}
-.edit-avatar label {
-  display: inline-block;
-  width: 100%;
-  height: 34px;
+.detail-items {
+  font-size: 14px;
   color: black;
-  padding: 1px;
-  background: #00ffec61;
-  border: 1px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  font-weight: normal;
-  transition: all 0.2s ease-in-out;
-}
-.file-cta {
-  display: inline-flex;
-  width: 100%;
-  /* height: 34px; */
-  color: black;
-  padding: 0px;
-  background: #00ffec61;
-  border: 1px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  font-weight: normal;
-  transition: all 0.2s ease-in-out;
-}
-
-.edit-avatar label:hover {
-  background: grey;
-  border-color: #d6d6d6;
-  color: white;
-}
-.edit-avatar label:after {
-  /* content: "\f007";
-        font-family: 'Font Awesome 5 Free'; */
-  color: white;
-  position: absolute;
-  /* top: 10px; */
-  left: 0;
-  right: 0;
-  text-align: center;
-  margin: auto;
 }
 </style>

@@ -152,7 +152,7 @@
 </template>
 <script>
 //import fungsi login dari auth_service
-import { login } from "../../services/auth_service";
+import { login } from "@/services/auth_service";
 export default {
   name: "Login",
   props: {
@@ -193,17 +193,10 @@ export default {
     findRole(item) {
       //redirect pake { name: "link"} biar ga panjang gini nulisnya
       // {path:"/home/produksi"}
-      //================== jangan lupa ini nanti dihapus ==============
-      console.log(item);
-      //=======================================
       const url = this.$store.getters.serverUrl; // server url, tempatnya admin sama root
       // switch item berisi role yang dipaggil oleh fungsi submitForm
       switch (item) {
         case "Produksi":
-          // ============= jangan lupa ini nanti di hapus ===============
-          console.log(" Login Switch to produksi");
-          console.log("params", this.$route.params);
-          //================================================================
           this.$router.push({ name: "produksi" }, () => {});
           this.flashMessage.success({
             message: "Anda login sebagai " + item + " Capcin",
@@ -211,9 +204,6 @@ export default {
           });
           break;
         case "Packing":
-          // ============= jangan lupa ini nanti di hapus ===============
-          console.log("Switch to Packing");
-          //================================================================
           this.$router.push({ name: "packing" }, () => {});
           this.flashMessage.success({
             message: "Anda login sebagai " + item + " Capcin",
@@ -221,9 +211,6 @@ export default {
           });
           break;
         case "Supplier":
-          // ============= jangan lupa ini nanti di hapus ===============
-          console.log("Switch to Supplier");
-          //================================================================
           this.$router.push({ name: "supplier" }, () => {});
           this.flashMessage.success({
             message: "Anda login sebagai " + item + " Capcin",
@@ -231,9 +218,6 @@ export default {
           });
           break;
         case "Mitra":
-          // ============= jangan lupa ini nanti di hapus ===============
-          console.log("Switch to Mitra");
-          //================================================================
           this.$router.push({ name: "mitra" }, () => {});
           this.flashMessage.success({
             message: "Anda login sebagai " + item + " Capcin",
@@ -321,9 +305,6 @@ export default {
 
           break;
         default:
-          // ============= jangan lupa ini nanti di hapus ===============
-          console.log(url);
-          //================================================================
           this.disable = true; // disable button login
           this.loading = "is-loading"; // enable button spinner
           // jika yang login role nya bukan 4 diatas atau admin atau root, maka logout
@@ -367,17 +348,11 @@ export default {
         this.disable = true; //disable button
         try {
           const response = await login(this.user); // paggil fungsi login dari auth dengan membawa data user
-          //=========== jangan lupa ini nanti di hapus =============
-          console.log(response);
-          //=========================================================
           vm.loading = ""; // button spinner off
           this.disable = false; // button enable
           this.errors = {}; // sepertinya belum berfungsi membesihkan error dengan baik dan benar
           this.findRole(response.token_scope); // panggil fungsi redirect sesuai role
         } catch (error) {
-          //=========== jangan lupa ini nanti di hapus =============
-          console.log(error.response);
-          //=========================================================
           this.disable = false; //button enable
           if (error.response != undefined) {
             vm.loading = ""; //loading spinner off

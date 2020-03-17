@@ -8,5 +8,7 @@ export default {
   adminVerified: localStorage.getItem("waiting_verivication") || null,
   profile: {},
   products: [],
-  loadShow: ""
+  loadShow: "",
+  successOrder: {},
+  cart: 0
 };

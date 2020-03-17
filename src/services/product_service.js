@@ -1,20 +1,18 @@
 import { http } from "./http_service.js";
 
+/*
+jika ingin melihat route apa saja yang tersedia cek di laravel
+pakai php artisan route:list
+*/
+
 export function loadData(params) {
-  return http().get("user/products", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
+  return http().get("user/products", params);
 }
 
 export function loadMore(page) {
-  return http().get(`user/products?page=${page}`); //
-}
-
-export function purchase(params) {
-  return http().post("user/orders", params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
-}
-export function beli(params) {
-  return http().post(`user/orders`, params); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
+  return http().get(`user/products?page=${page}`);
 }
 
 export function getById(params) {
-  return http().get(`user/products/${params}/edit`); //ini diambil  dari Route products laravel nama routenya ('api/(prefix=user)/products)...karena sdh di definisikan di store maka tgl ('/products)
+  return http().get(`user/products/${params}/edit`);
 }

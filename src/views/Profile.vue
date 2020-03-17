@@ -1,60 +1,56 @@
 <template>
   <div class="profile">
     <div class="has-text-centered">
-      <div>
-        <div>
-          <div class="card">
-            <div class="avatar-profile">
-              <div class="card-image">
-                <figure class="image is-480x480">
-                  <img
-                    class="avatar-ku"
-                    :src="displayImage"
-                    ref="displayAvatarImage"
-                    alt="avatar"
-                  />
-                </figure>
-              </div>
-              <div class="edit-avatar">
-                <input
-                  type="file"
-                  ref="editAvatar"
-                  id="image"
-                  @change="attachImage"
-                />
-                <!-- <input type="file" id="image" @change="previewFiles" /> -->
-                <label for="image"> Change Avatar </label>
-                <!-- <myInput id="image" @input="onFilePicked" /> -->
-              </div>
-            </div>
+      <div class="card">
+        <div class="avatar-profile">
+          <div class="card-image">
+            <figure class="image is-480x480">
+              <img
+                class="avatar-ku"
+                :src="displayImage"
+                ref="displayAvatarImage"
+                alt="avatar"
+              />
+            </figure>
+          </div>
+          <div class="edit-avatar">
+            <input
+              type="file"
+              ref="editAvatar"
+              id="image"
+              @change="attachImage"
+            />
+            <!-- <input type="file" id="image" @change="previewFiles" /> -->
+            <label for="image"> Change Avatar </label>
+            <!-- <myInput id="image" @input="onFilePicked" /> -->
+          </div>
+        </div>
 
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img
-                      :src="displayImage"
-                      alt="avatar"
-                      ref="miniDisplayAvatarImage"
-                    />
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-6" style="color: black">{{ user.name }}</p>
-                  <p class="subtitle is-7" style="color: black">
-                    {{ user.email }}<br />
-                    {{ user.role }} Capcin
-                  </p>
-                </div>
-                <div class="media-content">
-                  <button
-                    class="button is-info is-small"
-                    @click.prevent="editProfile"
-                  >
-                    edit
-                  </button>
-                </div>
-              </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img
+                  :src="displayImage"
+                  alt="avatar"
+                  ref="miniDisplayAvatarImage"
+                />
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-6" style="color: black">{{ user.name }}</p>
+              <p class="subtitle is-7" style="color: black">
+                {{ user.email }}<br />
+                {{ user.role }} Capcin
+              </p>
+            </div>
+            <div class="media-content">
+              <button
+                class="button is-info is-small"
+                @click.prevent="editProfile"
+              >
+                edit
+              </button>
             </div>
           </div>
         </div>
@@ -130,11 +126,11 @@
   </div>
 </template>
 <script>
-// import { getProfile } from "../services/auth_service";
+// import { getProfile } from "@/services/auth_service";
 import { mapState } from "vuex";
-import * as auth from "../services/auth_service";
-import Modal from "../components/element/Modal.vue";
-// import Footer from "../components/element/bulmaFooter";
+import * as auth from "@/services/auth_service";
+import Modal from "@/components/element/Modal.vue";
+// import Footer from "@/components/element/bulmaFooter";
 
 export default {
   name: "profile",
@@ -152,23 +148,26 @@ export default {
   },
 
   beforeCreate: async function() {
-    //===================jangan lupa ini nanti dihapus=============
-    console.log("Profile Get Profile");
-    //=============================================================
     try {
       const response = await auth.getProfile(); // ambil profile
-      //===================jangan lupa ini nanti dihapus=============
-      console.log(response);
-      //=============================================================
       this.$store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
       this.user = response.data;
       this.errors = [];
     } catch (error) {
-      console.log("", error);
+      this.errors = error;
     }
   },
   computed: {
     ...mapState(["profile", "serverImage", "token"])
+    // loading() {
+    //   if (this.user.image != "" || this.user.image != undefined) {
+    //     console.log("not Loading");
+    //     return this.$store.commit("notLoading");
+    //   } else {
+    //     console.log("not Loading");
+    //     return this.$store.commit("loading", "terserah");
+    //   }
+    // }
   },
   watch: {
     user: {
@@ -184,6 +183,9 @@ export default {
     //   }
     // }
   },
+  mounted() {
+    this.$store.commit("loading");
+  },
   methods: {
     editProfile() {
       this.showModal = true;
@@ -193,9 +195,11 @@ export default {
       this.showModal = false;
     },
     saveModal: async function() {
+      this.$store.commit("loading");
       try {
         this.disable = true;
         const response = await auth.updateProfile(this.user.id, this.user);
+        this.$store.commit("notLoading");
         this.flashMessage.success({
           message: "Profile Updated successfully!",
           time: 5000
@@ -219,20 +223,27 @@ export default {
       this.showModal = false;
     },
     getProfile() {
-      console.log("Profile Updated ", this.profile);
+      if (!this.profile.length) {
+        this.$store.commit("loading");
+      }
       let user = this.profile;
       this.user = user;
-      if (user.image != null || user.image != " null") {
-        console.log("user image", user.image);
-        this.displayImage = this.serverImage + user.image;
+      if (
+        user.image != undefined &&
+        user.image != null &&
+        user.image != "null"
+      ) {
+        this.displayImage = `${this.serverImage}` + `${user.image}`;
+        this.$store.commit("notLoading");
       } else {
-        this.displayImage = this.serverImage + "galleries_images/nouser.png";
+        this.displayImage = "@/assets/nouser.png";
+        this.$store.commit("notLoading");
       }
     },
 
     attachImage: async function() {
+      this.$store.commit("loading");
       this.user.image = this.$refs.editAvatar.files[0];
-      console.log(this.$refs.editAvatar.files[0]);
       let reader = new FileReader();
 
       reader.addEventListener(
@@ -252,6 +263,7 @@ export default {
 
       try {
         const response = await auth.updateImage(this.user.id, formData);
+        this.$store.commit("notLoading");
         this.flashMessage.success({
           message: "Avatar has been updated successfully!",
           time: 5000

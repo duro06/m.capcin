@@ -4,66 +4,43 @@
       position="right top"
       style="z-index: 19999 !important; position: fixed;"
     ></FlashMessage>
-    <Capcin />
-    <div class="vld-parent" ref="formContainer"></div>
-    <!-- <button @click="submit">Login</button> -->
-    <transition class="slideInLeft" v-wow data-wow-duration="1s">
+    <LoadingCapcin />
+    <Nav class="navbar" v-if="loggedIn" />
+    <transition name="slide-fade" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
     <Footer class="navbar" v-if="loggedIn" />
   </div>
 </template>
 <script>
-import * as auth from "./services/auth_service";
-import store from "./store";
-import Footer from "./components/element/bulmaFooter";
-import Capcin from "./components/element/Capcin.vue";
-import Loading from "vue-loading-overlay";
-import Vue from "vue";
-Vue.use(
-  Loading,
-  { color: "#42b549", opacity: 0.7, useSlot: true }
-  // {
-  // before: this.$createElement("h1", "Loading ...")
-  // after: this.$createElement(capcin)
-  // }
-);
+import * as auth from "@/services/auth_service";
+import * as cart from "@/services/cart_service";
+import store from "@/store";
 
-// import capcin from "./components/element/Capcin.vue";
-// import loading from "vue-loading-overlay";
+import Footer from "@/components/element/bulmaFooter";
+import Nav from "@/components/element/bulmaNav";
+import LoadingCapcin from "@/components/element/Loading.vue";
+import { mapState } from "vuex";
 
-// import Loading from "./components/element/Loading";
-
-// import router from "./router";
 export default {
   name: "app",
   components: {
     Footer,
-    Capcin
+    Nav,
+    LoadingCapcin
     // loading
   },
   beforeCreate: async function() {
-    localStorage.removeItem("level"); // hapus temporary local storege level
-    //===================jangan lupa ini nanti dihapus=============
-    console.log("App Get Profile");
-    //=============================================================
     try {
       //jika login maka
       if (store.getters.loggedIn) {
-        //===================jangan lupa ini nanti dihapus=============
-        console.log("Login = ", store.getters.loggedIn);
-        //=============================================================
         const response = await auth.getProfile(); // ambil profile
-        //===================jangan lupa ini nanti dihapus=============
-        console.log(response);
-        //=============================================================
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+        localStorage.removeItem("level"); // hapus temporary local storege level
+        localStorage.removeItem("mie"); // hapus temporary local storege level
 
         //jika tidak
       } else {
-        //===================jangan lupa ini nanti dihapus=============
-        console.log("Login = false");
-        //=============================================================
         store.dispatch("destroyToken"); //paggil action untuk menghapus authentifikasi
       }
       setTimeout(function() {}, 2000);
@@ -72,20 +49,36 @@ export default {
       store.dispatch("destroyToken");
     }
   },
+  created() {
+    // this.getCart();
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    ...mapState(["profile"])
+  },
+  methods: {
+    getCart: async function() {
+      let id = this.profile.id;
+      let params = {
+        params: {
+          q: id
+        }
+      };
+      try {
+        const res = await cart.getChart(params);
+        let panjang = res.data.data.data.length;
+        if (panjang > 0) {
+          store.commit("setCart", panjang);
+        } else {
+          store.commit("setCart", 0);
+        }
+      } catch (e) {
+        store.commit("notLoading");
+      }
     }
   }
-  // methods: {
-  //   submit() {
-  //     let loader = this.$loading.show();
-  //     // simulate AJAX
-  //     setTimeout(() => {
-  //       loader.hide();
-  //     }, 5000);
-  //   }
-  // }
 };
 </script>
 <style lang="scss">
@@ -135,6 +128,51 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+// Animmasi transition
+
+@-webkit-keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInLeft {
+  -webkit-animation-name: slideInLeft;
+  animation-name: slideInLeft;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 // .vld-icon > img {
 //   opacity: 0.6;
 //   position: relative;

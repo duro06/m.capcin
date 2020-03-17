@@ -1,39 +1,57 @@
 <template>
-  <div class="hello">
-    <div
-      class="field slideInDown"
-      v-wow
-      data-wow-duration="1s"
-      data-wow-delay="0.4s"
-    >
-      <div class="card" @click="redirect">
-        <div class="card-image">
-          <figure class="image is-5by3">
-            <img :src="image" alt="Placeholder image" />
-          </figure>
+  <div class="empty">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img :src="image" alt="Placeholder image" />
+        </figure>
+      </div>
+      <div class="card-content">
+        <div @click="redirect" class="halaman-isi" v-if="page">
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Silahkan lakukan transaksi</p>
         </div>
-        <div class="card-content">
-          <div class="halaman-isi">
-            <p class="tittle is-5">Halaman ini Kosong</p>
-            <p class="subtittle is-6">Memang tidak ada isi nya</p>
-          </div>
+        <div class="halaman-isi" v-else>
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Belum saya isi</p>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 export default {
-  name: "HelloWorld",
+  name: "empty",
   data() {
     return {
-      image: "../img/404.png"
+      emptyCart: "../img/emptyCart.png",
+      emptyBag: "../img/emptyBag.png",
+      sadBag: "../img/sadBag.png",
+      sadBag2: "../img/sadBag2.png"
     };
   },
   computed: {
     role() {
       return this.$store.getters.levelAccess;
+    },
+    image() {
+      if (this.$route.path.includes("order")) {
+        return this.sadBag;
+      } else if (this.$route.path.includes("keranjang")) {
+        return this.emptyCart;
+      } else {
+        return this.sadBag2;
+      }
+    },
+    page() {
+      if (
+        this.$route.path.includes("order") ||
+        this.$route.path.includes("keranjang")
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -84,10 +102,8 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.hello {
+.empty {
   padding: 55px 20px;
 }
 .halaman-isi {
