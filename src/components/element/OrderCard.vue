@@ -40,7 +40,7 @@
             <p class="rata-kiri">
               <B>status :</B>
             </p>
-            <p class="rata-kiri box">
+            <p class="rata-kiri box has-text-centered">
               <B>{{ item.status.name }}</B>
             </p>
           </div>
@@ -186,55 +186,55 @@ export default {
   border-radius: 10px;
 }
 .Order {
-  background-color: rgb(255, 245, 153);
+  background-color: rgb(255, 255, 150);
 }
 .Order > div > .box {
-  background-color: rgb(253, 239, 33);
+  background-color: rgb(255, 255, 50);
   color: black;
   cursor: not-allowed;
   padding: 7px 16px;
 }
 .Produksi {
-  background-color: rgb(214, 248, 160);
+  background-color: rgb(155, 255, 150);
 }
 .Produksi > div > .box {
-  background-color: rgb(158, 253, 33);
+  background-color: rgb(105, 255, 50);
   color: black;
   cursor: not-allowed;
   padding: 7px 16px;
 }
 .Packing {
-  background-color: rgb(160, 248, 164);
+  background-color: rgb(100, 250, 180);
 }
 .Packing > div > .box {
-  background-color: rgb(59, 253, 33);
+  background-color: rgb(50, 250, 100);
   color: black;
   cursor: not-allowed;
   padding: 7px 16px;
 }
 .Dikirim {
-  background-color: rgb(160, 195, 248);
+  background-color: rgb(150, 255, 205);
 }
 .Dikirim > div > .box {
-  background-color: rgb(33, 209, 253);
+  background-color: rgb(50, 250, 255);
   color: black;
   cursor: not-allowed;
   padding: 7px 16px;
 }
 .Terkirim {
-  background-color: rgb(155, 253, 245);
+  background-color: rgb(155, 182, 255);
 }
 .Terkirim > div > .box {
-  background-color: rgb(33, 121, 253);
+  background-color: rgb(62, 130, 255);
   color: aliceblue;
   cursor: not-allowed;
   padding: 7px 16px;
 }
 .Selesai {
-  background-color: rgb(172, 255, 155);
+  background-color: rgb(255, 158, 158);
 }
 .Selesai > div > .box {
-  background-color: rgb(66, 230, 17);
+  background-color: rgb(255, 79, 79);
   color: aliceblue;
   cursor: not-allowed;
   padding: 7px 16px;
