@@ -16,7 +16,7 @@
 import * as auth from "@/services/auth_service";
 import * as cart from "@/services/cart_service";
 import store from "@/store";
-
+import { readNotif } from "@/services/notif_service";
 import Footer from "@/components/element/bulmaFooter";
 import Nav from "@/components/element/bulmaNav";
 import LoadingCapcin from "@/components/element/Loading.vue";
@@ -35,7 +35,10 @@ export default {
       //jika login maka
       if (store.getters.loggedIn) {
         const response = await auth.getProfile(); // ambil profile
-        store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan data
+        store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
+
+        store.dispatch("ambilOrder");
+        readNotif();
         localStorage.removeItem("level"); // hapus temporary local storege level
         localStorage.removeItem("mie"); // hapus temporary local storege level
 
@@ -159,18 +162,6 @@ export default {
 .slideInLeft {
   -webkit-animation-name: slideInLeft;
   animation-name: slideInLeft;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.3s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
 }
 
 // .vld-icon > img {

@@ -52,9 +52,7 @@
     >
       <div class="navbar-end has-text-centered loop" v-if="notification.length">
         <div class="ulang" v-for="(pesan, n) in notification" :key="n">
-          <div class="pesan">
-            <p>{{ pesan }}</p>
-          </div>
+          <Notification :data="pesan" />
         </div>
       </div>
     </div>
@@ -63,20 +61,35 @@
 <script>
 import { mapState } from "vuex";
 import * as c from "@/services/cart_service";
+import Notification from "@/components/element/Notification.vue";
+
+// import Pusher from "pusher-js";
+//pusher console
+
+// Pusher.logToConsole = true;
 export default {
   name: "navbar",
+  components: { Notification },
   data: () => ({
     isActive: false,
     error: [],
     kelihatan: "none",
-    notification: ["satu", "dua", "tiga"]
+    notifications: [],
+    id: null
   }),
   created() {
     this.getCart();
   },
+  mounted() {},
   computed: {
+    notification() {
+      return this.notification;
+    },
     level() {
       return this.$store.getters.myProfile.role;
+    },
+    loggedIn() {
+      return this.$store.getters.loggedIn;
     },
     currentPage() {
       return this.$route.path;
@@ -87,7 +100,7 @@ export default {
     // cart() {
     //   return this.$store.state.cart;
     // },
-    ...mapState(["profile", "cart"])
+    ...mapState(["profile", "cart", "Order", "notification"])
   },
   methods: {
     tampil() {
@@ -95,24 +108,31 @@ export default {
       this.kelihatan = this.isActive ? "inherit" : "none";
     },
     getCart: async function() {
-      let id = this.profile.id;
-      let params = {
-        params: {
-          q: id
-        }
-      };
-      try {
-        const res = await c.getChart(params);
-        let panjang = res.data.data.data.length;
-        if (panjang > 0) {
-          this.$store.commit("setCart", panjang);
+      if (this.loggedIn) {
+        let id = this.profile.id;
+        if (id) {
+          this.id = id;
         } else {
-          this.$store.commit("setCart", 0);
+          this.id = localStorage.getItem("mie");
         }
-        this.$router.replace({ name: "mitra" }, () => {});
-        this.error = [];
-      } catch (e) {
-        this.$router.replace({ name: "mitra" }, () => {});
+        let params = {
+          params: {
+            q: this.id
+          }
+        };
+        try {
+          const res = await c.getChart(params);
+          let panjang = res.data.data.data.length;
+          if (panjang > 0) {
+            this.$store.commit("setCart", panjang);
+          } else {
+            this.$store.commit("setCart", 0);
+          }
+          this.$router.replace({ name: "mitra" }, () => {});
+          this.error = [];
+        } catch (e) {
+          this.$router.replace({ name: "mitra" }, () => {});
+        }
       }
     }
   }
@@ -121,23 +141,29 @@ export default {
 <style scoped>
 #notif {
   width: 40%;
-  position: fixed;
+  /* height: 80%; */
+  position: absolute;
   margin-left: 55%;
   margin-top: 53px;
   border-radius: 5px;
-  background-color: whitesmoke;
+  background-color: white;
+}
+.loop {
+  max-height: 80%;
 }
 .ulang {
-  background-color: rgb(241, 254, 255);
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
   padding: 10px;
   display: flex;
   justify-content: center;
+  max-height: 80%;
 }
 .pesan {
   border-radius: 3px;
   border-color: transparent;
   width: fit-content;
+  height: 80%;
 }
 .navbar-burger {
   color: #4e4e4e !important;

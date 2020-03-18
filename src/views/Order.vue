@@ -1,7 +1,7 @@
 <template>
   <div class="order">
-    <div class="isi" v-if="items.length">
-      <div class="pegulangan" v-for="(item, n) in items" :key="n">
+    <div class="isi" v-if="Order.length">
+      <div class="pegulangan" v-for="(item, n) in Order" :key="n">
         <OrderCard :data="item" />
       </div>
     </div>
@@ -11,10 +11,10 @@
   </div>
 </template>
 <script>
-import * as ord from "@/services/order_service";
 import OrderCard from "@/components/element/OrderCard";
 import Empty from "@/components/element/EmptyPage";
 import { mapState } from "vuex";
+// import Pusher from "pusher-js";
 
 export default {
   name: "order",
@@ -28,11 +28,11 @@ export default {
   },
   mounted() {
     this.ambilData();
-    // this.getID();
+    // this.subscribe();
   },
 
   computed: {
-    ...mapState(["profile"])
+    ...mapState(["profile", "Order"])
   },
   watch: {
     getID() {
@@ -42,27 +42,9 @@ export default {
     }
   },
   methods: {
-    ambilData: async function() {
-      this.$store.commit("loading");
-      let id = this.profile.id;
-      if (id) {
-        this.id = id;
-      } else {
-        this.id = localStorage.getItem("mie");
-      }
-      let params = {
-        params: {
-          q: this.id
-        }
-      };
-
-      try {
-        const res = await ord.getOrder(params);
-        this.items = res.data.data.data;
-        this.$store.commit("notLoading");
-      } catch (e) {
-        this.$store.commit("notLoading");
-      }
+    // Fungsinya pusher
+    ambilData() {
+      this.$store.dispatch("ambilOrder");
     },
     updateData() {
       // let id = this.profile.id;

@@ -34,9 +34,10 @@ Vue.use(infiniteScroll);
 // const _newUrlApiLogin = _LurlApi + "apilogin";
 
 // axios.defaults.baseURL = _LurlApi;
-
+import { writeNotif } from "./services/notif_service";
 window.addEventListener("beforeunload", function() {
   if (store.getters.loggedIn) {
+    writeNotif();
     localStorage.setItem("level", store.getters.levelAccess);
     localStorage.setItem("mie", store.state.profile.id);
   }

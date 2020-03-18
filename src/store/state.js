@@ -10,5 +10,7 @@ export default {
   products: [],
   loadShow: "",
   successOrder: {},
+  Order: [],
+  notification: [],
   cart: 0
 };

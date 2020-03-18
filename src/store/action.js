@@ -1,8 +1,96 @@
 import { http } from "../services/http_service.js";
 import store from ".";
 import { setToken } from "../services/auth_service.js";
-
+import * as ord from "@/services/order_service";
+import Pusher from "pusher-js";
+// Pusher.logToConsole = true;
 export default {
+  subscribe({ commit }, order) {
+    // Api key + cluster
+
+    let pusher = new Pusher("c1b487e073e0124e259f", {
+      cluster: "ap1",
+      forceTLS: true
+    });
+
+    // order.forEach(e => {
+    // console.log("order", e);
+    // console.log("index", index);
+    let channel = pusher.subscribe("capcin-tracker." + order.id);
+    console.log("Order nya ini lho", order);
+    channel.bind("App\\Events\\OrderStatusChanged", data => {
+      commit("setNotification", data);
+      console.log("Data ", data);
+      if (data != "") {
+        console.log("data ada");
+        // this.$store.dispatch("destroyVerifie");
+        // this.$router.push('/')
+      }
+    });
+    // });
+    // console.log(channel);
+  },
+  ambilLagi: async function(payload) {
+    try {
+      const res = await ord.getOrder(payload);
+      console.log("params ", payload);
+      let items = res.data.data.data;
+      items.forEach(e => {
+        store.commit("setOrder", e);
+        store.dispatch("subscribe", e);
+      });
+      console.log("Ambil lagi ", res);
+    } catch (e) {
+      store.commit("notLoading");
+    }
+  },
+
+  ambilOrder: async function() {
+    store.commit("loading");
+    let items;
+    // let curent = 1;
+    // let last;
+    let id = store.state.profile.id;
+    let ID;
+    if (id) {
+      ID = id;
+    } else {
+      ID = localStorage.getItem("mie");
+    }
+
+    let params = {
+      params: {
+        q: ID
+      }
+    };
+
+    try {
+      const res = await ord.getOrder(params);
+      items = res.data.data.data;
+      // curent = res.data.data.current_page;
+      // last = res.data.data.last_page;
+      // if (last > 1 && curent <= last) {
+      //   let rest = last - curent;
+      //   for (let index = 0; index < rest; index++) {
+      //     let params = {
+      //       params: {
+      //         q: ID,
+      //         page: index + 1
+      //       }
+      //     };
+      //     this.ambilLagi(params);
+      //   }
+      // }
+      console.log(res);
+      store.commit("notLoading");
+      items.forEach(e => {
+        store.commit("setOrder", e);
+        store.dispatch("subscribe", e);
+      });
+    } catch (e) {
+      store.commit("notLoading");
+    }
+  },
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },
