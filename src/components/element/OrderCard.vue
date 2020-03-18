@@ -1,6 +1,6 @@
 <template>
   <div class="order-container">
-    <div class="card">
+    <div class="card" ref="myPosition" :id="item.id">
       <div class="card-header zoomIn" v-wow data-wow-duration="1s">
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div>
@@ -23,6 +23,7 @@
             <p class="rata-kiri">Details</p>
           </div>
           <div
+            @click="position"
             class="column is-5 zoomIn"
             v-wow
             data-wow-duration="1s"
@@ -147,6 +148,13 @@ export default {
     // }
   },
   methods: {
+    position() {
+      // location.href = "#" + this.item.id;
+      // let positionX = this.$refs.myPosition.getClientRects();
+      // let positionY = this.$refs.myPosition.getBoundingClientRect();
+      // console.log("location ", location.href);
+      // console.log("y", positionY);
+    },
     getDetail() {
       this.isDisplay = !this.isDisplay;
       this.kelihatan = this.isDisplay ? "inherit" : "none";

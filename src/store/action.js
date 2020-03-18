@@ -17,7 +17,7 @@ export default {
     // console.log("order", e);
     // console.log("index", index);
     let channel = pusher.subscribe("capcin-tracker." + order.id);
-    console.log("Order nya ini lho", order);
+    // console.log("Order nya ini lho", order);
     channel.bind("App\\Events\\OrderStatusChanged", data => {
       commit("setNotification", data);
       console.log("Data ", data);
@@ -67,21 +67,6 @@ export default {
     try {
       const res = await ord.getOrder(params);
       items = res.data.data.data;
-      // curent = res.data.data.current_page;
-      // last = res.data.data.last_page;
-      // if (last > 1 && curent <= last) {
-      //   let rest = last - curent;
-      //   for (let index = 0; index < rest; index++) {
-      //     let params = {
-      //       params: {
-      //         q: ID,
-      //         page: index + 1
-      //       }
-      //     };
-      //     this.ambilLagi(params);
-      //   }
-      // }
-      console.log(res);
       store.commit("notLoading");
       items.forEach(e => {
         store.commit("setOrder", e);
