@@ -134,10 +134,9 @@ export default {
           } else {
             this.$store.commit("setCart", 0);
           }
-          this.$router.replace({ name: "mitra" }, () => {});
           this.error = [];
         } catch (e) {
-          this.$router.replace({ name: "mitra" }, () => {});
+          this.error = e;
         }
       }
     }
