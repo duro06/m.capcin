@@ -36,8 +36,38 @@ export default {
   setSuccessOrder(state, payload) {
     state.successOrder = payload;
   },
+  setOrder(state, payload) {
+    state.Order.push(payload);
+  },
+  delOrder(state) {
+    state.Order = [];
+  },
+  setNotification(state, payload) {
+    if (!payload.read) {
+      state.notification.push(payload);
+    }
+  },
+  notifIsRead(state, payload) {
+    const temp = state.notification.filter(
+      e => e.id === payload && e.read == false
+    );
+    if (temp.length) {
+      temp[0].read = true;
+      console.log("notif", temp);
+      if (temp.length > 1) {
+        state.notification.forEach(e => {
+          if (e.id == temp[0].id) {
+            e.read = temp[0].read;
+          }
+        });
+      } else {
+        state.notification.read = temp[0].read;
+      }
+    }
+  },
+
   delSuccessOrder(state) {
-    state.successOrder = {};
+    state.successOrder = [];
   },
   setCart(state, payload) {
     state.cart = payload;

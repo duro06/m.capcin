@@ -27,6 +27,7 @@ export default {
   components: {
     Mitra
   },
+
   data() {
     return {
       items: {}, // data items

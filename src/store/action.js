@@ -1,8 +1,43 @@
 import { http } from "../services/http_service.js";
-import store from ".";
+import { subscribe } from "../services/pusher_service";
 import { setToken } from "../services/auth_service.js";
+import * as ord from "@/services/order_service";
+import store from ".";
 
 export default {
+  ambilOrder: async function() {
+    store.commit("loading");
+    store.commit("delOrder");
+    let items;
+    let id = store.state.profile.id;
+    let ID;
+    if (id) {
+      ID = id;
+    } else {
+      ID = localStorage.getItem("mie");
+    }
+
+    let params = {
+      params: {
+        q: ID
+      }
+    };
+
+    try {
+      // const res = await ord.getOrder(params);
+      const res = await ord.getToNotif(params);
+      items = res.data.data;
+      store.commit("notLoading");
+      console.log("Items", items);
+      console.log("res", res);
+      items.forEach(e => {
+        store.commit("setOrder", e.id);
+        subscribe(e.id);
+      });
+    } catch (e) {
+      store.commit("notLoading");
+    }
+  },
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },

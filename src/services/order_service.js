@@ -4,6 +4,10 @@ export function getOrder(params) {
   return http().get(`user/orders-user`, params);
 }
 
+export function getToNotif(params) {
+  return http().get(`user/orders-all`, params);
+}
+
 export function purchase(params) {
   return http().post(`user/orders`, params);
 }

@@ -78,6 +78,28 @@ export default {
     // }
   },
   methods: {
+    getCart: async function() {
+      let id = this.profile.id;
+      let params = {
+        params: {
+          q: id
+        }
+      };
+      try {
+        const res = await cart.getChart(params);
+        let panjang = res.data.data.data.length;
+        if (panjang > 0) {
+          this.$store.commit("setCart", panjang);
+        } else {
+          this.$store.commit("setCart", 0);
+        }
+        // this.$router.replace({ name: "mitra" }, () => {});
+        this.error = [];
+      } catch (e) {
+        this.error = e;
+        // this.$router.replace({ name: "mitra" }, () => {});
+      }
+    },
     orderNow: async function() {
       this.$store.commit("loading");
       // post total sama user_id
@@ -88,6 +110,7 @@ export default {
       try {
         const response = await order.chartOrder(formData);
         if (response.status === 200) {
+          this.getCart();
           this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
