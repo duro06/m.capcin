@@ -17,8 +17,8 @@
               >
                 <a href="javascript:void(0)" class="mega-link">
                   <span class="mega-icon"><i class="fa fa-bell"></i></span>
-                  <span class="tag is-danger" v-if="notification.length">{{
-                    notification.length
+                  <span class="tag is-danger" v-if="PesanNotif.length">{{
+                    PesanNotif.length
                   }}</span>
                 </a>
               </li>
@@ -79,7 +79,7 @@ export default {
     isActive: false,
     error: [],
     kelihatan: "none",
-    notifications: [],
+    notif: [],
     id: null
   }),
   created() {
@@ -87,8 +87,9 @@ export default {
   },
   mounted() {},
   computed: {
-    notification() {
-      return this.notification;
+    PesanNotif() {
+      console.log("co", this.notification);
+      return this.notification.filter(e => e.read == false);
     },
     level() {
       return this.$store.getters.myProfile.role;
@@ -107,6 +108,7 @@ export default {
     // },
     ...mapState(["profile", "cart", "Order", "notification"])
   },
+  watch: {},
   methods: {
     tampil() {
       this.isActive = !this.isActive;
