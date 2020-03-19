@@ -1,18 +1,21 @@
 <template>
   <div class="container" @click="read">
-    <div :class="['card', pesan.read ? '' : 'unread']">
-      <div class="card-header">
-        <p><B>Referensi : </B> Capcin-{{ pesan.reff }}</p>
+    <router-link :to="{ path: '/order' }">
+      <!-- <router-link :to="{ path: '/order#' + pesan.id }"> -->
+      <div :class="['card', pesan.read ? '' : 'unread']">
+        <div class="card-header">
+          <p><B>Referensi : </B> Capcin-{{ pesan.reff }}</p>
+        </div>
+        <div class="content">
+          <p>
+            sudah berganti status menjadi
+            <span class="status"
+              ><B> {{ pesan.status }}</B></span
+            >
+          </p>
+        </div>
       </div>
-      <div class="content">
-        <p>
-          sudah berganti status menjadi
-          <span class="status"
-            ><B> {{ pesan.status }}</B></span
-          >
-        </p>
-      </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -27,6 +30,7 @@ export default {
   methods: {
     read() {
       this.$store.commit("notifIsRead", this.pesan.id);
+      this.$emit("tutup");
     }
   }
 };

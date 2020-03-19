@@ -56,7 +56,7 @@
           v-if="notification.length"
         >
           <div class="ulang" v-for="(pesan, n) in notification" :key="n">
-            <Notification :data="pesan" />
+            <Notification :data="pesan" @tutup="hantutup" />
           </div>
         </div>
       </div>
@@ -109,6 +109,11 @@ export default {
   },
   watch: {},
   methods: {
+    hantutup() {
+      console.log("tutup");
+      this.isActive = false;
+      this.kelihatan = this.isActive ? "inherit" : "none";
+    },
     tampil() {
       this.isActive = !this.isActive;
       this.kelihatan = this.isActive ? "inherit" : "none";
