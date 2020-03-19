@@ -1,6 +1,6 @@
 <template>
-  <div class="container" @click="posisi">
-    <div :class="['card', pesan.read ? '' : 'unread']" @click="read">
+  <div class="container" @click="read">
+    <div :class="['card', pesan.read ? '' : 'unread']">
       <div class="card-header">
         <p><B>Referensi : </B> Capcin-{{ pesan.reff }}</p>
       </div>
@@ -25,9 +25,6 @@ export default {
     };
   },
   methods: {
-    posisi() {
-      location.href = "order#" + this.pesan.id;
-    },
     read() {
       this.$store.commit("notifIsRead", this.pesan.id);
     }
@@ -39,6 +36,6 @@ export default {
   background-color: rgb(193, 243, 250);
 }
 .status {
-  color: EDF2FA;
+  color: #07ffc9;
 }
 </style>

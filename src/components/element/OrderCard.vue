@@ -1,6 +1,6 @@
 <template>
   <div class="order-container">
-    <div class="card" ref="myPosition" :id="item.id">
+    <div class="card">
       <div class="card-header zoomIn" v-wow data-wow-duration="1s">
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div>

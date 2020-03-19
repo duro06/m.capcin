@@ -50,9 +50,14 @@
       v-wow
       data-wow-duration="1s"
     >
-      <div class="navbar-end has-text-centered loop" v-if="notification.length">
-        <div class="ulang" v-for="(pesan, n) in notification" :key="n">
-          <Notification :data="pesan" />
+      <div class="dropdown-content">
+        <div
+          class="navbar-end has-text-centered loop"
+          v-if="notification.length"
+        >
+          <div class="ulang" v-for="(pesan, n) in notification" :key="n">
+            <Notification :data="pesan" />
+          </div>
         </div>
       </div>
     </div>
@@ -140,16 +145,21 @@ export default {
 </script>
 <style scoped>
 #notif {
-  width: 40%;
-  /* height: 80%; */
+  width: 70%;
+  /* height: 50%; */
+
   position: absolute;
-  margin-left: 55%;
+  margin-left: 25%;
   margin-top: 53px;
   border-radius: 5px;
-  background-color: white;
+  background-color: transparent;
 }
-.loop {
-  max-height: 80%;
+
+.dropdown-content {
+  /* margin-left: 25%; */
+  max-height: 400px;
+  /* max-width: 70%; */
+  overflow: auto;
 }
 .ulang {
   background-color: rgb(255, 255, 255);
