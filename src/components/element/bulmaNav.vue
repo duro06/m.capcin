@@ -88,7 +88,6 @@ export default {
   mounted() {},
   computed: {
     PesanNotif() {
-      console.log("co", this.notification);
       return this.notification.filter(e => e.read == false);
     },
     level() {

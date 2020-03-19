@@ -25,11 +25,7 @@ import * as ord from "@/services/order_service";
 export default {
   name: "order",
   components: { OrderCard, Empty },
-  beforeRouteLeave(from, to, next) {
-    console.log("order to", to);
-    console.log("order from", from);
-    next();
-  },
+
   data() {
     return {
       items: [],

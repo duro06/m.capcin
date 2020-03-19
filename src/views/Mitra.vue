@@ -27,11 +27,7 @@ export default {
   components: {
     Mitra
   },
-  beforeRouteEnter(to, from, next) {
-    console.log("to", to);
-    console.log("from", from);
-    next();
-  },
+
   data() {
     return {
       items: {}, // data items
