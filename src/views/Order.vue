@@ -42,7 +42,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["profile", "Order"])
+    ...mapState(["profile"])
   },
   // watch: {
   //   getID() {
