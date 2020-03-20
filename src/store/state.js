@@ -12,5 +12,6 @@ export default {
   successOrder: {},
   Order: [],
   notification: [],
-  cart: 0
+  cart: 0,
+  orderFocus: {}
 };

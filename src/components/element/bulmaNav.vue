@@ -1,11 +1,6 @@
 <template>
   <div>
-    <nav
-      class="navbar has-shadow is-fixed-top fadeIn"
-      role="navigation"
-      v-wow
-      data-wow-duration="2s"
-    >
+    <nav class="navbar has-shadow is-fixed-top fadeIn" role="navigation">
       <div class="container is-fullwidth">
         <div class="navbar-end">
           <div class="navbar-brand is-pulled-right">
@@ -47,8 +42,6 @@
       id="notif"
       class="navbar-menu fadeInDown"
       :class="{ 'is-active': isActive }"
-      v-wow
-      data-wow-duration="1s"
     >
       <div class="dropdown-content">
         <div

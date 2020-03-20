@@ -42,6 +42,9 @@ export default {
   delOrder(state) {
     state.Order = [];
   },
+  setOrderFocus(state, payload) {
+    state.orderFocus = payload;
+  },
   setNotification(state, payload) {
     if (!payload.read) {
       state.notification.push(payload);

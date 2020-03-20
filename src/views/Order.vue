@@ -1,5 +1,11 @@
 <template>
   <div class="order">
+    <!-- <div class="focus" v-if="orderFocus">
+      <div class="nav">
+        <a href="javascript:void(0)" @click="removeFocus">tampilkan semua</a>
+      </div>
+      <OrderFocus :data="orderFocus" />
+    </div> -->
     <div class="isi" v-if="items.length">
       <div class="pegulangan" v-for="(item, n) in items" :key="n">
         <OrderCard :data="item" />
@@ -14,10 +20,12 @@
       infinite-scroll-distance="5"
       infinite-scroll-throttle-delay="1500"
     ></div>
+    <button class="button-transparent is-loading " v-if="moreExist"></button>
   </div>
 </template>
 <script>
 import OrderCard from "@/components/element/OrderCard";
+// import OrderFocus from "@/components/element/OrderFocus";
 import Empty from "@/components/element/EmptyPage";
 import { mapState } from "vuex";
 import * as ord from "@/services/order_service";
@@ -42,7 +50,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["profile"])
+    ...mapState(["profile", "orderFocus"])
   },
   // watch: {
   //   getID() {
@@ -52,10 +60,13 @@ export default {
   //   }
   // },
   methods: {
+    removeFocus() {
+      this.$store.commit("setOrderFocus", {});
+    },
     Scroll: function() {
       this.busy = true;
       if (this.moreExist && this.last != null) {
-        this.$store.commit("loading");
+        // this.$store.commit("loading");
         this.ambilLagi(); //jalankan fungsi Load more
       }
     },
@@ -91,7 +102,7 @@ export default {
       }
     },
     ambilLagi: async function() {
-      this.$store.commit("loading");
+      // this.$store.commit("loading");
       let id = this.profile.id;
       let current = this.current + 1;
       let ID;

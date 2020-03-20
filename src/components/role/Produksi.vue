@@ -178,7 +178,7 @@ export default {
     },
     // load lebih banyak data
     loadMore: async function() {
-      this.$store.commit("loading");
+      // this.$store.commit("loading");
       // inisialisasi lokal halaman sekarang
       let current_page;
       current_page = this.current_page + 1; // request ke server halaman selanjutnya

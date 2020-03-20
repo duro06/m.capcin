@@ -12,13 +12,10 @@
         </div>
       </div>
       <div class="field">
+        <p>{{ hasil }}</p>
         <div class="control">
-          <input
-            class="input is-primary"
-            type="text"
-            placeholder="Primary input"
-            v-model="data.name"
-          />
+          <label for="input">{{ data.name }}</label>
+          <input class="input is-primary" type="text" v-model="data.name" />
         </div>
       </div>
       <div class="field">
@@ -61,18 +58,26 @@
     <button class="button is-info" type="submit" @click="testLoad">
       Test Load
     </button>
+    <button class="button is-info" @click="write">
+      Storage Write
+    </button>
+    <button class="button is-info" @click="read">
+      Storage Read
+    </button>
   </div>
 </template>
 <script>
 import * as order from "@/services/order_service";
 import * as prod from "@/services/product_service";
 import * as auth from "@/services/auth_service.js";
+import * as loc from "@/services/storage_service";
 // import axios from "axios";
 const axios = require("axios").default;
 export default {
   name: "coba",
   data() {
     return {
+      hasil: "",
       data: {
         id: "",
         name: "",
@@ -92,6 +97,13 @@ export default {
     // this.kirim();
   },
   methods: {
+    write() {
+      loc.write(JSON.stringify(this.data.nama));
+    },
+    read() {
+      this.hasil = loc.read();
+      console.log(this.data.nama);
+    },
     testLoad() {
       this.$store.commit("loading");
       setTimeout(() => {
@@ -195,3 +207,8 @@ export default {
   // }
 };
 </script>
+<style lang="scss" scoped>
+.coba {
+  padding-top: 10px;
+}
+</style>

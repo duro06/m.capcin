@@ -28,8 +28,8 @@ export default {
       const res = await ord.getToNotif(params);
       items = res.data.data;
       store.commit("notLoading");
-      console.log("Items", items);
-      console.log("res", res);
+      // console.log("Items", items);
+      // console.log("res", res);
       items.forEach(e => {
         store.commit("setOrder", e.id);
         subscribe(e.id);

@@ -14,10 +14,11 @@ export function subscribe(order) {
   // console.log("Order nya ini lho", order);
   channel.bind("App\\Events\\OrderStatusChanged", data => {
     store.commit("setNotification", data);
-    console.log("Data ", data);
-    if (data != "") {
-      console.log("data ada");
-    }
+    store.commit("setOrderFocus", data);
+    // console.log("Data ", data);
+    // if (data != "") {
+    //   console.log("data ada");
+    // }
   });
 
   // console.log(channel);

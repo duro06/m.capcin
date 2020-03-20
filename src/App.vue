@@ -64,9 +64,16 @@ export default {
   methods: {
     getCart: async function() {
       let id = this.profile.id;
+      let ID;
+      if (id) {
+        ID = id;
+      } else {
+        ID = localStorage.getItem("mie");
+      }
+
       let params = {
         params: {
-          q: id
+          q: ID
         }
       };
       try {

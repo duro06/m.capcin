@@ -89,7 +89,7 @@ export default {
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
       if (this.more_exist && this.last_page != null) {
-        this.$store.commit("loading");
+        // this.$store.commit("loading");
         this.loadMore(); //jalankan fungsi Load more
       }
     },

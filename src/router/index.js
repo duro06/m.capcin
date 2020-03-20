@@ -123,6 +123,18 @@ const routes = [
       verified: true
     }
   },
+
+  {
+    path: "/focus/:id",
+    name: "focus",
+    component: () => import("../components/element/OrderFocus.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
   {
     path: "/order_detail/:id",
     name: "order_detail",
