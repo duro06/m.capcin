@@ -146,7 +146,7 @@ export default {
   width: 70%;
   /* height: 50%; */
 
-  position: absolute;
+  position: fixed;
   margin-left: 25%;
   margin-top: 53px;
   border-radius: 5px;

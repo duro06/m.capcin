@@ -13,8 +13,8 @@
     <div
       v-infinite-scroll="Scroll"
       infinite-scroll-disabled="busy"
-      infinite-scroll-distance="5"
-      infinite-scroll-throttle-delay="1500"
+      infinite-scroll-distance="50"
+      infinite-scroll-throttle-delay="100"
     ></div>
   </div>
 </template>
@@ -32,12 +32,13 @@ export default {
     return {
       items: {}, // data items
       current_page: 1, //DEFAULT PAGE YANG AKTIF ADA PAGE 1
-      per_page: 6, //DEFAULT LOAD PERPAGE ADALAH 8
+      per_page: 8, //DEFAULT LOAD PERPAGE ADALAH 8
       search: "", // data search
       sortBy: "id", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null
+      last_page: null,
+      busy: false
     };
   },
   created() {
@@ -48,6 +49,7 @@ export default {
   },
   methods: {
     req: async function() {
+      this.busy = true;
       this.$store.commit("loading");
       this.$store.dispatch("productOut"); //kosongkan state product
       let sorting = this.sortByDesc ? "DESC" : "ASC";
@@ -74,8 +76,10 @@ export default {
 
         this.$store.commit("notLoading"); // loadng spinner berhenti
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
+        this.busy = false;
       } catch (error) {
         this.more_exist = false; //apapun hasilnya, more exist false dulu
+        this.busy = false;
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
           time: 5000
@@ -84,11 +88,12 @@ export default {
     },
     //jika ada scroll event
     Scroll() {
-      this.busy = true; // disable fungsi VueInfiniteScroll
+      // this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
       if (this.more_exist && this.last_page != null) {
+        this.busy = true;
         // this.$store.commit("loading");
         this.loadMore(); //jalankan fungsi Load more
       }
@@ -130,9 +135,11 @@ export default {
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
         this.$store.commit("notLoading"); // matikan button loading spinner
+        this.busy = false;
         // biar more_exist nilainya di update oleh fungsi updated saja
         this.more_exist = false;
       } catch (error) {
+        this.busy = false;
         this.more_exist = false;
         this.flashMessage.error({
           message: "" + error,

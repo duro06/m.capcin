@@ -1,11 +1,5 @@
 <template>
   <div class="order">
-    <!-- <div class="focus" v-if="orderFocus">
-      <div class="nav">
-        <a href="javascript:void(0)" @click="removeFocus">tampilkan semua</a>
-      </div>
-      <OrderFocus :data="orderFocus" />
-    </div> -->
     <div class="isi" v-if="items.length">
       <div class="pegulangan" v-for="(item, n) in items" :key="n">
         <OrderCard :data="item" />
@@ -17,10 +11,15 @@
     <div
       v-infinite-scroll="Scroll"
       infinite-scroll-disabled="busy"
-      infinite-scroll-distance="5"
-      infinite-scroll-throttle-delay="1500"
+      infinite-scroll-distance="50"
+      infinite-scroll-throttle-delay="100"
     ></div>
-    <button class="button-transparent is-loading " v-if="moreExist"></button>
+    <!-- <button
+      class="button transparent is-loading is-fullwidth is-large"
+      v-if="moreExist"
+    >
+      ...is loading
+    </button> -->
   </div>
 </template>
 <script>
@@ -41,12 +40,12 @@ export default {
       id: null,
       current: 1,
       last: null,
-      moreExist: false
+      moreExist: false,
+      busy: false
     };
   },
   mounted() {
     this.ambilData();
-    // this.subscribe();
   },
 
   computed: {
@@ -64,14 +63,15 @@ export default {
       this.$store.commit("setOrderFocus", {});
     },
     Scroll: function() {
-      this.busy = true;
-      if (this.moreExist && this.last != null) {
-        // this.$store.commit("loading");
+      if (this.moreExist) {
+        this.moreExist = false;
+
         this.ambilLagi(); //jalankan fungsi Load more
       }
     },
     // Fungsinya pusher
     ambilData: async function() {
+      this.busy = true;
       this.$store.commit("loading");
       let id = this.profile.id;
       let ID;
@@ -93,16 +93,16 @@ export default {
         let par = res.data.data;
         this.current = par.current_page;
         this.last = par.last_page;
-        console.log("par ", par);
-        console.log("curent", this.current);
-        console.log("last", this.last);
+
         this.$store.commit("notLoading");
+        this.busy = false;
       } catch (e) {
         this.$store.commit("notLoading");
+        this.busy = false;
       }
     },
     ambilLagi: async function() {
-      // this.$store.commit("loading");
+      this.busy = true; // disable scroll biar ga ambil2 data terus,
       let id = this.profile.id;
       let current = this.current + 1;
       let ID;
@@ -121,17 +121,17 @@ export default {
 
       try {
         const res = await ord.getOrder(params);
-        // this.items = res.data.data.data;
         let par = res.data.data;
         par.data.forEach(e => {
           this.items.push(e);
         });
         this.current = par.current_page;
         this.last = par.last_page;
-        console.log(par.data);
         this.$store.commit("notLoading");
+        this.busy = false;
       } catch (e) {
         this.$store.commit("notLoading");
+        this.busy = false;
       }
     }
   },
@@ -141,14 +141,14 @@ export default {
     } else {
       this.moreExist = false;
     }
-    console.log("more ", this.moreExist);
-    console.log("last ", this.last);
-    console.log("current ", this.current);
   }
 };
 </script>
 <style scoped>
 .order {
   padding-bottom: 55px;
+}
+.transparent {
+  background-color: transparent;
 }
 </style>

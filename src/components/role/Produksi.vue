@@ -1,15 +1,11 @@
 <template>
   <div class="produk">
     <div class="wrapper">
-      <h2 class="has-text-centered fadeInUp" v-wow data-wow-duration="1s">
+      <h2 class="has-text-centered">
         Produksi
       </h2>
       <div class="level">
-        <div
-          class="level-item has-text-centered fadeInUp"
-          v-wow
-          data-wow-duration="1s"
-        >
+        <div class="level-item has-text-centered">
           <Search
             @search="handleSearch"
             class="is-small is-right is-7 search"
@@ -25,38 +21,27 @@
             :key="apem"
             class="infinite-list-item"
           >
-            <Produksi
-              class="produksi fadeInUp"
-              v-wow
-              data-wow-duration="1s"
-              :data="item"
-              @edit="handleEdit"
-            />
+            <Produksi class="produksi" :data="item" @edit="handleEdit" />
           </div>
           <div
             v-infinite-scroll="Scroll"
             infinite-scroll-disabled="busy"
-            infinite-scroll-distance="12"
-            infinite-scroll-throttle-delay="1500"
+            infinite-scroll-distance="50"
+            infinite-scroll-throttle-delay="100"
           ></div>
         </div>
         <!-- <button
           v-if="this.more_exist"
-          class="button is-info is-fullwidth is-loading fadeInUp"
-          v-wow
-          data-wow-duration="1s"
+          class="button is-info is-fullwidth is-loading"
+          
+          
         >
           Button loading
         </button> -->
         <Modal v-if="showModal" @close="handleModal">
           <!-- <h3 slot="header">Custom header</h3> -->
-          <header
-            slot="header"
-            class="modal-card-head fadeInUp"
-            v-wow
-            data-wow-duration="1s"
-          >
-            <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
+          <header slot="header" class="modal-card-head">
+            <p class="modal-card-title ">
               Modal title
             </p>
             <button
@@ -65,28 +50,14 @@
               @click.prevent="handleModal"
             ></button>
           </header>
-          <section
-            slot="body"
-            class="modal-card-body  fadeInUp"
-            v-wow
-            data-wow-duration="1s"
-          >
+          <section slot="body" class="modal-card-body ">
             Content ...
           </section>
-          <footer
-            slot="footer"
-            class="modal-card-foot  fadeInUp"
-            v-wow
-            data-wow-duration="1s"
-          >
-            <button
-              class="button is-success fadeInUp"
-              v-wow
-              data-wow-duration="1s"
-            >
+          <footer slot="footer" class="modal-card-foot ">
+            <button class="button is-success">
               Save changes
             </button>
-            <button class="button  fadeInUp" v-wow data-wow-duration="1s">
+            <button class="button ">
               Cancel
             </button>
           </footer>
@@ -123,7 +94,8 @@ export default {
       sortBy: "created_at", //DEFAULT SORTNYA ADALAH CREATED_AT
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
-      last_page: null // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
+      last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
+      busy: false
     };
   },
   created() {
@@ -132,6 +104,7 @@ export default {
   },
   methods: {
     req: async function() {
+      this.busy = true;
       this.$store.commit("loading");
       let sorting = this.sortByDesc ? "DESC" : "ASC";
       let params = {
@@ -156,7 +129,9 @@ export default {
 
         this.$store.commit("notLoading"); // loadng spinner berhenti
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
+        this.busy = false;
       } catch (error) {
+        this.busy = false;
         this.more_exist = false; //apapun hasilnya, more exist false dulu
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
@@ -167,12 +142,13 @@ export default {
 
     //jika ada scroll event
     Scroll() {
-      this.busy = true; // disable fungsi VueInfiniteScroll
+      // this.busy = true; // disable fungsi VueInfiniteScroll
       //penting nya more exist ada di updated. biar yang ngecek satu aja
       // memastikan bahwa fungsi ini jalan ketika scroll, bukan refresh
       //jika refresh otomatis last_page nya null, karena belum di isi oleh fungsi req()
 
       if (this.more_exist && this.last_page != null) {
+        this.busy = true;
         this.loadMore(); //jalankan fungsi Load more
       }
     },
@@ -195,9 +171,8 @@ export default {
           sortbydesc: sorting
         }
       };
-      this.busy = false; // jalankan lagi fungsi VueInfineScroll
       try {
-        this.busy = true; // selama request matikan InfiniteScroll
+        // this.busy = true; // selama request matikan InfiniteScroll
         // ngene iki lho carane lek gawe async await hehehe
         const response = await itemService.loadData(params);
         this.$store.commit("notLoading");
@@ -213,8 +188,10 @@ export default {
         this.last_page = getData.last_page; // input paramaeter halaman teraksir
         //==============================================================
         // biar more_exist nilainya di update oleh fungsi updated saja
+        this.busy = false; // jalankan lagi fungsi VueInfineScroll
         this.more_exist = false;
       } catch (error) {
+        this.busy = false; // jalankan lagi fungsi VueInfineScroll
         this.more_exist = false;
         this.flashMessage.error({
           message: "" + error,
