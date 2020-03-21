@@ -38,6 +38,7 @@ export default {
       store.commit("notLoading");
     }
   },
+
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },

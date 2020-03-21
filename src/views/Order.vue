@@ -16,7 +16,7 @@
     ></div>
     <!-- <button
       class="button transparent is-loading is-fullwidth is-large"
-      v-if="moreExist"
+      v-if="more_exist"
     >
       ...is loading
     </button> -->
@@ -40,7 +40,7 @@ export default {
       id: null,
       current: 1,
       last: null,
-      moreExist: false,
+      more_exist: false,
       busy: false,
       update: false
     };
@@ -53,7 +53,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["profile", "OrderItems"])
+    ...mapState(["profile", "OrderItems", "mitraOrderMeta"])
   },
   // watch: {
   //   needUpdate() {
@@ -67,42 +67,40 @@ export default {
     //   this.$store.commit("setOrderFocus", {});
     // },
     Scroll: function() {
-      if (this.moreExist) {
-        this.moreExist = false;
-
+      if (this.mitraOrderMeta.more) {
+        this.mitraOrderMeta.more = false;
         this.ambilLagi(); //jalankan fungsi Load more
       }
     },
-    //update data(halaman pertama aja.. kalo lagi ada di bawah ya maap saya update dulu...)
-    updateData: async function() {
-      console.log("Update");
-      this.busy = true; //disable sementara fungsi scroll
-      let id = this.profile.id; //ambil id dari profil
-      // jika tidak ada id tidak perlu jalankan update... karena sudah dijalanan ambilData
-      if (id) {
-        let params = {
-          params: {
-            q: id
-          }
-        };
-        try {
-          const res = await ord.getOrder(params);
-          this.items = res.data.data.data;
-          let par = res.data.data;
-          this.current = par.current_page;
-          this.last = par.last_page;
-          this.update = false;
-          this.busy = false;
-          this.$store.commit("needUpdate", null);
-        } catch (e) {
-          this.update = false;
-          this.busy = false;
-        }
-      }
-    },
-    // Fungsinya pusher
+    // //update data(halaman pertama aja.. kalo lagi ada di bawah ya maap saya update dulu...)
+    // updateData: async function() {
+    //   console.log("Update");
+    //   this.busy = true; //disable sementara fungsi scroll
+    //   let id = this.profile.id; //ambil id dari profil
+    //   // jika tidak ada id tidak perlu jalankan update... karena sudah dijalanan ambilData
+    //   if (id) {
+    //     let params = {
+    //       params: {
+    //         q: id
+    //       }
+    //     };
+    //     try {
+    //       const res = await ord.getOrder(params);
+    //       this.items = res.data.data.data;
+    //       let par = res.data.data;
+    //       this.current = par.current_page;
+    //       this.last = par.last_page;
+    //       this.update = false;
+    //       this.busy = false;
+    //       this.$store.commit("needUpdate", null);
+    //     } catch (e) {
+    //       this.update = false;
+    //       this.busy = false;
+    //     }
+    //   }
+    // },
+
     ambilData: async function() {
-      this.$store.commit("needUpdate", null);
       this.$store.commit("loading");
       this.busy = true;
       let id = this.profile.id;
@@ -125,9 +123,20 @@ export default {
         this.$store.commit("setOrderItems", res.data.data.data);
 
         let par = res.data.data;
+        let more;
         this.current = par.current_page;
         this.last = par.last_page;
-
+        if (par.current_page < par.last_page) {
+          more = true;
+        } else {
+          more = false;
+        }
+        let meta = {
+          current: par.current_page,
+          last: par.last_page,
+          more: more
+        };
+        this.$store.commit("setMitraOrderMeta", meta);
         this.$store.commit("notLoading");
         this.busy = false;
       } catch (e) {
@@ -136,9 +145,10 @@ export default {
       }
     },
     ambilLagi: async function() {
+      console.log("amvil lagi");
       this.busy = true; // disable scroll biar ga ambil2 data terus,
       let id = this.profile.id;
-      let current = this.current + 1;
+      let current = this.mitraOrderMeta.current + 1;
       let ID;
       if (id) {
         ID = id;
@@ -156,12 +166,25 @@ export default {
       try {
         const res = await ord.getOrder(params);
         let par = res.data.data;
+        let more;
         par.data.forEach(e => {
           // this.items.push(e);
           this.$store.commit("pushOrderItems", e);
         });
         this.current = par.current_page;
         this.last = par.last_page;
+        if (par.current_page < par.last_page) {
+          more = true;
+        } else {
+          more = false;
+        }
+        let meta = {
+          current: par.current_page,
+          last: par.last_page,
+          more: more
+        };
+
+        this.$store.commit("setMitraOrderMeta", meta);
         this.$store.commit("notLoading");
         this.busy = false;
       } catch (e) {
@@ -171,11 +194,12 @@ export default {
     }
   },
   updated() {
-    if (this.current < this.last) {
-      this.moreExist = true;
+    if (this.mitraOrderMeta.current < this.mitraOrderMeta.last) {
+      this.more_exist = true;
     } else {
-      this.moreExist = false;
+      this.more_exist = false;
     }
+    console.log("more exist", this.more_exist);
   }
 };
 </script>

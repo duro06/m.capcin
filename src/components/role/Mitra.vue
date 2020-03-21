@@ -40,7 +40,7 @@ export default {
   props: { data: Object },
   created() {
     if (this.data) {
-      return this.$store.dispatch("productPush", this.data);
+      // return this.$store.dispatch("productPush", this.data);
     }
   },
   computed: {

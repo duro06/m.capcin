@@ -131,6 +131,8 @@ export default {
   methods: {
     allIsRead() {
       this.$store.commit("allNotifIsRead");
+      this.isActive = false;
+      this.kelihatan = this.isActive ? "inherit" : "none";
     },
     goBack() {
       this.$router.go(-1);

@@ -15,5 +15,7 @@ export default {
   notification: [],
   cart: 0,
   orderFocus: {},
-  orderUpdate: null
+  orderUpdate: null,
+  mitraOrderMeta: {},
+  mitraProductMeta: {}
 };
