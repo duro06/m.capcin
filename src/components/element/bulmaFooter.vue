@@ -1,5 +1,8 @@
 <template>
-  <nav class="navbar is-fixed-bottom-touch is-hidden-desktop ">
+  <nav
+    class="navbar is-fixed-bottom-touch is-hidden-desktop"
+    :style="{ display: umum }"
+  >
     <div class="container">
       <div class="navbar-brand level is-mobile">
         <div
@@ -94,6 +97,10 @@ export default {
     };
   },
   computed: {
+    umum() {
+      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      return tampil;
+    },
     loggedIn() {
       return this.$store.getters.loggedIn;
     },

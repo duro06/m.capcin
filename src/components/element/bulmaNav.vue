@@ -1,8 +1,21 @@
 <template>
   <div>
-    <nav class="navbar has-shadow is-fixed-top fadeIn" role="navigation">
+    <nav class="navbar has-shadow is-fixed-top" role="navigation">
       <div class="container is-fullwidth">
-        <div class="navbar-end">
+        <div class="navbar-start" :style="{ display: khusus }">
+          <div class="navbar-brand">
+            <div class="mega-ul">
+              <div class="one-icon mega-li navbar-item">
+                <a @click.prevent="goBack" class="mega-link">
+                  <span class="mega-icon"
+                    ><i class="fas fa-arrow-left"></i
+                  ></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end" :style="{ display: umum }">
           <div class="navbar-brand is-pulled-right">
             <ul class="mega-ul">
               <li
@@ -18,7 +31,7 @@
                 </a>
               </li>
               <li class="one-icon mega-li navbar-item">
-                <router-link to="/keranjang" class="mega-link">
+                <router-link to="/transaksi/keranjang" class="mega-link">
                   <span class="mega-icon"
                     ><i class="fas fa-shopping-cart"></i
                   ></span>
@@ -92,6 +105,14 @@ export default {
     currentPage() {
       return this.$route.path;
     },
+    umum() {
+      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      return tampil;
+    },
+    khusus() {
+      let tampil = this.$route.path.includes("transaksi") ? "inherit" : "none";
+      return tampil;
+    },
     // check() {
     //   return console.log(this.level);
     // },
@@ -102,6 +123,9 @@ export default {
   },
   watch: {},
   methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
     hantutup() {
       console.log("tutup");
       this.isActive = false;
@@ -201,6 +225,9 @@ export default {
 .navbar-brand > .mega-ul > li.one-icon {
   padding: 10px 5px 2px;
 }
+.navbar-brand > .mega-ul > div.one-icon {
+  padding: 10px 5px 2px;
+}
 
 .navbar-brand > .mega-ul > li.one-icon > .mega-link {
   display: block;
@@ -215,8 +242,25 @@ export default {
   -moz-border-radius: 30px;
   border-radius: 30px;
 }
+.navbar-brand > .mega-ul > div.one-icon > .mega-link {
+  display: block;
+  height: 36px;
+  line-height: 30px;
+  width: 36px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
 
 .navbar-brand > .mega-ul > li.one-icon > .mega-link .mega-icon {
+  font-size: 1.3rem;
+  color: #6e6d6d;
+}
+.navbar-brand > .mega-ul > div.one-icon > .mega-link .mega-icon {
   font-size: 1.3rem;
   color: #6e6d6d;
 }

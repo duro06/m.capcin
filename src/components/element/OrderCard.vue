@@ -32,6 +32,12 @@
         <!-- </router-link> -->
       </div>
     </div>
+    <button
+      v-if="loading"
+      class="button transparent is-fullwidth is-loading is-large is-outlined"
+    >
+      loading ...
+    </button>
     <div class="kalo" v-if="dataDetails.length">
       <div class="card" :style="{ display: kelihatan }">
         <div class="isi-kartu">
@@ -81,7 +87,8 @@ export default {
       details: this.detail,
       dataDetails: [],
       kelihatan: "none",
-      isDisplay: false
+      isDisplay: false,
+      loading: false
     };
   },
   created() {
@@ -116,7 +123,8 @@ export default {
       }
     },
     ambilDetail: async function() {
-      this.$store.commit("loading");
+      // this.$store.commit("loading");
+      this.loading = true;
       let id = this.item.id;
       let params = {
         params: {
@@ -125,18 +133,24 @@ export default {
       };
       try {
         const res = await ord.getDetail(params);
-        this.$store.commit("notLoading");
+        // this.$store.commit("notLoading");
+        this.loading = false;
         if (res.status == 200) {
           this.dataDetails = res.data.data;
         }
       } catch (e) {
-        this.$store.commit("notLoading");
+        this.loading = false;
+        // this.$store.commit("notLoading");
       }
     }
   }
 };
 </script>
 <style scoped>
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
 .isi-kartu {
   padding: 0px 24px;
 }

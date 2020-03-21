@@ -71,8 +71,8 @@ export default {
     },
     // Fungsinya pusher
     ambilData: async function() {
-      this.busy = true;
       this.$store.commit("loading");
+      this.busy = true;
       let id = this.profile.id;
       let ID;
       if (id) {
