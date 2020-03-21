@@ -39,6 +39,21 @@ export default {
   setOrder(state, payload) {
     state.Order.push(payload);
   },
+  pushOrderItems(state, payload) {
+    state.OrderItems.push(payload);
+  },
+  setOrderItems(state, payload) {
+    state.OrderItems = payload;
+  },
+
+  updateOrderItems(state, payload) {
+    state.OrderItems.forEach(e => {
+      if (e.id === payload.id) {
+        e.status.name = payload.status;
+      }
+    });
+  },
+
   delOrder(state) {
     state.Order = [];
   },
@@ -49,6 +64,11 @@ export default {
     if (!payload.read) {
       state.notification.push(payload);
     }
+  },
+  allNotifIsRead(state) {
+    state.notification.forEach(e => {
+      e.read = true;
+    });
   },
   notifIsRead(state, payload) {
     const temp = state.notification.filter(
@@ -74,5 +94,8 @@ export default {
   },
   setCart(state, payload) {
     state.cart = payload;
+  },
+  needUpdate(state, payload) {
+    state.orderUpdate = payload;
   }
 };

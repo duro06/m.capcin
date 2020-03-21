@@ -15,6 +15,7 @@ export function subscribe(order) {
   channel.bind("App\\Events\\OrderStatusChanged", data => {
     store.commit("setNotification", data);
     store.commit("setOrderFocus", data);
+    store.commit("updateOrderItems", data);
     // console.log("Data ", data);
     // if (data != "") {
     //   console.log("data ada");

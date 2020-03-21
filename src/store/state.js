@@ -11,7 +11,9 @@ export default {
   loadShow: "",
   successOrder: {},
   Order: [],
+  OrderItems: [],
   notification: [],
   cart: 0,
-  orderFocus: {}
+  orderFocus: {},
+  orderUpdate: null
 };

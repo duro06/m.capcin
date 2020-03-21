@@ -56,6 +56,12 @@
       class="navbar-menu fadeInDown"
       :class="{ 'is-active': isActive }"
     >
+      <button
+        class="button is-fullwidth is-light is-small is-primary"
+        @click="allIsRead"
+      >
+        Tandai semua telah dibaca
+      </button>
       <div class="dropdown-content">
         <div
           class="navbar-end has-text-centered loop"
@@ -123,6 +129,9 @@ export default {
   },
   watch: {},
   methods: {
+    allIsRead() {
+      this.$store.commit("allNotifIsRead");
+    },
     goBack() {
       this.$router.go(-1);
     },
@@ -132,8 +141,10 @@ export default {
       this.kelihatan = this.isActive ? "inherit" : "none";
     },
     tampil() {
-      this.isActive = !this.isActive;
-      this.kelihatan = this.isActive ? "inherit" : "none";
+      if (this.notification.length) {
+        this.isActive = !this.isActive;
+        this.kelihatan = this.isActive ? "inherit" : "none";
+      }
     },
     getCart: async function() {
       if (this.loggedIn) {
@@ -166,6 +177,10 @@ export default {
 };
 </script>
 <style scoped>
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
 #notif {
   width: 70%;
   /* height: 50%; */

@@ -80,6 +80,12 @@ export default {
       isDisplay: false
     };
   },
+  mounted() {
+    if (this.orderFocus.id == undefined) {
+      this.$store.commit("loading");
+      this.$router.push({ name: "mitra" }, () => {});
+    }
+  },
   computed: {
     ...mapState(["orderFocus"]),
     status() {
