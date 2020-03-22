@@ -183,7 +183,9 @@ export default {
           this.getCart();
           // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
+        this.$store.commit("notLoading");
       } catch (e) {
+        this.$store.commit("notLoading");
         this.errors = e;
       }
     },
@@ -243,9 +245,11 @@ export default {
         } else {
           this.$store.commit("setCart", 0);
         }
+        this.$store.commit("notLoading");
         // this.$router.replace({ name: "mitra" }, () => {});
         this.error = [];
       } catch (e) {
+        this.$store.commit("notLoading");
         this.error = e;
         // this.$router.replace({ name: "mitra" }, () => {});
       }

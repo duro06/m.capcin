@@ -4,7 +4,7 @@ import * as auth from "./auth_service";
 
 export function http() {
   return axios.create({
-    baseURL: store.state.serverApi2,
+    baseURL: store.getters.apiUrl,
     headers: {
       Authorization: "Bearer " + auth.getAccessToken()
     }
@@ -20,7 +20,7 @@ export function httpMe() {
 }
 export function httpFile() {
   return axios.create({
-    baseURL: store.state.serverApi,
+    baseURL: store.getters.apiUrl,
     headers: {
       Authorization: "Bearer " + auth.getAccessToken(),
       "Content-Type": "multipart/form-data"
@@ -30,7 +30,7 @@ export function httpFile() {
 
 export function httpNot() {
   return axios.create({
-    baseURL: store.state.serverApi2,
+    baseURL: store.getters.apiUrl,
     headers: {
       // eslint-disable-next-line prettier/prettier
       Authorization: 'Bearer '+auth.getAccessToken(),

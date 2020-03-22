@@ -58,6 +58,9 @@ export default {
   setOrderItems(state, payload) {
     state.OrderItems = payload;
   },
+  delOrderItems(state) {
+    state.Order = [];
+  },
 
   updateOrderItems(state, payload) {
     state.OrderItems.forEach(e => {

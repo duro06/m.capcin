@@ -1,6 +1,12 @@
 export default {
   serverUrl(state) {
-    return state.server;
+    return state.server + `/home`;
+  },
+  apiUrl(state) {
+    return state.server + `/api`;
+  },
+  storageUrl(state) {
+    return state.server + `/storage/`;
   },
   loggedIn(state) {
     return state.token !== null;

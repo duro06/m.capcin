@@ -127,7 +127,7 @@
 </template>
 <script>
 // import { getProfile } from "@/services/auth_service";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import * as auth from "@/services/auth_service";
 import Modal from "@/components/element/Modal.vue";
 // import Footer from "@/components/element/bulmaFooter";
@@ -158,7 +158,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["profile", "serverImage", "token"])
+    ...mapState(["profile", "token"]),
+    ...mapGetters(["storageUrl"])
     // loading() {
     //   if (this.user.image != "" || this.user.image != undefined) {
     //     console.log("not Loading");
@@ -233,7 +234,7 @@ export default {
         user.image != null &&
         user.image != "null"
       ) {
-        this.displayImage = `${this.serverImage}` + `${user.image}`;
+        this.displayImage = `${this.storageUrl}` + `${user.image}`;
         this.$store.commit("notLoading");
       } else {
         this.displayImage = "@/assets/nouser.png";
