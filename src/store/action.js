@@ -86,6 +86,7 @@ export default {
       http()
         .post("client/register", data)
         .then(response => {
+          console.log("action response", response);
           resolve(response);
         })
         .catch(error => {

@@ -3,47 +3,26 @@
     <section class="hero is-fullheight">
       <div class="hero-body">
         <div class="container has-text-centered">
-          <div
-            class="field fadeInUp"
-            v-wow
-            data-wow-delay="0s"
-            data-wow-duration="2s"
-          >
+          <div class="field fadeInUp">
             <h1 class="avatar has-text-centered custom section">
               <img src="../assets/logocapcin.png" alt="logo" />
             </h1>
           </div>
           <div class="column is-4 is-offset-4">
             <article class="message is-danger">
-              <div
-                class="message-header field fadeInUp"
-                v-wow
-                data-wow-delay="0s"
-                data-wow-duration="2s"
-              >
+              <div class="message-header field fadeInUp">
                 <p>
                   <strong>Anda telah berhasil melakukan Regestrasi</strong>
                 </p>
               </div>
-              <div
-                class="message-body field fadeInUp"
-                v-wow
-                data-wow-delay="0s"
-                data-wow-duration="2s"
-              >
+              <div class="message-body field fadeInUp">
                 <strong>Silahkan tunggu 1 x 24 jam</strong>
                 <p>hubungi Admin di nomor</p>
                 <strong>088 000 888 999</strong>
                 <p>jika dalam waktu 1 x 24 jam halaman ini belum berubah</p>
               </div>
             </article>
-            <div
-              v-if="!waiting"
-              class="message-body field fadeInUp"
-              v-wow
-              data-wow-delay="0s"
-              data-wow-duration="2s"
-            >
+            <div v-if="!waiting" class="message-body field fadeInUp">
               <h3 class="notification berhasil">Anda sudah terverifikasi</h3>
               <a @click="pindah" class="button is-small is-rounded is-danger">
                 Klik untuk Login
@@ -58,9 +37,9 @@
 <script>
 /* eslint-disable */
 
-import Pusher from "pusher-js";
+// import Pusher from "pusher-js";
 
-Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 
 export default {
   name: "info",
@@ -69,7 +48,7 @@ export default {
   },
 
   created () {
-    this.subscribe();
+    // this.subscribe();
     // this.kirimKePuser()
   },
   computed: {
@@ -84,23 +63,24 @@ export default {
       this.$router.replace({ name: "login" },()=>{})
     },
     // Fungsinya pusher
-    subscribe () {
-    // Api key + cluster
-    let pusher = new Pusher("ebfe3f8ff45ad9c3ad4c", {
-      cluster: "ap1",
-      forceTLS: true
-    });
-    let channel = pusher.subscribe("my-channel");
+    // subscribe () {
+    // // Api key + cluster
+    // let pusher = new Pusher("c1b487e073e0124e259f", {
+    //   cluster: "ap1",
+    //   forceTLS: true
+    // });
+    // let channel = pusher.subscribe("capcin-reg.19");
 
-    channel.bind("my-event", data => {
-      this.messages.push(data);
-      if (data != "") {
-      this.$store.dispatch("destroyVerifie");
-      // this.$router.push('/')
-      }
+    // channel.bind("App\\Events\\RegisterEvent", data => {
+    //   this.messages.push(data);
+    //   if (data != "") {
+    //     console.log('data ada')
+    //   this.$store.dispatch("destroyVerifie");
+    //   // this.$router.push('/')
+    //   }
 
-    });
-    }
+    // });
+    // }
   }
 };
 </script>

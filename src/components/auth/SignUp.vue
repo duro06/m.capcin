@@ -68,6 +68,7 @@
                 <div class="control has-icons-left">
                   <div :class="['select', valSelect, 'is-small']">
                     <select v-model="user.role" @change="validasiSelect">
+                      <option value="">Pilih bagian</option>
                       <option v-for="(level, t) in levels" :key="t">
                         {{ level.nama }}
                       </option>
@@ -163,6 +164,7 @@
   </section>
 </template>
 <script>
+import { register } from "@/services/pusher_service.js";
 export default {
   name: "signup",
   data() {
@@ -184,7 +186,7 @@ export default {
       validMail: "",
       // pilihan Role
       levels: [
-        { id: "", nama: "Pilih bagian" },
+        // { id: "", nama: "Pilih bagian" },
         { id: 3, nama: "Produksi" },
         { id: 4, nama: "Packing" },
         { id: 5, nama: "Supplier" },
@@ -227,11 +229,11 @@ export default {
         vm.$store
           .dispatch("register", this.user)
           .then(response => {
+            register(response.data.data.id);
+            console.log("response id", response.data.data.id);
             // panggil fungsi "retriveVerivie" di action nya Vuex, bawa apa aja buat di tarun d locak storage
-            vm.$store.dispatch(
-              "retrieveVerifie",
-              "asdasdadasdasdadasdasdasdasdasdasdasdasdsad"
-            );
+            vm.$store.dispatch("retrieveVerifie", "response");
+            console.log("respose", response);
             // tampilkan flas message
             this.flashMessage.success({
               message: response.data.message,
