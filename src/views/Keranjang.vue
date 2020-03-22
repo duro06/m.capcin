@@ -4,7 +4,7 @@
       <div class="pengulangan" v-for="(item, n) in items" :key="n">
         <Card :anu="item" />
       </div>
-      <div class="card-footer">
+      <div class="navbar card-footer is-fixed-bottom-touch">
         <div class="card">
           <div class="card-content">
             <div class="columns is-mobile">
@@ -162,7 +162,7 @@ export default {
 </script>
 <style scoped>
 .profile {
-  padding: 3rem 0.3rem 3rem 0.3rem;
+  padding: 1rem 0.3rem 6rem 0.3rem;
 }
 
 .card {

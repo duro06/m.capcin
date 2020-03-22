@@ -6,7 +6,7 @@
         :can-cancel="false"
         :is-full-page="true"
         :color="color"
-        :opacity="0.8"
+        :opacity="1"
       >
         <template v-slot:before>Loading...</template>
         <template v-slot:after>

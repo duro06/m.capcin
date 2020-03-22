@@ -34,10 +34,10 @@ export default {
     try {
       //jika login maka
       if (store.getters.loggedIn) {
+        store.dispatch("ambilOrder");
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
 
-        store.dispatch("ambilOrder");
         readNotif();
         localStorage.removeItem("level"); // hapus temporary local storege level
         localStorage.removeItem("mie"); // hapus temporary local storege level
@@ -64,9 +64,16 @@ export default {
   methods: {
     getCart: async function() {
       let id = this.profile.id;
+      let ID;
+      if (id) {
+        ID = id;
+      } else {
+        ID = localStorage.getItem("mie");
+      }
+
       let params = {
         params: {
-          q: id
+          q: ID
         }
       };
       try {

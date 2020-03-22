@@ -29,7 +29,7 @@ export default {
       items = res.data.data;
       store.commit("notLoading");
       console.log("Items", items);
-      console.log("res", res);
+      // console.log("res", res);
       items.forEach(e => {
         store.commit("setOrder", e.id);
         subscribe(e.id);
@@ -38,6 +38,7 @@ export default {
       store.commit("notLoading");
     }
   },
+
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },
@@ -85,6 +86,7 @@ export default {
       http()
         .post("client/register", data)
         .then(response => {
+          console.log("action response", response);
           resolve(response);
         })
         .catch(error => {

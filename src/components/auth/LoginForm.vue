@@ -3,24 +3,14 @@
     <div class="hero-body">
       <div class="container has-text-centered">
         <div class="column is-4 is-offset-4 box">
-          <div
-            class="fadeInUp"
-            v-wow
-            data-wow-delay="0s"
-            data-wow-duration="2s"
-          >
+          <div class="fadeInUp">
             <h1 class="avatar has-text-centered section">
               <img src="../../assets/logocapcin.png" alt="logo" />
             </h1>
           </div>
 
           <transition name="slide-fade">
-            <div
-              class="fadeInUp"
-              v-wow
-              data-wow-delay="0s"
-              data-wow-duration="2s"
-            >
+            <div class="fadeInUp">
               <p id="log" class="subtitle has-text-black">
                 Please login to proceed.
               </p>
@@ -29,12 +19,7 @@
           <form action>
             <div class="login-form">
               <form role="form" method="post">
-                <div
-                  class="field fadeInUp"
-                  v-wow
-                  data-wow-delay="0s"
-                  data-wow-duration="2s"
-                >
+                <div class="field fadeInUp">
                   <p class="control has-icons-left has-icons-right">
                     <input
                       :class="['input', classDanger, 'is-small']"
@@ -58,12 +43,7 @@
                   </p>
                 </div>
 
-                <div
-                  class="field fadeInUp"
-                  v-wow
-                  data-wow-delay="0s"
-                  data-wow-duration="2s"
-                >
+                <div class="field fadeInUp">
                   <p class="control has-icons-left has-icons-right">
                     <input
                       :class="['input', passOk(), 'is-small']"
@@ -87,12 +67,7 @@
                   </p>
                 </div>
 
-                <div
-                  class="field fadeInUp level"
-                  v-wow
-                  data-wow-delay="0s"
-                  data-wow-duration="2s"
-                >
+                <div class="field fadeInUp level">
                   <div class="level-item has-text-centered ">
                     <input type="checkbox" v-model="user.remember" />
                     <label class="checkbox is-size-7 ">
@@ -100,12 +75,7 @@
                     </label>
                   </div>
                 </div>
-                <div
-                  class="field fadeInUp"
-                  v-wow
-                  data-wow-delay="0s"
-                  data-wow-duration="2s"
-                >
+                <div class="field fadeInUp">
                   <p class="control">
                     <button
                       @click.prevent="submitForm"
@@ -127,12 +97,7 @@
               </form>
             </div>
             <hr />
-            <div
-              class="forgot-password fadeInUp"
-              v-wow
-              data-wow-delay="0s"
-              data-wow-duration="2s"
-            >
+            <div class="forgot-password fadeInUp">
               <p class="has-text-centered has-text-small">
                 Did you
                 <router-link class="is-small" :to="{ path: '/forgot' }"

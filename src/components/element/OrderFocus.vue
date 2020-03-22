@@ -1,22 +1,18 @@
 <template>
   <div class="order-container">
+    <router-link to="/order">
+      tampilkan semua
+    </router-link>
     <div class="card">
       <div class="card-header zoomIn">
-        <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
+        <p><B>Refferensi :</B> Capcin-{{ orderFocus.reff }}</p>
       </div>
       <div class="card-content">
-        <!-- <router-link
-          :to="{
-            name: 'order_detail',
-            params: { id: this.data.id }
-          }"
-          class="detail-items"
-        > -->
         <div :class="['columns', 'is-mobile', status]">
           <div @click="getDetail" class="column is-3 zoomIn">
             <p class="rata-kiri">Details</p>
           </div>
-          <div @click="position" class="column is-5 zoomIn">
+          <div class="column is-5 zoomIn">
             <p class="rata-kiri">Jumlah :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
@@ -25,19 +21,12 @@
               <B>status :</B>
             </p>
             <p class="rata-kiri box has-text-centered">
-              <B>{{ item.status.name }}</B>
+              <B>{{ orderFocus.status }}</B>
             </p>
           </div>
         </div>
-        <!-- </router-link> -->
       </div>
     </div>
-    <button
-      v-if="loading"
-      class="button transparent is-fullwidth is-loading is-large is-outlined"
-    >
-      loading ...
-    </button>
     <div class="kalo" v-if="dataDetails.length">
       <div class="card" :style="{ display: kelihatan }">
         <div class="isi-kartu">
@@ -78,54 +67,46 @@
 </template>
 <script>
 import * as ord from "@/services/order_service";
+import { mapState } from "vuex";
 export default {
-  name: "card",
-  props: { data: Object, detail: Array },
+  name: "focus",
+
   data() {
     return {
-      item: this.data,
+      // orderFocus: this.orderFocus,
       details: this.detail,
       dataDetails: [],
       kelihatan: "none",
-      isDisplay: false,
-      loading: false
+      isDisplay: false
     };
   },
-  created() {
-    // this.detail;
+  mounted() {
+    if (this.orderFocus.id == undefined) {
+      this.$store.commit("loading");
+      this.$router.push({ name: "mitra" }, () => {});
+    }
   },
   computed: {
+    ...mapState(["orderFocus"]),
     status() {
-      return this.item.status.name;
+      return this.orderFocus.status;
     },
     total() {
-      let sub = "Rp " + new Intl.NumberFormat().format(this.item.total);
+      let sub = "Rp " + new Intl.NumberFormat().format(this.orderFocus.total);
       return sub;
     }
-    // Ddetail() {
-    //   const detail = this.details.filter(e => e.order_id === this.item.id);
-    //   return detail;
-    // }
   },
   methods: {
-    position() {
-      // location.href = "#" + this.item.id;
-      // let positionX = this.$refs.myPosition.getClientRects();
-      // let positionY = this.$refs.myPosition.getBoundingClientRect();
-      // console.log("location ", location.href);
-      // console.log("y", positionY);
-    },
     getDetail() {
       this.isDisplay = !this.isDisplay;
       this.kelihatan = this.isDisplay ? "inherit" : "none";
-      if (this.isDisplay && !this.dataDetails.length) {
+      if (this.isDisplay) {
         this.ambilDetail();
       }
     },
     ambilDetail: async function() {
-      // this.$store.commit("loading");
-      this.loading = true;
-      let id = this.item.id;
+      this.$store.commit("loading");
+      let id = this.orderFocus.id;
       let params = {
         params: {
           q: id
@@ -133,24 +114,18 @@ export default {
       };
       try {
         const res = await ord.getDetail(params);
-        // this.$store.commit("notLoading");
-        this.loading = false;
+        this.$store.commit("notLoading");
         if (res.status == 200) {
           this.dataDetails = res.data.data;
         }
       } catch (e) {
-        this.loading = false;
-        // this.$store.commit("notLoading");
+        this.$store.commit("notLoading");
       }
     }
   }
 };
 </script>
 <style scoped>
-.transparent {
-  background-color: transparent;
-  border-color: transparent;
-}
 .isi-kartu {
   padding: 0px 24px;
 }

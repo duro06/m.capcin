@@ -1,6 +1,6 @@
 <template>
   <div class="container" @click="read">
-    <router-link :to="{ path: '/order' }">
+    <router-link :to="{ name: 'focus', params: { id: this.data.id } }">
       <!-- <router-link :to="{ path: '/order#' + pesan.id }"> -->
       <div :class="['card', pesan.read ? '' : 'unread']">
         <div class="card-header">
@@ -29,8 +29,11 @@ export default {
   },
   methods: {
     read() {
+      this.$store.commit("setOrderFocus", this.data);
       this.$store.commit("notifIsRead", this.pesan.id);
+      console.log(this.data);
       this.$emit("tutup");
+      // this.$router.replace({ name: "order" }, () => {});
     }
   }
 };

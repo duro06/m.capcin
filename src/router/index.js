@@ -123,8 +123,20 @@ const routes = [
       verified: true
     }
   },
+
   {
-    path: "/order_detail/:id",
+    path: "/focus/:id",
+    name: "focus",
+    component: () => import("../components/element/OrderFocus.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/transaksi/order_detail/:id",
     name: "order_detail",
     component: () => import("../views/DetailOrder.vue"),
     meta: {
@@ -136,7 +148,7 @@ const routes = [
   },
 
   {
-    path: "/keranjang",
+    path: "/transaksi/keranjang",
     name: "keranjang",
     component: () => import("../views/Keranjang.vue"),
     meta: {

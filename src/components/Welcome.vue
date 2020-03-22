@@ -1,6 +1,6 @@
 <template>
   <div class="content-body">
-    <div class=" fadeInUp" v-wow data-wow-duration="1s" name="welcome">
+    <div class=" fadeInUp" name="welcome">
       <h1 class="judul-component">Info Capcin</h1>
       <carousel
         :per-page="1"

@@ -1,13 +1,21 @@
 <template>
   <div>
-    <nav
-      class="navbar has-shadow is-fixed-top fadeIn"
-      role="navigation"
-      v-wow
-      data-wow-duration="2s"
-    >
+    <nav class="navbar has-shadow is-fixed-top" role="navigation">
       <div class="container is-fullwidth">
-        <div class="navbar-end">
+        <div class="navbar-start" :style="{ display: khusus }">
+          <div class="navbar-brand">
+            <div class="mega-ul">
+              <div class="one-icon mega-li navbar-item">
+                <a @click.prevent="goBack" class="mega-link">
+                  <span class="mega-icon"
+                    ><i class="fas fa-arrow-left"></i
+                  ></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end" :style="{ display: umum }">
           <div class="navbar-brand is-pulled-right">
             <ul class="mega-ul">
               <li
@@ -23,7 +31,7 @@
                 </a>
               </li>
               <li class="one-icon mega-li navbar-item">
-                <router-link to="/keranjang" class="mega-link">
+                <router-link to="/transaksi/keranjang" class="mega-link">
                   <span class="mega-icon"
                     ><i class="fas fa-shopping-cart"></i
                   ></span>
@@ -47,9 +55,13 @@
       id="notif"
       class="navbar-menu fadeInDown"
       :class="{ 'is-active': isActive }"
-      v-wow
-      data-wow-duration="1s"
     >
+      <button
+        class="button is-fullwidth is-light is-small is-primary"
+        @click="allIsRead"
+      >
+        Tandai semua telah dibaca
+      </button>
       <div class="dropdown-content">
         <div
           class="navbar-end has-text-centered loop"
@@ -99,6 +111,14 @@ export default {
     currentPage() {
       return this.$route.path;
     },
+    umum() {
+      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      return tampil;
+    },
+    khusus() {
+      let tampil = this.$route.path.includes("transaksi") ? "inherit" : "none";
+      return tampil;
+    },
     // check() {
     //   return console.log(this.level);
     // },
@@ -109,14 +129,24 @@ export default {
   },
   watch: {},
   methods: {
+    allIsRead() {
+      this.$store.commit("allNotifIsRead");
+      this.isActive = false;
+      this.kelihatan = this.isActive ? "inherit" : "none";
+    },
+    goBack() {
+      this.$router.go(-1);
+    },
     hantutup() {
       console.log("tutup");
       this.isActive = false;
       this.kelihatan = this.isActive ? "inherit" : "none";
     },
     tampil() {
-      this.isActive = !this.isActive;
-      this.kelihatan = this.isActive ? "inherit" : "none";
+      if (this.notification.length) {
+        this.isActive = !this.isActive;
+        this.kelihatan = this.isActive ? "inherit" : "none";
+      }
     },
     getCart: async function() {
       if (this.loggedIn) {
@@ -149,11 +179,15 @@ export default {
 };
 </script>
 <style scoped>
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
 #notif {
   width: 70%;
   /* height: 50%; */
 
-  position: absolute;
+  position: fixed;
   margin-left: 25%;
   margin-top: 53px;
   border-radius: 5px;
@@ -208,6 +242,9 @@ export default {
 .navbar-brand > .mega-ul > li.one-icon {
   padding: 10px 5px 2px;
 }
+.navbar-brand > .mega-ul > div.one-icon {
+  padding: 10px 5px 2px;
+}
 
 .navbar-brand > .mega-ul > li.one-icon > .mega-link {
   display: block;
@@ -222,8 +259,25 @@ export default {
   -moz-border-radius: 30px;
   border-radius: 30px;
 }
+.navbar-brand > .mega-ul > div.one-icon > .mega-link {
+  display: block;
+  height: 36px;
+  line-height: 30px;
+  width: 36px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
 
 .navbar-brand > .mega-ul > li.one-icon > .mega-link .mega-icon {
+  font-size: 1.3rem;
+  color: #6e6d6d;
+}
+.navbar-brand > .mega-ul > div.one-icon > .mega-link .mega-icon {
   font-size: 1.3rem;
   color: #6e6d6d;
 }

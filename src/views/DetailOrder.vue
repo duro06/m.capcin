@@ -1,87 +1,62 @@
 <template>
   <div class="profile">
-    <div class="has-text-centered">
-      <div>
-        <div>
-          <div class="card">
-            <div class="avatar-profile">
-              <div class="card-image">
-                <figure class="image is-480x480">
-                  <img
-                    class="avatar-ku"
-                    :src="displayImage"
-                    ref="displayAvatarImage"
-                    alt="avatar"
-                  />
-                </figure>
-              </div>
+    <div class="satu">
+      <div class="has-text-centered">
+        <div class="card">
+          <div class="avatar-profile">
+            <div class="card-image">
+              <figure class="image is-480x480">
+                <img
+                  class="avatar-ku"
+                  :src="displayImage"
+                  ref="displayAvatarImage"
+                  alt="avatar"
+                />
+              </figure>
             </div>
+          </div>
 
-            <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <p class="title is-6" style="color: black">
-                    {{ barang.name }}
-                  </p>
-                  <p class="subtitle is-7" style="color: black">
-                    {{ harga }} <br />
-                    Tersedia {{ barang.stok_awal }} <br />
-                    {{ barang.description }}
-                  </p>
-                </div>
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-6" style="color: black">
+                  {{ barang.name }}
+                </p>
+                <p class="subtitle is-7" style="color: black">
+                  {{ harga }} <br />
+                  Tersedia {{ barang.stok_awal }} <br />
+                  {{ barang.description }}
+                </p>
               </div>
             </div>
           </div>
-          <div>
-            <div class="card">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-content">
-                    <p class="title is-5" style="color: black">
-                      Isi jumlah pesanan
-                    </p>
-                    <div class="columns is-mobile">
-                      <div class="column is-3">
-                        <button
-                          class="button is-info is-small is-rounded"
-                          @click.prevent="kurang"
-                          :disabled="kdisable"
-                        >
-                          <i class="fas fa-minus"></i>
-                        </button>
-                      </div>
-                      <div class="column is-4">
-                        <input
-                          class="isi-kotak input is-small is-5 has-text-centered"
-                          type="text"
-                          v-model="jumlahPesanan"
-                        />
-                      </div>
-                      <div class="column is-5">
-                        <button
-                          class="button is-info is-small is-rounded"
-                          @click.prevent="tambah"
-                        >
-                          <i class="fas fa-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <button
-                      class="button is-primary is-small is-rounded"
-                      @click.prevent="addToCart"
-                      :disabled="disable"
-                    >
-                      Tambah ke kenranjang <i class="fas fa-cart-plus"></i>
-                    </button>
-                    <button
-                      type="submit"
-                      class="button is-success is-small is-rounded"
-                      @click.prevent="orderNow"
-                      :disabled="disable"
-                    >
-                      Order Sekarang
-                    </button>
-                  </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-content pesanan">
+              <p class="title is-6 isi-pesanan" style="color: black">
+                Isi jumlah pesanan
+              </p>
+              <div class="isi-pesanan khusus">
+                <div class="field is-grouped">
+                  <button
+                    class="button is-info is-small is-rounded"
+                    @click.prevent="kurang"
+                    :disabled="kdisable"
+                  >
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <input
+                    class="isi-kotak input is-small is-5 has-text-centered"
+                    type="text"
+                    v-model="jumlahPesanan"
+                  />
+                  <button
+                    class="button is-info is-small is-rounded"
+                    @click.prevent="tambah"
+                  >
+                    <i class="fas fa-plus"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -89,6 +64,31 @@
         </div>
       </div>
     </div>
+    <nav class="navbar is-fixed-bottom-touch ">
+      <div class="container">
+        <div class="navbar-brand level is-mobile">
+          <div class="btn_nav_item level-item">
+            <button
+              class="button is-primary is-small is-rounded"
+              @click.prevent="addToCart"
+              :disabled="disable"
+            >
+              Tambah ke kenranjang <i class="fas fa-cart-plus"></i>
+            </button>
+          </div>
+          <div class="btn_nav_item level-item">
+            <button
+              type="submit"
+              class="button is-success is-small is-rounded"
+              @click.prevent="orderNow"
+              :disabled="disable"
+            >
+              Order Sekarang
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
   </div>
 </template>
 <script>
@@ -120,7 +120,7 @@ export default {
       if (this.barang.image) {
         return this.barang.image;
       } else {
-        return "../img/no-image.jpg";
+        return "../../img/no-image.jpg";
       }
     },
     harga() {
@@ -183,7 +183,9 @@ export default {
           this.getCart();
           // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
+        this.$store.commit("notLoading");
       } catch (e) {
+        this.$store.commit("notLoading");
         this.errors = e;
       }
     },
@@ -243,9 +245,11 @@ export default {
         } else {
           this.$store.commit("setCart", 0);
         }
+        this.$store.commit("notLoading");
         // this.$router.replace({ name: "mitra" }, () => {});
         this.error = [];
       } catch (e) {
+        this.$store.commit("notLoading");
         this.error = e;
         // this.$router.replace({ name: "mitra" }, () => {});
       }
@@ -257,6 +261,14 @@ export default {
 };
 </script>
 <style scoped>
+.khusus {
+  max-width: 60%;
+}
+.pesanan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .profile {
   padding: 3rem 0.3rem 3rem 0.3rem;
 }
