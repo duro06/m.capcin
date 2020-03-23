@@ -164,7 +164,7 @@
   </section>
 </template>
 <script>
-import { register } from "@/services/pusher_service.js";
+import * as pusher from "@/services/pusher_service.js";
 export default {
   name: "signup",
   data() {
@@ -229,7 +229,7 @@ export default {
         vm.$store
           .dispatch("register", this.user)
           .then(response => {
-            register(response.data.data.id);
+            pusher.register(response.data.data.id);
             console.log("response id", response.data.data.id);
             // panggil fungsi "retriveVerivie" di action nya Vuex, bawa apa aja buat di tarun d locak storage
             vm.$store.dispatch("retrieveVerifie", "response");
@@ -239,25 +239,47 @@ export default {
               message: response.data.message,
               time: 5000
             });
-            vm.loading = ""; // button spinner disable
+            vm.loading = ""; // button spinner
+            this.errors = [];
             this.$router.replace({ name: "waiting" }, () => {}); // arahkan ke halaman waiting untuk menuggu verifikasi
           })
           .catch(error => {
             if (error) {
               //jika email sudah ada yang pake kosongkan dah kasih tanda
-              if (error.response.data.errors.email == "email") {
-                vm.classDanger = "is-danger";
-                vm.visClass = "visible";
-                vm.validMail = "Email sudah terdaftar, harap diganti";
-                vm.user.email = "";
-              }
+              console.log(error.response.data.errors);
+
+              // if (error.response.data.errors.email == "email") {
+              //   vm.classDanger = "is-danger";
+              //   vm.visClass = "visible";
+              //   vm.validMail = "Email sudah terdaftar, harap diganti";
+              //   vm.user.email = "";
+              // }
+              let email = error.response.data.errors.email;
+              let role = error.response.data.errors.role;
               switch (error.response.status) {
                 case 422:
-                  this.errors = error.response.data.errors;
+                  this.flashMessage.setStrategy("multiple");
+                  if (email) {
+                    this.classDanger = "is-danger";
+                    this.visClass = "visible";
+                    this.flashMessage.error({
+                      message: error.response.data.errors.email[0],
+                      time: 5000
+                    });
+                  }
+                  if (role) {
+                    this.valSelect = "is-danger";
+                    this.errors = error.response.data.errors;
+                    this.flashMessage.error({
+                      message: error.response.data.errors.role[0],
+                      time: 5000
+                    });
+                  }
+
                   break;
                 case 500:
                   this.flashMessage.error({
-                    message: error.response.data.message,
+                    message: error.response.data.message + " Please refresh",
                     time: 5000
                   });
                   break;
