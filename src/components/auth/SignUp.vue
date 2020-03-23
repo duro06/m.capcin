@@ -78,6 +78,12 @@
                     <i class="far fa-id-card"></i>
                   </span>
                 </div>
+                <p
+                  :class="['help', 'align-left', 'is-danger']"
+                  :style="{ visibility: classSelect }"
+                >
+                  {{ validSelect }}
+                </p>
               </div>
             </div>
 
@@ -194,6 +200,8 @@ export default {
       ],
       //validasi select
       valSelect: "",
+      classSelect: "hidden",
+      validSelect: "",
       //validasi password
       validPass: "",
       visPass: "hidden",
@@ -248,34 +256,31 @@ export default {
               //jika email sudah ada yang pake kosongkan dah kasih tanda
               console.log(error.response.data.errors);
 
-              // if (error.response.data.errors.email == "email") {
-              //   vm.classDanger = "is-danger";
-              //   vm.visClass = "visible";
-              //   vm.validMail = "Email sudah terdaftar, harap diganti";
-              //   vm.user.email = "";
-              // }
               let email = error.response.data.errors.email;
               let role = error.response.data.errors.role;
               switch (error.response.status) {
                 case 422:
-                  this.flashMessage.setStrategy("multiple");
                   if (email) {
-                    this.classDanger = "is-danger";
-                    this.visClass = "visible";
-                    this.flashMessage.error({
-                      message: error.response.data.errors.email[0],
-                      time: 5000
-                    });
+                    this.user.email = "";
+                    this.mailString(
+                      "is-danger",
+                      "visible",
+                      error.response.data.errors.email[0] +
+                        "\n" +
+                        " Please use another email address",
+                      false
+                    );
                   }
                   if (role) {
                     this.valSelect = "is-danger";
-                    this.errors = error.response.data.errors;
-                    this.flashMessage.error({
-                      message: error.response.data.errors.role[0],
-                      time: 5000
-                    });
+                    this.classSelect = "visible";
+                    this.validSelect =
+                      error.response.data.errors.role[0] +
+                      "\n" +
+                      " Please choose one";
                   }
 
+                  this.errors = error.response.data.errors;
                   break;
                 case 500:
                   this.flashMessage.error({
@@ -349,8 +354,12 @@ export default {
     validasiSelect() {
       if (this.role == "") {
         this.valSelect = "is-danger";
+        this.classSelect = "visible";
+        this.validSelect = "Tidak boleh kosong";
       } else {
         this.valSelect = "";
+        this.classSelect = "hidden";
+        this.validSelect = "Tidak boleh kosong";
       }
     },
     // //====================== Validasi konfirm password ===============
