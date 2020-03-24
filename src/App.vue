@@ -34,7 +34,9 @@ export default {
     try {
       //jika login maka
       if (store.getters.loggedIn) {
-        store.dispatch("ambilOrder");
+        if (localStorage.getItem("level") == "Mitra") {
+          store.dispatch("ambilOrder");
+        }
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
 

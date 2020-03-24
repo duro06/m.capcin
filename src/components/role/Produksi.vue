@@ -4,8 +4,22 @@
       <h1 class="judul-component">
         Produksi
       </h1>
-
-      <div class="content">
+      <!-- <img src="../../assets/svg/coba.svg" alt="" /> -->
+      <div class="info-produksi ">
+        <div class="ibu" id="frame1">
+          <img :src="info" alt="" id="worker" />
+          <div id="info">
+            <p>Ini informasi dari admin</p>
+          </div>
+          <button
+            class="button is-info is-small is-rounded"
+            @click="handleEdit"
+          >
+            Laporkan pencapaian target
+          </button>
+        </div>
+      </div>
+      <!-- <div class="content" v-if="items.length">
         <div class="is-hidden-desktop">
           <div
             v-for="(item, apem) in items"
@@ -21,7 +35,8 @@
             infinite-scroll-throttle-delay="100"
           ></div>
         </div>
-        <!-- <button
+      </div> -->
+      <!-- <button
           v-if="this.more_exist"
           class="button is-info is-fullwidth is-loading"
           
@@ -29,36 +44,61 @@
         >
           Button loading
         </button> -->
-        <Modal v-if="showModal" @close="handleModal">
-          <!-- <h3 slot="header">Custom header</h3> -->
-          <header slot="header" class="modal-card-head">
-            <p class="modal-card-title ">
-              Modal title
-            </p>
-            <button
-              class="delete"
-              aria-label="close"
-              @click.prevent="handleModal"
-            ></button>
-          </header>
-          <section slot="body" class="modal-card-body ">
-            Content ...
-          </section>
-          <footer slot="footer" class="modal-card-foot ">
-            <button class="button is-success">
-              Save changes
-            </button>
-            <button class="button ">
-              Cancel
-            </button>
-          </footer>
-        </Modal>
-      </div>
+
+      <Modal v-if="showModal" @close="handleModal">
+        <!-- <h3 slot="header">Custom header</h3> -->
+        <header slot="header" class="modal-card-head">
+          <p class="modal-card-title ">
+            Kirim Laporan
+          </p>
+          <!-- <button
+            class="delete"
+            aria-label="close"
+            @click.prevent="handleModal"
+          ></button> -->
+        </header>
+        <section slot="body" class="modal-card-body ">
+          <div class="field">
+            <div class="control">
+              <input
+                class="input is-primary is-small"
+                type="number"
+                placeholder="Masukkan jumlah capaian target"
+                v-model="capaianTarget"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <textarea
+                class="textarea is-small is-info"
+                placeholder="Keterangan"
+                rows="3"
+                v-model="keterangan"
+              ></textarea>
+            </div>
+          </div>
+        </section>
+        <footer slot="footer" class="modal-card-foot ">
+          <button
+            class="button is-success is-small is-rounded"
+            @click.prevent="submit"
+          >
+            Kirimkan
+          </button>
+          <button
+            class="button is-small is-rounded"
+            @click.prevent="handleModal"
+          >
+            Batal
+          </button>
+        </footer>
+      </Modal>
     </div>
   </div>
 </template>
 <script>
-import ProduksiEl from "@/components/element/ProduksiEl.vue";
+// import ProduksiEl from "@/components/element/ProduksiEl.vue";
 
 import Modal from "@/components/element/Modal.vue";
 import * as itemService from "@/services/item_service.js";
@@ -66,11 +106,13 @@ import * as itemService from "@/services/item_service.js";
 export default {
   name: "produk",
   components: {
-    ProduksiEl,
+    // ProduksiEl,
     Modal
   },
   data() {
     return {
+      capaianTarget: null,
+      keterangan: "",
       showModal: false, // modal tampil atau tidak
       units: {}, // data unit
       meta: {}, // perlu di review butuh atau
@@ -84,14 +126,21 @@ export default {
       sortByDesc: false, //ASCEDING
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
       last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
-      busy: false
+      busy: false,
+      info: "../../img/produksi/worker.svg"
     };
   },
   created() {
     // panggil data awal
-    this.req();
+    // this.req();
   },
   methods: {
+    submit() {
+      console.log(this.capaianTarget);
+      console.log(this.keterangan);
+
+      this.showModal = false;
+    },
     req: async function() {
       this.busy = true;
       this.$store.commit("loading");
@@ -222,11 +271,34 @@ export default {
 };
 </script>
 <style scoped>
-/* @import "../../assets/css/debug.css"; */
-
-/* .produk {
-  padding: 0px 0px 50px 0px;
+/* .info-produksi {
+   display: flex; 
+   justify-items: center; 
+   align-items: center; 
+}
+.ibu {
+   display: flex; 
+   z-index: -1; 
 } */
+#worker {
+  background-color: aliceblue;
+  border-radius: 10px;
+}
+#info {
+  /* position: absolute; */
+  background-color: rgb(162, 212, 255);
+  color: #3c3a92;
+  /* background-color: #42b549; */
+  display: block;
+  border-radius: 10px;
+  padding: 1em;
+  margin-bottom: 10px;
+  /* height: 6.5%; */
+  /* width: 70%; */
+  /* margin-top: 8.5%;
+  margin-left: 15.6%; */
+}
+
 .iterasi {
   display: flex;
   flex-wrap: wrap;
