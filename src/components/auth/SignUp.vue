@@ -11,7 +11,7 @@
           <form
             action="#"
             @submit.prevent="register"
-            class="is-light is-danger"
+            class="is-light is-danger has-text-left"
           >
             <div class="field fadeInUp">
               <div class="field">
@@ -254,8 +254,7 @@ export default {
           .catch(error => {
             if (error) {
               //jika email sudah ada yang pake kosongkan dah kasih tanda
-              console.log(error.response.data.errors);
-
+              // console.log(error.response.data.errors);
               let email = error.response.data.errors.email;
               let role = error.response.data.errors.role;
               switch (error.response.status) {

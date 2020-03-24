@@ -1,27 +1,18 @@
 <template>
   <div class="produk">
-    <div class="wrapper">
-      <h2 class="has-text-centered">
+    <div class="content-body has-shadow">
+      <h1 class="judul-component">
         Produksi
-      </h2>
-      <div class="level">
-        <div class="level-item has-text-centered">
-          <Search
-            @search="handleSearch"
-            class="is-small is-right is-7 search"
-            v-model="search"
-            :load="loading"
-          />
-        </div>
-      </div>
+      </h1>
+
       <div class="content">
-        <div class="iterasi is-hidden-desktop">
+        <div class="is-hidden-desktop">
           <div
             v-for="(item, apem) in items"
             :key="apem"
             class="infinite-list-item"
           >
-            <Produksi class="produksi" :data="item" @edit="handleEdit" />
+            <ProduksiEl class="produksi" :data="item" @edit="handleEdit" />
           </div>
           <div
             v-infinite-scroll="Scroll"
@@ -67,18 +58,16 @@
   </div>
 </template>
 <script>
-import Produksi from "@/components/element/ProduksiEl.vue";
-import Search from "@/components/element/Search.vue";
+import ProduksiEl from "@/components/element/ProduksiEl.vue";
+
 import Modal from "@/components/element/Modal.vue";
 import * as itemService from "@/services/item_service.js";
 
 export default {
   name: "produk",
   components: {
-    Produksi,
-    Modal,
-
-    Search
+    ProduksiEl,
+    Modal
   },
   data() {
     return {
@@ -235,9 +224,9 @@ export default {
 <style scoped>
 /* @import "../../assets/css/debug.css"; */
 
-.wrapper {
-  padding: 0px 20px 55px 20px;
-}
+/* .produk {
+  padding: 0px 0px 50px 0px;
+} */
 .iterasi {
   display: flex;
   flex-wrap: wrap;

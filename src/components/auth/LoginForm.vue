@@ -16,7 +16,7 @@
               </p>
             </div>
           </transition>
-          <form action>
+          <form action class="has-text-left">
             <div class="login-form">
               <form role="form" method="post">
                 <div class="field fadeInUp">
