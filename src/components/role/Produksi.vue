@@ -65,6 +65,7 @@
                 type="number"
                 placeholder="Masukkan jumlah capaian target"
                 v-model="capaianTarget"
+                required
               />
             </div>
           </div>
@@ -127,13 +128,15 @@ export default {
       more_exist: true, // parameter masih ada halaman yang perlu di load true jika masih ada, di cek di fungsi updated
       last_page: null, // inisiali sasi awal halaman terakhir, isi pertama kali di init data awal (fungsi req())
       busy: false,
-      info: "../../img/produksi/worker.svg"
+      info: "../../img/produksi/worker.svg",
+      isInputActive: false
     };
   },
   created() {
     // panggil data awal
     // this.req();
   },
+
   methods: {
     submit() {
       console.log(this.capaianTarget);
@@ -283,6 +286,8 @@ export default {
 #worker {
   background-color: aliceblue;
   border-radius: 10px;
+  width: 100%;
+  height: auto;
 }
 #info {
   /* position: absolute; */

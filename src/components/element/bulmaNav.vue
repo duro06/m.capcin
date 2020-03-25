@@ -57,6 +57,7 @@
       :class="{ 'is-active': isActive }"
     >
       <button
+        v-if="notification.length"
         class="button is-fullwidth is-light is-small is-primary"
         @click="allIsRead"
       >
