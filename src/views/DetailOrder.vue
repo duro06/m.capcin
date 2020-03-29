@@ -223,7 +223,7 @@ export default {
       try {
         const response = await prod.getById(id);
         if (response.status == 200) {
-          this.barang = response.data.data; // masukkan data yang di dapat ke barang
+          this.barang = response.data.data[0]; // masukkan data yang di dapat ke barang
         }
         this.$store.commit("notLoading");
       } catch (error) {
