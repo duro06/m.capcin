@@ -113,11 +113,19 @@ export default {
       return this.$route.path;
     },
     umum() {
-      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      let tampil =
+        this.$route.path.includes("transaksi") ||
+        this.$route.path.includes("setting")
+          ? "none"
+          : "inherit";
       return tampil;
     },
     khusus() {
-      let tampil = this.$route.path.includes("transaksi") ? "inherit" : "none";
+      let tampil =
+        this.$route.path.includes("transaksi") ||
+        this.$route.path.includes("setting")
+          ? "inherit"
+          : "none";
       return tampil;
     },
     // check() {
