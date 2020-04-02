@@ -57,13 +57,8 @@
       </div>
     </div>
     <Modal v-if="showModal" @close="handleModal">
-      <header
-        slot="header"
-        class="modal-card-head fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
-        <p class="modal-card-title  fadeInUp" v-wow data-wow-duration="1s">
+      <header slot="header" class="modal-card-head fadeInUp">
+        <p class="modal-card-title  fadeInUp">
           Update Profile
         </p>
         <button
@@ -72,12 +67,7 @@
           @click.prevent="handleModal"
         ></button>
       </header>
-      <section
-        slot="body"
-        class="modal-card-body  fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
+      <section slot="body" class="modal-card-body  fadeInUp">
         <div class="content">
           <div class="kotak">
             <label class="isi-kotak" for="input">Nama </label>
@@ -97,27 +87,15 @@
           </div>
         </div>
       </section>
-      <footer
-        slot="footer"
-        class="modal-card-foot  fadeInUp"
-        v-wow
-        data-wow-duration="1s"
-      >
+      <footer slot="footer" class="modal-card-foot  fadeInUp">
         <button
           class="button is-success fadeInUp is-small"
-          v-wow
-          data-wow-duration="1s"
           @click.prevent="saveModal"
           :disabled="disable"
         >
           Save changes
         </button>
-        <button
-          class="button  fadeInUp is-small"
-          v-wow
-          data-wow-duration="1s"
-          @click.prevent="handleModal"
-        >
+        <button class="button  fadeInUp is-small" @click.prevent="handleModal">
           Cancel
         </button>
       </footer>

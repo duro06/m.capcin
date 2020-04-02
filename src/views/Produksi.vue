@@ -1,7 +1,7 @@
 <template>
   <div class="produksi">
     <Produksi />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 <script>
@@ -28,4 +28,8 @@ export default {
   // }
 };
 </script>
-<style scoped></style>
+<style scoped>
+.produksi {
+  padding: 0px 0px 60px 0px;
+}
+</style>

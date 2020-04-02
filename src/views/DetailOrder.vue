@@ -3,9 +3,9 @@
     <div class="satu">
       <div class="has-text-centered">
         <div class="card">
-          <div class="avatar-profile">
+          <!-- <div class="avatar-profile">
             <div class="card-image">
-              <figure class="image is-480x480">
+              <figure class="image is-96x96">
                 <img
                   class="avatar-ku"
                   :src="displayImage"
@@ -14,19 +14,64 @@
                 />
               </figure>
             </div>
-          </div>
+          </div> -->
 
           <div class="card-content">
             <div class="media">
+              <div class="media-left">
+                <figure class="image is-96x96">
+                  <img
+                    class="avatar-ku"
+                    :src="displayImage"
+                    ref="displayAvatarImage"
+                    alt="avatar"
+                  />
+                </figure>
+              </div>
               <div class="media-content">
                 <p class="title is-6" style="color: black">
                   {{ barang.name }}
                 </p>
                 <p class="subtitle is-7" style="color: black">
+                  <B> {{ harga }} </B>
+                </p>
+                <!-- <p class="subtitle is-7" style="color: black">
                   {{ harga }} <br />
                   Tersedia {{ barang.stok_awal }} <br />
                   {{ barang.description }}
-                </p>
+                </p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div
+              class="pengulangan"
+              v-for="(d, n) in barang.detail_items"
+              :key="n"
+            >
+              <!-- <div class="card" :style="{ display: kelihatan }"> -->
+              <div class="card">
+                <div class="isi-kartu">
+                  <div class="columns is-mobile">
+                    <div class="column is-6 zoomIn">
+                      <p class="subtitle is-7 has-text-left detail">
+                        <B> {{ d.item.nama }} </B>
+                      </p>
+                    </div>
+                    <div class="column is-6 zoomIn">
+                      <p class="subtitle is-7 has-text-left">
+                        <B> {{ d.qty }} {{ d.item.unit.nama }} </B>
+                      </p>
+                    </div>
+                    <!-- <div class="column is-4 zoomIn">
+                      <p class="subtitle is-7 has-text-right">
+                        Rp. {{ (d.item.harga_jual * d.qty) | numeral("0,0") }}
+                      </p>
+                    </div> -->
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -67,7 +112,7 @@
     <nav class="navbar is-fixed-bottom-touch ">
       <div class="container">
         <div class="navbar-brand level is-mobile">
-          <div class="btn_nav_item level-item">
+          <!-- <div class="btn_nav_item level-item">
             <button
               class="button is-primary is-small is-rounded"
               @click.prevent="addToCart"
@@ -75,7 +120,7 @@
             >
               Tambah ke kenranjang <i class="fas fa-cart-plus"></i>
             </button>
-          </div>
+          </div> -->
           <div class="btn_nav_item level-item">
             <button
               type="submit"
@@ -168,27 +213,27 @@ export default {
         this.kdisable = false;
       }
     },
-    addToCart: async function() {
-      this.$store.commit("loading");
-      const formData = new FormData();
-      formData.append("user_id", this.profile.id);
-      formData.append("product_id", this.barang.id);
-      formData.append("harga", this.barang.harga);
-      formData.append("qty", this.jumlahPesanan);
+    // addToCart: async function() {
+    //   this.$store.commit("loading");
+    //   const formData = new FormData();
+    //   formData.append("user_id", this.profile.id);
+    //   formData.append("product_id", this.barang.id);
+    //   formData.append("harga", this.barang.harga);
+    //   formData.append("qty", this.jumlahPesanan);
 
-      try {
-        const response = await cart.toChart(formData);
-        if (response.status === 200) {
-          this.$router.replace({ name: "mitra" }, () => {});
-          this.getCart();
-          // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
-        }
-        this.$store.commit("notLoading");
-      } catch (e) {
-        this.$store.commit("notLoading");
-        this.errors = e;
-      }
-    },
+    //   try {
+    //     const response = await cart.toChart(formData);
+    //     if (response.status === 200) {
+    //       this.$router.replace({ name: "mitra" }, () => {});
+    //       this.getCart();
+    //       // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+    //     }
+    //     this.$store.commit("notLoading");
+    //   } catch (e) {
+    //     this.$store.commit("notLoading");
+    //     this.errors = e;
+    //   }
+    // },
     orderNow: async function() {
       this.$store.commit("loading");
       const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
@@ -202,7 +247,7 @@ export default {
       try {
         const response = await order.purchase(formData);
         if (response.status === 200) {
-          this.$router.replace({ name: "berhasil" }, () => {});
+          // this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
 
@@ -223,7 +268,8 @@ export default {
       try {
         const response = await prod.getById(id);
         if (response.status == 200) {
-          this.barang = response.data.data; // masukkan data yang di dapat ke barang
+          this.barang = response.data.data[0]; // masukkan data yang di dapat ke barang
+          console.log("barang", this.barang);
         }
         this.$store.commit("notLoading");
       } catch (error) {
@@ -261,6 +307,9 @@ export default {
 };
 </script>
 <style scoped>
+.detail {
+  margin-left: 10px;
+}
 .khusus {
   max-width: 60%;
 }

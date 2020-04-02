@@ -1,11 +1,6 @@
 <template>
   <div class="berhasil is-full-height">
-    <div
-      class="field slideInDown"
-      v-wow
-      data-wow-duration="1s"
-      data-wow-delay="0.4s"
-    >
+    <div class="field slideInDown">
       <article class="message is-success">
         <div class="message-body">
           <h2 class="is-3">

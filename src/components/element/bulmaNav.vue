@@ -30,19 +30,19 @@
                   }}</span>
                 </a>
               </li>
-              <li class="one-icon mega-li navbar-item">
+              <!-- <li class="one-icon mega-li navbar-item">
                 <router-link to="/transaksi/keranjang" class="mega-link">
                   <span class="mega-icon"
                     ><i class="fas fa-shopping-cart"></i
                   ></span>
                   <span class="tag is-danger" v-if="cart > 0">{{ cart }}</span>
                 </router-link>
-              </li>
+              </li> -->
               <li
                 class="one-icon mega-li navbar-item"
                 v-if="currentPage.includes('profile')"
               >
-                <router-link to="/keranjang" class="mega-link">
+                <router-link to="/setting" class="mega-link">
                   <span class="mega-icon"><i class="fas fa-cog"></i></span>
                 </router-link>
               </li>
@@ -57,6 +57,7 @@
       :class="{ 'is-active': isActive }"
     >
       <button
+        v-if="notification.length"
         class="button is-fullwidth is-light is-small is-primary"
         @click="allIsRead"
       >

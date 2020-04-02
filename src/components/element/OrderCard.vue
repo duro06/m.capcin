@@ -47,7 +47,6 @@
             </div>
             <div class="column is-3 zoomIn">
               <p><B>Harga</B></p>
-              <p><B>Subtotal</B></p>
             </div>
             <div class="column is-4 zoomIn">
               <p><B>Jumlah</B></p>
@@ -64,7 +63,6 @@
               </div>
               <div class="column is-3 zoomIn">
                 <p>{{ d.harga }}</p>
-                <p>{{ d.harga * d.qty }}</p>
               </div>
               <div class="column is-4 zoomIn">
                 <p>{{ d.qty }}</p>
@@ -137,6 +135,7 @@ export default {
         this.loading = false;
         if (res.status == 200) {
           this.dataDetails = res.data.data;
+          // console.log(this.dataDetails)
         }
       } catch (e) {
         this.loading = false;

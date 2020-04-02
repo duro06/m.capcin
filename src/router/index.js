@@ -180,6 +180,17 @@ const routes = [
       verified: true
     }
   },
+  {
+    path: "/setting",
+    name: "setting",
+    component: () => import("../views/Setting.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
 
   {
     path: "/test",

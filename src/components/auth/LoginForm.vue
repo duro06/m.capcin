@@ -16,10 +16,16 @@
               </p>
             </div>
           </transition>
-          <form action>
+          <form action class="has-text-left">
             <div class="login-form">
               <form role="form" method="post">
                 <div class="field fadeInUp">
+                  <p
+                    class="help align-left is-danger"
+                    :style="{ display: mailMessage }"
+                  >
+                    {{ mail }}
+                  </p>
                   <p class="control has-icons-left has-icons-right">
                     <input
                       :class="['input', classDanger, 'is-small']"
@@ -38,7 +44,15 @@
                       <i class="fas fa-exclamation-triangle"></i>
                     </span>
                   </p>
-                  <p :class="['help', 'align-left', formValidation()]">
+                  <p
+                    :class="[
+                      'help',
+                      'align-left',
+                      classDanger,
+                      formValidation()
+                    ]"
+                    :style="{ visibility: visClass }"
+                  >
                     {{ validMail }}
                   </p>
                 </div>
@@ -143,7 +157,9 @@ export default {
       validPass: "", //validasi passsword
       Vmail: false, // boolean email sudah valid atau belum, jika sudah valid bisa masuk proses selanjutnya
       Vpass: false, // boolean password sudah valid atau belum, idem yang atas
-      loading: "" // kelas loading button
+      loading: "", // kelas loading button
+      mailMessage: "none", // return mail error 401
+      mail: ""
     };
   },
   computed: {
@@ -306,22 +322,23 @@ export default {
 
     submitForm: async function() {
       // shortcut untuk this
-      const vm = this;
+      // const vm = this;
       //jika email dan password sudah di validai
-      if (vm.Vpass == true && vm.Vmail == true) {
-        vm.loading = "is-loading"; // button spinner on
+      if (this.Vpass == true && this.Vmail == true) {
+        this.loading = "is-loading"; // button spinner on
         this.disable = true; //disable button
         try {
           const response = await login(this.user); // paggil fungsi login dari auth dengan membawa data user
-          vm.loading = ""; // button spinner off
+          this.loading = ""; // button spinner off
           this.disable = false; // button enable
           this.errors = {}; // sepertinya belum berfungsi membesihkan error dengan baik dan benar
           this.findRole(response.token_scope); // panggil fungsi redirect sesuai role
         } catch (error) {
+          // console.log(error);
           this.disable = false; //button enable
+          this.loading = ""; //loading spinner off
           if (error.response != undefined) {
-            vm.loading = ""; //loading spinner off
-            vm.user.password = ""; //kosongkan input password
+            this.user.password = ""; //kosongkan input password
             //pilih pesan error sesuai respon server
             switch (error.response.status) {
               case 422:
@@ -334,6 +351,9 @@ export default {
                 });
                 break;
               case 401:
+                this.classDanger = "is-danger";
+                this.mailMessage = "inherit";
+                this.mail = "Do you use the registered email address?";
                 this.flashMessage.error({
                   message: error.response.data.message,
                   time: 5000
@@ -352,13 +372,18 @@ export default {
                 });
                 break;
             }
+          } else {
+            this.flashMessage.error({
+              tittle: "Some error occured, Please Try Again!",
+              message: error,
+              time: 5000
+            });
           }
         }
       } else {
         //ini seharusnya hanya terjadi jika formnya kosong
         this.flashMessage.error({
-          message:
-            "Jangan buru-buru..., di cek dulu, kalo masih merah, ada yang salah",
+          message: "Oops..., did you forget to fill the form?",
           time: 4000
         });
       }
@@ -383,19 +408,14 @@ export default {
       const vm = this;
       if (vm.user.email != "") {
         if (vm.reg.test(vm.user.email) == false) {
-          vm.mailString(
-            "is-danger",
-            "visible",
-            "periksa kembali email anda",
-            false
-          );
+          vm.mailString("is-danger", "visible", "Check your email", false);
         } else if (vm.reg.test(vm.user.email) == true) {
           vm.mailString("is-success", "hidden", "", true);
         }
       } else {
         vm.mailString("", "hidden", "", false);
       }
-      return vm.classDanger;
+      // return vm.classDanger;
     },
     //=================== validasi Password ==================
     passOk: function() {
@@ -405,23 +425,18 @@ export default {
           vm.passString(
             "is-danger",
             "hidden",
-            "password anda kurang dari 6 karakter",
+            "your password less than 6 caracter",
             false
           );
         } else {
           vm.passString("is-success", "visible", "", true);
         }
       } else if (vm.user.password != "" && vm.user.email == "") {
-        vm.passString("is-danger", "hidden", "Email anda kosong", false);
+        vm.passString("is-danger", "hidden", "Your email is empty", false);
       } else if (vm.user.password != "" && vm.validMail != "") {
-        vm.passString("is-danger", "hidden", "Email anda belum valid", false);
+        vm.passString("is-danger", "hidden", "Your email is not valid", false);
       } else if (vm.user.password == "" && vm.user.email != "") {
-        vm.passString(
-          "is-warning",
-          "hidden",
-          "Password tidak boleh kosong",
-          false
-        );
+        vm.passString("is-warning", "hidden", "Password is empty", false);
       } else {
         vm.passString("", "hidden", "", false);
       }

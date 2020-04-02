@@ -1,11 +1,6 @@
 <template>
   <div class="hello">
-    <div
-      class="field slideInDown"
-      v-wow
-      data-wow-duration="1s"
-      data-wow-delay="0.4s"
-    >
+    <div class="field slideInDown">
       <div class="card" @click="redirect">
         <div class="card-image">
           <figure class="image is-5by3">
