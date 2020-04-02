@@ -42,7 +42,7 @@
                 class="one-icon mega-li navbar-item"
                 v-if="currentPage.includes('profile')"
               >
-                <router-link to="/keranjang" class="mega-link">
+                <router-link to="/setting" class="mega-link">
                   <span class="mega-icon"><i class="fas fa-cog"></i></span>
                 </router-link>
               </li>

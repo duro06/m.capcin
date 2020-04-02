@@ -55,21 +55,21 @@
               <div class="card">
                 <div class="isi-kartu">
                   <div class="columns is-mobile">
-                    <div class="column is-5 zoomIn">
-                      <p class="subtitle is-7 has-text-left">
-                        {{ d.item.nama }}
+                    <div class="column is-6 zoomIn">
+                      <p class="subtitle is-7 has-text-left detail">
+                        <B> {{ d.item.nama }} </B>
                       </p>
                     </div>
-                    <div class="column is-4 zoomIn">
+                    <div class="column is-6 zoomIn">
                       <p class="subtitle is-7 has-text-left">
-                        {{ d.qty }} {{ d.item.unit.nama }}
+                        <B> {{ d.qty }} {{ d.item.unit.nama }} </B>
                       </p>
                     </div>
-                    <div class="column is-3 zoomIn">
+                    <!-- <div class="column is-4 zoomIn">
                       <p class="subtitle is-7 has-text-right">
-                        {{ (d.item.harga_jual * d.qty) | numeral("0,0") }}
+                        Rp. {{ (d.item.harga_jual * d.qty) | numeral("0,0") }}
                       </p>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -213,27 +213,27 @@ export default {
         this.kdisable = false;
       }
     },
-    addToCart: async function() {
-      this.$store.commit("loading");
-      const formData = new FormData();
-      formData.append("user_id", this.profile.id);
-      formData.append("product_id", this.barang.id);
-      formData.append("harga", this.barang.harga);
-      formData.append("qty", this.jumlahPesanan);
+    // addToCart: async function() {
+    //   this.$store.commit("loading");
+    //   const formData = new FormData();
+    //   formData.append("user_id", this.profile.id);
+    //   formData.append("product_id", this.barang.id);
+    //   formData.append("harga", this.barang.harga);
+    //   formData.append("qty", this.jumlahPesanan);
 
-      try {
-        const response = await cart.toChart(formData);
-        if (response.status === 200) {
-          this.$router.replace({ name: "mitra" }, () => {});
-          this.getCart();
-          // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
-        }
-        this.$store.commit("notLoading");
-      } catch (e) {
-        this.$store.commit("notLoading");
-        this.errors = e;
-      }
-    },
+    //   try {
+    //     const response = await cart.toChart(formData);
+    //     if (response.status === 200) {
+    //       this.$router.replace({ name: "mitra" }, () => {});
+    //       this.getCart();
+    //       // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+    //     }
+    //     this.$store.commit("notLoading");
+    //   } catch (e) {
+    //     this.$store.commit("notLoading");
+    //     this.errors = e;
+    //   }
+    // },
     orderNow: async function() {
       this.$store.commit("loading");
       const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
@@ -247,7 +247,7 @@ export default {
       try {
         const response = await order.purchase(formData);
         if (response.status === 200) {
-          this.$router.replace({ name: "berhasil" }, () => {});
+          // this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
 
@@ -307,6 +307,9 @@ export default {
 };
 </script>
 <style scoped>
+.detail {
+  margin-left: 10px;
+}
 .khusus {
   max-width: 60%;
 }

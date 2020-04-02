@@ -74,15 +74,18 @@
               Login
             </p>
           </router-link>
-        </div>
-        <div v-if="loggedIn" class="btn_nav_item level-item has-text-centered">
+        </div>-->
+        <!-- <div
+          v-if="currentPage.includes('setting')"
+          class="btn_nav_item level-item has-text-centered"
+        >
           <router-link :to="{ path: '/logout' }" exact>
             <i class="fas fa-sign-out-alt"></i>
             <p class="subtitle is-7">
               Logout
             </p>
-          </router-link> 
-        </div>-->
+          </router-link>
+        </div> -->
       </div>
     </div>
   </nav>
@@ -98,7 +101,11 @@ export default {
   },
   computed: {
     umum() {
-      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      let tampil =
+        this.$route.path.includes("transaksi") ||
+        this.$route.path.includes("setting")
+          ? "none"
+          : "inherit";
       return tampil;
     },
     loggedIn() {

@@ -94,6 +94,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.custom_bottom_nav {
+  padding: 2px 5px;
+}
 .content-body {
   padding: 10px;
   box-shadow: 0 2px 0 0 whitesmoke;
