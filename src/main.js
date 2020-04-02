@@ -6,7 +6,7 @@ import store from "./store";
 
 import Vuex from "vuex";
 import axios from "axios";
-import vueNumeral from "vue-numeral-filter";
+// import vueNumeral from "vue-numeral-filter";
 import FlashMessage from "@smartweb/vue-flash-message";
 import VueCarousel from "vue-carousel";
 import infiniteScroll from "vue-infinite-scroll";
@@ -14,7 +14,7 @@ import infiniteScroll from "vue-infinite-scroll";
 import "bulma-badge/dist/css/bulma-badge.min.css";
 import "vue-loading-overlay/dist/vue-loading.css";
 Vue.use(Vuex, axios);
-Vue.use(vueNumeral, { locale: "en-gb" });
+// Vue.use(vueNumeral, { locale: "en-gb" });
 Vue.use(FlashMessage);
 Vue.use(VueCarousel);
 Vue.use(infiniteScroll);
