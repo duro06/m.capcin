@@ -30,14 +30,14 @@
                   }}</span>
                 </a>
               </li>
-              <li class="one-icon mega-li navbar-item">
+              <!-- <li class="one-icon mega-li navbar-item">
                 <router-link to="/transaksi/keranjang" class="mega-link">
                   <span class="mega-icon"
                     ><i class="fas fa-shopping-cart"></i
                   ></span>
                   <span class="tag is-danger" v-if="cart > 0">{{ cart }}</span>
                 </router-link>
-              </li>
+              </li> -->
               <li
                 class="one-icon mega-li navbar-item"
                 v-if="currentPage.includes('profile')"

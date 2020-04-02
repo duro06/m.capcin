@@ -30,6 +30,10 @@ export default {
   delProduct(state) {
     state.products = [];
   },
+  //===========detail product ======
+  setDetailsProduct(state, payload) {
+    state.productDetails = payload;
+  },
   // =========== loading ==============
   loading(state) {
     state.loadShow = "payload";

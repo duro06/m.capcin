@@ -3,9 +3,9 @@
     <div class="satu">
       <div class="has-text-centered">
         <div class="card">
-          <div class="avatar-profile">
+          <!-- <div class="avatar-profile">
             <div class="card-image">
-              <figure class="image is-480x480">
+              <figure class="image is-96x96">
                 <img
                   class="avatar-ku"
                   :src="displayImage"
@@ -14,19 +14,64 @@
                 />
               </figure>
             </div>
-          </div>
+          </div> -->
 
           <div class="card-content">
             <div class="media">
+              <div class="media-left">
+                <figure class="image is-96x96">
+                  <img
+                    class="avatar-ku"
+                    :src="displayImage"
+                    ref="displayAvatarImage"
+                    alt="avatar"
+                  />
+                </figure>
+              </div>
               <div class="media-content">
                 <p class="title is-6" style="color: black">
                   {{ barang.name }}
                 </p>
                 <p class="subtitle is-7" style="color: black">
+                  <B> {{ harga }} </B>
+                </p>
+                <!-- <p class="subtitle is-7" style="color: black">
                   {{ harga }} <br />
                   Tersedia {{ barang.stok_awal }} <br />
                   {{ barang.description }}
-                </p>
+                </p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <div
+              class="pengulangan"
+              v-for="(d, n) in barang.detail_items"
+              :key="n"
+            >
+              <!-- <div class="card" :style="{ display: kelihatan }"> -->
+              <div class="card">
+                <div class="isi-kartu">
+                  <div class="columns is-mobile">
+                    <div class="column is-5 zoomIn">
+                      <p class="subtitle is-7 has-text-left">
+                        {{ d.item.nama }}
+                      </p>
+                    </div>
+                    <div class="column is-4 zoomIn">
+                      <p class="subtitle is-7 has-text-left">
+                        {{ d.qty }} {{ d.item.unit.nama }}
+                      </p>
+                    </div>
+                    <div class="column is-3 zoomIn">
+                      <p class="subtitle is-7 has-text-right">
+                        {{ (d.item.harga_jual * d.qty) | numeral("0,0") }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -67,7 +112,7 @@
     <nav class="navbar is-fixed-bottom-touch ">
       <div class="container">
         <div class="navbar-brand level is-mobile">
-          <div class="btn_nav_item level-item">
+          <!-- <div class="btn_nav_item level-item">
             <button
               class="button is-primary is-small is-rounded"
               @click.prevent="addToCart"
@@ -75,7 +120,7 @@
             >
               Tambah ke kenranjang <i class="fas fa-cart-plus"></i>
             </button>
-          </div>
+          </div> -->
           <div class="btn_nav_item level-item">
             <button
               type="submit"
@@ -224,6 +269,7 @@ export default {
         const response = await prod.getById(id);
         if (response.status == 200) {
           this.barang = response.data.data[0]; // masukkan data yang di dapat ke barang
+          console.log("barang", this.barang);
         }
         this.$store.commit("notLoading");
       } catch (error) {

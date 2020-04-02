@@ -9,6 +9,7 @@ export default {
   adminVerified: localStorage.getItem("waiting_verivication") || null,
   profile: {},
   products: [],
+  productDetails: [],
   loadShow: "",
   successOrder: {},
   Order: [],

@@ -38,7 +38,7 @@ export default {
       store.commit("notLoading");
     }
   },
-
+  ///===============product ======
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });
   },
@@ -48,6 +48,11 @@ export default {
   productOut(context) {
     context.commit("delProduct", { root: true });
   },
+  //==================product details ===========
+  detailsIn(context, payload) {
+    context.commit("setDetailsProduct", payload, { root: true });
+  },
+  //=====================auth====================
   aunthenticate(context, payload) {
     context.commit("setAuthenticate", payload, { root: true });
     // localStorage.setItem("role", payload.role);
