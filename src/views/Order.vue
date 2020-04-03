@@ -260,6 +260,9 @@ export default {
         this.busy = false;
       }
     }
+  },
+  destroyed() {
+    this.$store.commit("order/delOrderItems");
   }
   // updated() {
   //   // if (this.mitraOrderMeta.more) {
