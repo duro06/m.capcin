@@ -1,7 +1,9 @@
 <template>
   <div class="order-container">
     <router-link :to="{ path: '/order' }" exact>
-      tampilkan semua
+      <button class="button is-fullwidth is-light is-primary">
+        tampilkan semua
+      </button>
     </router-link>
     <div class="card">
       <div class="card-header zoomIn">
@@ -9,14 +11,15 @@
       </div>
       <div class="card-content">
         <div :class="['columns', 'is-mobile', status]">
-          <div @click="getDetail" class="column is-3 zoomIn">
+          <!-- <div @click="getDetail" class="column is-3 zoomIn"> -->
+          <!-- <div  class="column is-3 zoomIn">
             <p class="rata-kiri">Details</p>
-          </div>
+          </div> -->
           <div class="column is-5 zoomIn">
             <p class="rata-kiri">Jumlah :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
-          <div class="column is-4 zoomIn">
+          <div class="column is-7 zoomIn">
             <p class="rata-kiri">
               <B>status :</B>
             </p>
