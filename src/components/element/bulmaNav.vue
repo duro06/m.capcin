@@ -134,7 +134,8 @@ export default {
     // cart() {
     //   return this.$store.state.cart;
     // },
-    ...mapState(["profile", "cart", "Order", "notification"])
+    ...mapState(["profile", "cart", "notification"]),
+    ...mapState("order", { Order: state => state.Order })
   },
   watch: {},
   methods: {

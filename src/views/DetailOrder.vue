@@ -142,6 +142,7 @@ import { mapState } from "vuex";
 import * as order from "@/services/order_service";
 import * as cart from "@/services/cart_service";
 import * as prod from "@/services/product_service";
+import * as pusher from "@/services/pusher_service";
 
 export default {
   name: "Detail_Order",
@@ -247,8 +248,9 @@ export default {
       try {
         const response = await order.purchase(formData);
         if (response.status === 200) {
+          pusher.subscribe(response.data.data.id);
           this.$router.replace({ name: "berhasil" }, () => {});
-          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+          this.$store.commit("order/setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
 
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja

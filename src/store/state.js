@@ -1,7 +1,7 @@
 // import store from ".."
 export default {
-  // server: "http://192.168.1.100:8000",
-  server: "http://localhost:8000",
+  server: "http://192.168.1.101:8000",
+  // server: "http://localhost:8000",
   // serverApi: "http://localhost:8000/api/",
   // serverApi2: "http://localhost:8000/api",
   // serverImage: "http://localhost:8000/storage/",
@@ -11,13 +11,7 @@ export default {
   products: [],
   productDetails: [],
   loadShow: "",
-  successOrder: {},
-  Order: [],
-  OrderItems: [],
   notification: [],
   cart: 0,
-  orderFocus: {},
-  orderUpdate: null,
-  mitraOrderMeta: {},
   mitraProductMeta: {}
 };

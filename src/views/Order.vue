@@ -1,9 +1,9 @@
 <template>
   <div class="order">
-    <div class="isi" v-if="OrderItems.length">
+    <div class="isi" v-if="Items.length">
       <div
         class="pegulangan"
-        v-for="(item, n) in OrderItems"
+        v-for="(item, n) in Items"
         :key="n"
         @scroll="testScroll"
       >
@@ -36,7 +36,7 @@ new Vue({
 import OrderCard from "@/components/element/OrderCard";
 // import OrderFocus from "@/components/element/OrderFocus";
 import Empty from "@/components/element/EmptyPage";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import * as ord from "@/services/order_service";
 
 export default {
@@ -55,88 +55,105 @@ export default {
       update: false
     };
   },
+  // created() {
+  //   this.ambilData();
+  // },
   mounted() {
-    console.log(this.OrderItems.length);
+    console.log(this.Items);
     console.log("busy", this.busy);
-    this.updateData();
-    // if (!this.OrderItems.length) {
-    this.ambilData();
+    // this.updateData();
+    // if (!this.Items.length) {
     // }
   },
 
   computed: {
-    ...mapState(["profile", "OrderItems", "mitraOrderMeta"])
+    ...mapState(["profile"]),
+    ...mapState("order", {
+      Items: state => state.Items,
+      mitraOrderMeta: state => state.meta
+    })
   },
-  // watch: {
-  //   needUpdate() {
-  //     if (this.orderUpdate != null) {
-  //       this.updateData();
-  //     }
-  //   }
-  // },
+  watch: {
+    getData: {
+      handler: "ambilData",
+      immediate: true
+    }
+  },
   methods: {
+    ...mapActions("order", ["getDataOrder", "setMeta"]),
     // removeFocus() {
     //   this.$store.commit("setOrderFocus", {});
     // },
     testScroll() {
-      console.log("scroll");
+      console.log("test scroll");
     },
     orderScroll: function() {
       console.log("scroll");
+      console.log(this.mitraOrderMeta.more);
       if (this.mitraOrderMeta.more) {
         // this.mitraOrderMeta.more = false;
         this.ambilLagi(); //jalankan fungsi Load more
       }
     },
     //update data(halaman pertama aja.. kalo lagi ada di bawah ya maap saya update dulu...)
-    updateData: async function() {
-      console.log("Update");
-      this.busy = true; // disable scroll biar ga ambil2 data terus,
-      let id = this.profile.id;
-      let current_page;
-      current_page = this.mitraOrderMeta.current;
+    // updateData: async function() {
+    //   console.log("Update");
+    //   this.busy = true; // disable scroll biar ga ambil2 data terus,
+    //   let id = this.profile.id;
+    //   let current_page;
+    //   if (this.mitraOrderMeta.current) {
+    //     current_page = this.mitraOrderMeta.current;
+    //   } else {
+    //     current_page = 1;
+    //   }
+    //   console.log("curretn atas", current_page);
+    //   console.log("curretn atas", this.mitraOrderMeta);
+    //   console.log("curretn atas", !this.mitraOrderMeta.current);
 
-      // if (this.mitraOrderMeta.more) {
-      // }
-      let ID;
-      if (id) {
-        ID = id;
-      } else {
-        ID = localStorage.getItem("mie");
-      }
+    //   // if (this.mitraOrderMeta.more) {
+    //   // }
+    //   let ID;
+    //   if (id) {
+    //     ID = id;
+    //   } else {
+    //     ID = localStorage.getItem("mie");
+    //   }
 
-      let params = {
-        params: {
-          // page: current,
-          q: ID
-        }
-      };
-      try {
-        const res = await ord.getOrder(params);
-        // this.items = res.data.data.data;
-        let par = res.data.data;
-        let more;
-        if (par.current_page < par.last_page) {
-          more = true;
-        } else {
-          more = false;
-        }
-        let meta = {
-          current: current_page,
-          last: par.last_page,
-          more: more
-        };
+    //   let params = {
+    //     params: {
+    //       page: current_page,
+    //       q: ID
+    //     }
+    //   };
+    //   try {
+    //     const res = await ord.getOrder(params);
+    //     // this.items = res.data.data.data;
+    //     let par = res.data.data;
+    //     let more;
+    //     if (par.current_page < par.last_page) {
+    //       more = true;
+    //     } else {
+    //       more = false;
+    //     }
+    //     let meta = {
+    //       current: par.current_page,
+    //       last: par.last_page,
+    //       more: more
+    //     };
+    //     console.log("par", par);
+    //     console.log("meta", meta);
+    //     // this.$store.commit("order/setMitraOrderMeta", meta);
+    //     this.setMeta(meta);
+    //   } catch (e) {
+    //     this.update = false;
+    //     this.busy = false;
+    //   }
+    // },
 
-        this.$store.commit("setMitraOrderMeta", meta);
-      } catch (e) {
-        this.update = false;
-        this.busy = false;
-      }
-    },
-
-    ambilData: async function() {
+    // ambilData: async function() {
+    ambilData() {
       this.$store.commit("loading");
-      this.$store.commit("delOrderItems");
+      // this.$store.commit("delOrderItems");
       this.busy = true;
       let id = this.profile.id;
       let ID;
@@ -151,33 +168,46 @@ export default {
           q: ID
         }
       };
+      // this.$store.dispatch("order/getOrderData", params);
+      // this.getOrderData(params);
+      this.getDataOrder(params)
+        .then(() => {
+          this.$store.commit("notLoading");
+          console.log("res");
+          this.busy = false;
+        })
+        .catch(() => {
+          this.$store.commit("notLoading");
+          console.log("err");
+          this.busy = false;
+        });
+      // try {
+      //   const res = await ord.getOrder(params);
+      //   // this.items = res.data.data.data;
+      //   this.$store.commit("order/setOrderItems", res.data.data.data);
 
-      try {
-        const res = await ord.getOrder(params);
-        // this.items = res.data.data.data;
-        this.$store.commit("setOrderItems", res.data.data.data);
-
-        let par = res.data.data;
-        let more;
-        this.current = par.current_page;
-        this.last = par.last_page;
-        if (par.current_page < par.last_page) {
-          more = true;
-        } else {
-          more = false;
-        }
-        let meta = {
-          current: par.current_page,
-          last: par.last_page,
-          more: more
-        };
-        this.$store.commit("setMitraOrderMeta", meta);
-        this.$store.commit("notLoading");
-        this.busy = false;
-      } catch (e) {
-        this.$store.commit("notLoading");
-        this.busy = false;
-      }
+      //   let par = res.data.data;
+      //   let more;
+      //   this.current = par.current_page;
+      //   this.last = par.last_page;
+      //   if (par.current_page < par.last_page) {
+      //     more = true;
+      //   } else {
+      //     more = false;
+      //   }
+      //   let meta = {
+      //     current: par.current_page,
+      //     last: par.last_page,
+      //     more: more
+      //   };
+      //   console.log("meta bawah", meta);
+      // this.$store.commit("order/setMitraOrderMeta", meta);
+      // this.setMeta(meta)
+      //   this.$store.commit("notLoading");
+      // } catch (e) {
+      //   this.$store.commit("notLoading");
+      //   this.busy = false;
+      // }
     },
     ambilLagi: async function() {
       console.log("amvil lagi");
@@ -206,7 +236,7 @@ export default {
         let more;
         par.data.forEach(e => {
           // this.items.push(e);
-          this.$store.commit("pushOrderItems", e);
+          this.$store.commit("order/pushOrderItems", e);
         });
         this.current = par.current_page;
         this.last = par.last_page;
@@ -221,7 +251,8 @@ export default {
           more: more
         };
 
-        this.$store.commit("setMitraOrderMeta", meta);
+        // this.$store.commit("order/setMitraOrderMeta", meta);
+        this.setMeta(meta);
         this.$store.commit("notLoading");
         this.busy = false;
       } catch (e) {

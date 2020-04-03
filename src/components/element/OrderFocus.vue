@@ -1,6 +1,6 @@
 <template>
   <div class="order-container">
-    <router-link to="/order">
+    <router-link :to="{ path: '/order' }" exact>
       tampilkan semua
     </router-link>
     <div class="card">
@@ -87,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["orderFocus"]),
+    ...mapState("order", { orderFocus: state => state.Focus }),
     status() {
       return this.orderFocus.status;
     },

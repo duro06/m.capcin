@@ -41,41 +41,9 @@ export default {
   notLoading(state) {
     state.loadShow = "";
   },
-  //=========== mitra success order message =====
-  setSuccessOrder(state, payload) {
-    state.successOrder = payload;
-  },
-  delSuccessOrder(state) {
-    state.successOrder = [];
-  },
-  //============= mitra order to subscribe ====
-  setOrder(state, payload) {
-    state.Order.push(payload);
-  },
-  delOrder(state) {
-    state.Order = [];
-  },
-  //===========mitra order items ====
-  pushOrderItems(state, payload) {
-    state.OrderItems.push(payload);
-  },
-  setOrderItems(state, payload) {
-    state.OrderItems = payload;
-  },
-  delOrderItems(state) {
-    state.Order = [];
-  },
-
-  updateOrderItems(state, payload) {
-    state.OrderItems.forEach(e => {
-      if (e.id === payload.id) {
-        e.status.name = payload.status;
-      }
-    });
-  },
-  //=========== order focus from notifcation mitra ====
-  setOrderFocus(state, payload) {
-    state.orderFocus = payload;
+  //======= mitra product meta ==
+  setMitraProductMeta(state, payload) {
+    state.mitraProductMeta = payload;
   },
   // ====mitra notification =============
   setNotification(state, payload) {
@@ -109,19 +77,5 @@ export default {
   //=====mitra cart========
   setCart(state, payload) {
     state.cart = payload;
-  },
-  //======= mitra order meta ==
-  setMitraOrderMeta(state, payload) {
-    state.mitraOrderMeta = payload;
-  },
-
-  //======= mitra product meta ==
-  setMitraProductMeta(state, payload) {
-    state.mitraProductMeta = payload;
-  },
-
-  //====not yet used ===
-  needUpdate(state, payload) {
-    state.orderUpdate = payload;
   }
 };

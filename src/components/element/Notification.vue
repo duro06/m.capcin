@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     read() {
-      this.$store.commit("setOrderFocus", this.data);
+      this.$store.commit("order/setOrderFocus", this.data);
       this.$store.commit("notifIsRead", this.pesan.id);
       console.log(this.data);
       this.$emit("tutup");

@@ -5,11 +5,13 @@ import state from "./state.js";
 import mutations from "./mutations.js";
 import actions from "./action.js";
 import getters from "./getters.js";
+import order from "./order.js";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state,
   mutations,
   actions,
-  getters
+  getters,
+  modules: { order }
 });
