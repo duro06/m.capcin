@@ -189,6 +189,11 @@ export default {
 };
 </script>
 <style scoped>
+.loop {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .transparent {
   background-color: transparent;
   border-color: transparent;
