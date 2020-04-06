@@ -3,7 +3,7 @@ import store from "../store";
 // import { mapState } from "vuex";
 
 export function writeNotif() {
-  const notifData = localStorage.getItem("notif");
+  // const notifData = localStorage.getItem("notif");
   const data = store.state.order.Order;
   if (store.state.notification) {
     // const pesan = store.state.notification;
@@ -23,10 +23,10 @@ export function writeNotif() {
       "Pala64564ha@sakuranandaniyu99865773838"
     );
     // console.log(notif);
-    if (notifData) {
-      console.log(notifData);
-      localStorage.removeItem("notif");
-    }
+    // if (notifData) {
+    //   console.log(notifData);
+    //   localStorage.removeItem("notif");
+    // }
     // store.commit("order/setLocalOrder", []);
     // store.dispatch('ambilData')
     localStorage.setItem("notif", notif);
@@ -69,6 +69,6 @@ export function readNotif() {
         console.log("ada pesan baru", ada);
       });
     }
-    // localStorage.removeItem("notif");
+    localStorage.removeItem("notif");
   }
 }

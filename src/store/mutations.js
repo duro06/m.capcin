@@ -1,4 +1,4 @@
-import { writeNotif } from "../services/notif_service";
+// import { writeNotif } from "../services/notif_service";
 export default {
   //=========  profile ====
   setAuthenticate(state, payload) {
@@ -51,7 +51,7 @@ export default {
     if (!payload.read) {
       state.notification.push(payload);
     }
-    writeNotif();
+    // writeNotif();
   },
   allNotifIsRead(state) {
     state.notification.forEach(e => {
