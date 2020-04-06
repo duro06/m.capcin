@@ -3,7 +3,8 @@ import store from "../store";
 // import { mapState } from "vuex";
 
 export function writeNotif() {
-  let data = store.state.order.Order;
+  const notifData = localStorage.getItem("notif");
+  const data = store.state.order.Order;
   if (store.state.notification) {
     // const pesan = store.state.notification;
     const pesan = store.state.notification.filter(e => e.read === false);
@@ -22,7 +23,12 @@ export function writeNotif() {
       "Pala64564ha@sakuranandaniyu99865773838"
     );
     // console.log(notif);
-    store.commit("order/setLocalOrder", []);
+    if (notifData) {
+      console.log(notifData);
+      localStorage.removeItem("notif");
+    }
+    // store.commit("order/setLocalOrder", []);
+    // store.dispatch('ambilData')
     localStorage.setItem("notif", notif);
   }
 }
@@ -44,24 +50,25 @@ export function readNotif() {
       });
     }
     if (data.length) {
-      console.log("data", data);
-      let items = store.state.order.Order;
+      // console.log("data", data);
+      const items = store.state.order.Order;
       // store.commit("order/setLocalOrder", message.items);
       data.forEach(local => {
-        console.log("data 1", local);
-        let ada = items.filter(item => {
+        // console.log("data 1", local);
+        const ada = items.filter(item => {
           if (item.id == local.id && item.status_id != local.status_id) {
             return true;
           }
         });
         if (ada.length) {
-          ada[0].read = false;
-          store.commit("setNotification", ada[0]);
+          const data = ada[0];
+          store.commit("setNotification", data);
+          store.commit("order/updateOrder", data);
         }
         console.log("ada pesan baru?", ada[0]);
         console.log("ada pesan baru", ada);
       });
     }
-    localStorage.removeItem("notif");
+    // localStorage.removeItem("notif");
   }
 }

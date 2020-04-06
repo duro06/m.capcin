@@ -84,6 +84,7 @@ export default {
 
       localStorage.removeItem("access_token"),
         localStorage.removeItem("level"),
+        localStorage.removeItem("notif"),
         context.commit("setDestroyToken", {
           root: true
         });

@@ -101,7 +101,7 @@ export default {
   mounted() {},
   computed: {
     PesanNotif() {
-      return this.notification.filter(e => e.read == false);
+      return this.notification.filter(data => data.read == false);
     },
     level() {
       return this.$store.getters.myProfile.role;
@@ -134,8 +134,8 @@ export default {
     // cart() {
     //   return this.$store.state.cart;
     // },
-    ...mapState(["profile", "cart", "notification"]),
-    ...mapState("order", { Order: state => state.Order })
+    ...mapState(["profile", "cart", "notification"])
+    // ...mapState("order", { Order: state => state.Order })
   },
   watch: {},
   methods: {

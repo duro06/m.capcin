@@ -14,6 +14,7 @@ export function subscribe(order) {
   channel.bind("App\\Events\\OrderStatusChanged", data => {
     store.commit("setNotification", data);
     store.commit("order/setOrderFocus", data);
+    store.commit("order/updateOrder", data);
     store.commit("order/updateOrderItems", data);
   });
 }

@@ -36,12 +36,12 @@ export default {
       if (store.getters.loggedIn) {
         if (localStorage.getItem("level") == "Mitra") {
           store.dispatch("order/ambilOrder");
-          let params = {
-            params: {
-              q: localStorage.getItem("mie")
-            }
-          };
-          store.dispatch("order/getDataOrder", params);
+          // let params = {
+          //   params: {
+          //     q: localStorage.getItem("mie")
+          //   }
+          // };
+          // store.dispatch("order/getDataOrder", params);
         }
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
