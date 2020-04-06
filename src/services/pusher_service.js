@@ -30,6 +30,7 @@ export function register(order) {
   channel.bind("App\\Events\\RegisterEvent", data => {
     if (data != "") {
       store.dispatch("destroyVerifie");
+      store.dispatch("stockMitra/remove", "ada");
     }
   });
 }

@@ -89,7 +89,17 @@ const routes = [
       }
     ]
   },
-
+  {
+    path: "/stock/:id",
+    name: "stock",
+    component: () => import("../views/MitraStock.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: true,
+      visitor: true,
+      verified: true
+    }
+  },
   {
     path: "*",
     name: "hello",
