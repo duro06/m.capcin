@@ -3,6 +3,9 @@ import { setToken } from "../services/auth_service.js";
 import store from ".";
 
 export default {
+  setNotification({ commit }, payload) {
+    commit("setNotification", payload);
+  },
   ///===============product ======
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });

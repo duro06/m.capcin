@@ -35,12 +35,12 @@ export default {
       //jika login maka
       if (store.getters.loggedIn) {
         if (localStorage.getItem("level") == "Mitra") {
+          store.dispatch("order/ambilOrder");
           let params = {
             params: {
               q: localStorage.getItem("mie")
             }
           };
-          store.dispatch("order/ambilOrder");
           store.dispatch("order/getDataOrder", params);
         }
         const response = await auth.getProfile(); // ambil profile

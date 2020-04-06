@@ -9,9 +9,14 @@ const state = () => ({
   Items: [],
   Focus: {},
   Update: null,
-  meta: {}
+  meta: {},
+  localOrder: []
 });
 const mutations = {
+  //================ mitra local order ======
+  setLocalOrder(state, payload) {
+    state.localOrder = payload;
+  },
   //=========== mitra success order message =====
   setSuccessOrder(state, payload) {
     state.successOrder = payload;
@@ -47,6 +52,13 @@ const mutations = {
   //=========== order focus from notifcation mitra ====
   setOrderFocus(state, payload) {
     state.Focus = payload;
+    state.Order.forEach(data => {
+      if (data.id == payload.id) {
+        data.status_id = payload.status_id;
+        data.status = payload.status;
+      }
+    });
+    console.log("fokus", payload);
   },
   //======= mitra order meta ==
   setMitraOrderMeta(state, payload) {
@@ -145,10 +157,43 @@ const actions = {
       store.commit("notLoading");
       console.log("Items", items);
       // console.log("res", res);
+      // items.forEach(e => {
+      // });
       items.forEach(e => {
-        store.commit("order/setOrder", e.id);
+        store.commit("order/setOrder", e);
         subscribe(e.id);
+        if (e.status_id == 1) {
+          e.status = "Order";
+          // e.read = false;
+        } else if (e.status_id == 2) {
+          // e.read = false;
+          e.status = "Proses Produksi";
+        } else if (e.status_id == 3) {
+          // e.read = false;
+          e.status = "Proses Packing";
+        } else if (e.status_id == 4) {
+          e.status = "Dikirim";
+          // e.read = false;
+        } else if (e.status_id == 5) {
+          e.status = "Terkirim";
+          // e.read = false;
+        } else if (e.status_id == 6) {
+          e.status = "Selesai";
+          // e.read = false;
+        }
       });
+      // if (state.localOrder) {
+      //   state.localOrder.forEach(local => {
+      //     let ada = items.filter(item => {
+      //       if (item.status_id != local.status_id) {
+      //         return true;
+      //       }
+      //     });
+      //     console.log(ada);
+      //     store.dispatch("setNotification", ada[0]);
+      //   });
+      // }
+      console.log("Items modif", items);
     } catch (e) {
       store.commit("notLoading");
     }
