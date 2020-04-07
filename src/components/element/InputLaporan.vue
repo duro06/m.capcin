@@ -1,28 +1,33 @@
 <template>
   <div class="form">
     <div class="columns is-mobile">
-      <div class="column is-4">
+      <div class="column is-5">
         <label class="label">{{ item.bubuk.nama }}</label>
       </div>
-      <div class="column is-3">
+      <div class="column is-4">
         <p class="control">
           <input
             type="number"
-            class="input is-small"
+            class="input is-small has-text-centered"
             v-model.number="data"
             @change="isi"
+            @keyup.enter="isi"
           />
         </p>
       </div>
-      <div class="column is-5">
-        <button
+      <div class="column is-3 has-text-right">
+        <!-- <button
           @click.prevent="isi"
           class="button warna-tema is-small"
           :disabled="isi_laporan"
         >
           simpan
-        </button>
-        <button @click.prevent="edit" class="button warna-tema is-small">
+        </button> -->
+        <button
+          @click.prevent="edit"
+          class="button warna-tema is-small"
+          :disabled="!isi_laporan"
+        >
           Edit
         </button>
       </div>
