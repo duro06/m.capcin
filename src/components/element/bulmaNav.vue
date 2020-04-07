@@ -80,7 +80,7 @@
 import { mapState } from "vuex";
 import * as c from "@/services/cart_service";
 import Notification from "@/components/element/Notification.vue";
-
+import { updateNotif } from "@/services/notif_service";
 // import Pusher from "pusher-js";
 //pusher console
 
@@ -137,7 +137,14 @@ export default {
     ...mapState(["profile", "cart", "notification"])
     // ...mapState("order", { Order: state => state.Order })
   },
-  watch: {},
+  watch: {
+    notification: {
+      handler: function() {
+        updateNotif();
+      },
+      deep: true
+    }
+  },
   methods: {
     allIsRead() {
       this.$store.commit("allNotifIsRead");

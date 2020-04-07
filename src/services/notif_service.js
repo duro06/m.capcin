@@ -65,10 +65,34 @@ export function readNotif() {
           store.commit("setNotification", data);
           store.commit("order/updateOrder", data);
         }
-        console.log("ada pesan baru?", ada[0]);
+        // console.log("ada pesan baru?", ada[0]);
         console.log("ada pesan baru", ada);
       });
     }
     localStorage.removeItem("notif");
   }
+}
+
+export function updateNotif() {
+  localStorage.removeItem("notif");
+  if (store.state.notification) {
+    const data = store.state.order.Order;
+    const pesan = store.state.notification.filter(e => e.read === false);
+    // console.log("Write ", pesan);
+    const notif = jwt.sign(
+      { message: pesan, items: data },
+      "Pala64564ha@sakuranandaniyu99865773838"
+    );
+    console.log("data", data, "pesan", pesan);
+    localStorage.setItem("notif", notif);
+  }
+  // else {
+  //   const notif = jwt.sign(
+  //     {
+  //       items: data
+  //     },
+  //     "Pala64564ha@sakuranandaniyu99865773838"
+  //   );
+  //   localStorage.setItem("notif", notif);
+  // }
 }
