@@ -25,10 +25,10 @@ const actions = {
       http()
         .put(`admin/mitra-update-stok/${payload.id}`, data)
         .then(res => {
-          let dataReturn = res.data.data;
+          // let dataReturn = res.data.data;
           console.log("return", res);
           // commit("setItems", dataReturn);
-          resolve(dataReturn);
+          resolve(res);
         });
     });
   },
@@ -54,6 +54,18 @@ const actions = {
         .then(res => {
           let dataReturn = res.data.data;
           commit("setBubuks", dataReturn);
+          resolve(dataReturn);
+        });
+    });
+  },
+  // eslint-disable-next-line no-unused-vars
+  laporanHarian({ commit }, payload) {
+    return new Promise(resolve => {
+      http()
+        .post(`/admin/mitra-input-penjualan`, payload)
+        .then(res => {
+          let dataReturn = res.data.data;
+          // commit("setBubuks", dataReturn);
           resolve(dataReturn);
         });
     });
