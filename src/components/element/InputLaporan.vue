@@ -6,7 +6,12 @@
       </div>
       <div class="column is-3">
         <p class="control">
-          <input type="number" class="input is-small" v-model.number="data" />
+          <input
+            type="number"
+            class="input is-small"
+            v-model.number="data"
+            @change="isi"
+          />
         </p>
       </div>
       <div class="column is-5">

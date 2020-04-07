@@ -2,7 +2,7 @@
   <div class="container" @click="read">
     <router-link :to="{ name: 'focus', params: { id: this.data.id } }">
       <!-- <router-link :to="{ path: '/order#' + pesan.id }"> -->
-      <div :class="['card', baca ? '' : 'unread']">
+      <div :class="['card', data.read ? '' : 'unread']">
         <div class="card-header">
           <p><B>Referensi : </B> Capcin-{{ pesan.reff }}</p>
         </div>
@@ -27,18 +27,19 @@ export default {
       pesan: this.data
     };
   },
-  computed: {
-    baca() {
-      return this.data.read;
-    }
-  },
+  // computed: {
+  //   baca() {
+  //     console.log(this.data.read);
+  //     return this.data.read;
+  //   }
+  // },
   methods: {
     read() {
       this.$store.commit("order/setOrderFocus", this.data);
       this.$store.commit("notifIsRead", this.pesan.id);
       console.log("Notif card", this.data);
       this.$emit("tutup");
-      this.$destroy();
+
       // this.$router.replace({ name: "order" }, () => {});
     }
   },
