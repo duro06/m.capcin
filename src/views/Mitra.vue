@@ -54,7 +54,7 @@ export default {
       this.req();
     }
     // kosongkan state SuccessOrder
-    this.$store.commit("delSuccessOrder");
+    this.$store.commit("order/delSuccessOrder");
   },
   computed: {
     ...mapState(["products", "mitraProductMeta"])

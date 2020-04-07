@@ -19,6 +19,7 @@ Vue.use(FlashMessage);
 Vue.use(VueCarousel);
 Vue.use(infiniteScroll);
 import { writeNotif } from "./services/notif_service";
+
 window.addEventListener("beforeunload", function() {
   if (store.getters.loggedIn) {
     writeNotif();
@@ -26,7 +27,15 @@ window.addEventListener("beforeunload", function() {
     localStorage.setItem("mie", store.state.profile.id);
   }
 });
-
+//for mobile
+// eslint-disable-next-line no-undef
+$(window).bind("beforeunload", function() {
+  if (store.getters.loggedIn) {
+    writeNotif();
+    localStorage.setItem("level", store.getters.levelAccess);
+    localStorage.setItem("mie", store.state.profile.id);
+  }
+});
 Vue.config.productionTip = false;
 
 new Vue({

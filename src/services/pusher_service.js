@@ -13,8 +13,9 @@ export function subscribe(order) {
   let channel = pusher.subscribe("capcin-tracker." + order);
   channel.bind("App\\Events\\OrderStatusChanged", data => {
     store.commit("setNotification", data);
-    store.commit("setOrderFocus", data);
-    store.commit("updateOrderItems", data);
+    store.commit("order/setOrderFocus", data);
+    store.commit("order/updateOrder", data);
+    store.commit("order/updateOrderItems", data);
   });
 }
 
@@ -30,6 +31,7 @@ export function register(order) {
   channel.bind("App\\Events\\RegisterEvent", data => {
     if (data != "") {
       store.dispatch("destroyVerifie");
+      store.dispatch("stockMitra/remove", "ada");
     }
   });
 }

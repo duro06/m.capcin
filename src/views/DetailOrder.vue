@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <!-- <div>
           <div class="card">
             <div class="card-content pesanan">
               <p class="title is-6 isi-pesanan" style="color: black">
@@ -106,7 +106,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <nav class="navbar is-fixed-bottom-touch ">
@@ -142,6 +142,7 @@ import { mapState } from "vuex";
 import * as order from "@/services/order_service";
 import * as cart from "@/services/cart_service";
 import * as prod from "@/services/product_service";
+import * as pusher from "@/services/pusher_service";
 
 export default {
   name: "Detail_Order",
@@ -197,22 +198,22 @@ export default {
     //     console.log(e);
     //   }
     // },
-    kurang() {
-      if (this.jumlahPesanan <= 2) {
-        // this.jumlahPesanan = this.jumlahPesanan;
-        this.kdisable = true;
-        this.jumlahPesanan--;
-      } else {
-        this.kdisable = false;
-        this.jumlahPesanan--;
-      }
-    },
-    tambah() {
-      this.jumlahPesanan++;
-      if (this.jumlahPesanan > 0) {
-        this.kdisable = false;
-      }
-    },
+    // kurang() {
+    //   if (this.jumlahPesanan <= 2) {
+    //     // this.jumlahPesanan = this.jumlahPesanan;
+    //     this.kdisable = true;
+    //     this.jumlahPesanan--;
+    //   } else {
+    //     this.kdisable = false;
+    //     this.jumlahPesanan--;
+    //   }
+    // },
+    // tambah() {
+    //   this.jumlahPesanan++;
+    //   if (this.jumlahPesanan > 0) {
+    //     this.kdisable = false;
+    //   }
+    // },
     // addToCart: async function() {
     //   this.$store.commit("loading");
     //   const formData = new FormData();
@@ -247,8 +248,9 @@ export default {
       try {
         const response = await order.purchase(formData);
         if (response.status === 200) {
-          // this.$router.replace({ name: "berhasil" }, () => {});
-          this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+          pusher.subscribe(response.data.data.id);
+          this.$router.replace({ name: "berhasil" }, () => {});
+          this.$store.commit("order/setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
         }
 
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja

@@ -35,7 +35,13 @@ export default {
       //jika login maka
       if (store.getters.loggedIn) {
         if (localStorage.getItem("level") == "Mitra") {
-          store.dispatch("ambilOrder");
+          store.dispatch("order/ambilOrder");
+          // let params = {
+          //   params: {
+          //     q: localStorage.getItem("mie")
+          //   }
+          // };
+          // store.dispatch("order/getDataOrder", params);
         }
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
@@ -50,6 +56,7 @@ export default {
       }
       setTimeout(function() {}, 2000);
     } catch (error) {
+      console.log(error);
       //meskipun error tetap data yang ada di hapus
       store.dispatch("destroyToken");
     }

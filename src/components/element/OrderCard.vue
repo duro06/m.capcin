@@ -13,14 +13,15 @@
           class="detail-items"
         > -->
         <div :class="['columns', 'is-mobile', status]">
-          <div @click="getDetail" class="column is-3 zoomIn">
-            <p class="rata-kiri">Details</p>
-          </div>
+          <!-- <div @click="getDetail" class="column is-3 zoomIn"> -->
+          <!-- <div class="column is-3 zoomIn">
+            <p class="rata-kiri">Harga</p>
+          </div> -->
           <div @click="position" class="column is-5 zoomIn">
-            <p class="rata-kiri">Jumlah :</p>
+            <p class="rata-kiri">Harga :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
-          <div class="column is-4 zoomIn">
+          <div class="column is-7 zoomIn">
             <p class="rata-kiri">
               <B>status :</B>
             </p>
@@ -90,6 +91,7 @@ export default {
     };
   },
   created() {
+    // console.log(this.item);
     // this.detail;
   },
   computed: {

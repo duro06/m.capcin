@@ -80,7 +80,7 @@
 import { mapState } from "vuex";
 import * as c from "@/services/cart_service";
 import Notification from "@/components/element/Notification.vue";
-
+import { updateNotif } from "@/services/notif_service";
 // import Pusher from "pusher-js";
 //pusher console
 
@@ -101,7 +101,7 @@ export default {
   mounted() {},
   computed: {
     PesanNotif() {
-      return this.notification.filter(e => e.read == false);
+      return this.notification.filter(data => data.read == false);
     },
     level() {
       return this.$store.getters.myProfile.role;
@@ -113,11 +113,19 @@ export default {
       return this.$route.path;
     },
     umum() {
-      let tampil = this.$route.path.includes("transaksi") ? "none" : "inherit";
+      let tampil =
+        this.$route.path.includes("transaksi") ||
+        this.$route.path.includes("setting")
+          ? "none"
+          : "inherit";
       return tampil;
     },
     khusus() {
-      let tampil = this.$route.path.includes("transaksi") ? "inherit" : "none";
+      let tampil =
+        this.$route.path.includes("transaksi") ||
+        this.$route.path.includes("setting")
+          ? "inherit"
+          : "none";
       return tampil;
     },
     // check() {
@@ -126,9 +134,17 @@ export default {
     // cart() {
     //   return this.$store.state.cart;
     // },
-    ...mapState(["profile", "cart", "Order", "notification"])
+    ...mapState(["profile", "cart", "notification"])
+    // ...mapState("order", { Order: state => state.Order })
   },
-  watch: {},
+  watch: {
+    notification: {
+      handler: function() {
+        updateNotif();
+      },
+      deep: true
+    }
+  },
   methods: {
     allIsRead() {
       this.$store.commit("allNotifIsRead");
@@ -180,6 +196,11 @@ export default {
 };
 </script>
 <style scoped>
+.loop {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 .transparent {
   background-color: transparent;
   border-color: transparent;

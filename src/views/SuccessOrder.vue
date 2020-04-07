@@ -5,7 +5,7 @@
         <div class="message-body">
           <h2 class="is-3">
             Anda {{ successOrder.status }} melakukan pembelian dengan referensi
-            <strong> {{ successOrder.message }} </strong>
+            <strong> {{ successOrder.data.reff }} </strong>
             silahkan
             <br />
             <strong>
@@ -27,7 +27,7 @@ export default {
     role() {
       return this.$store.getters.levelAccess;
     },
-    ...mapState(["successOrder"])
+    ...mapState("order", { successOrder: state => state.successOrder })
   },
   mounted() {
     this.$store.commit("notLoading");
