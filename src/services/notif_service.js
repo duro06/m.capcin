@@ -35,11 +35,6 @@ export function writeNotif() {
 
 export function readNotif() {
   const notif = localStorage.getItem("notif");
-  // let params = {
-  //   params: {
-  //     q: localStorage.getItem("mie")
-  //   }
-  // };
   if (notif) {
     const message = jwt.decode(notif);
     console.log("read", message);
@@ -69,7 +64,10 @@ export function readNotif() {
         console.log("ada pesan baru", ada);
       });
     }
-    localStorage.removeItem("notif");
+    // localStorage.removeItem("notif");
+    return message;
+  } else {
+    return "tidak ada data";
   }
 }
 
@@ -95,4 +93,25 @@ export function updateNotif() {
   //   );
   //   localStorage.setItem("notif", notif);
   // }
+}
+export function writeOrder(newValue, oldValue) {
+  localStorage.removeItem("order");
+  const order = jwt.sign(
+    { newItems: newValue, oldItems: oldValue },
+    "Pala64564ha@sakuranandaniyu99865773838"
+  );
+  console.log("new", newValue);
+  console.log("old", oldValue);
+  localStorage.setItem("order", order);
+}
+export function read() {
+  const notif = localStorage.getItem("order");
+  if (notif) {
+    const message = jwt.decode(notif);
+    console.log("read", message);
+    let data = message;
+    return data;
+  } else {
+    return "tidak ada data order";
+  }
 }

@@ -36,6 +36,17 @@ $(window).bind("beforeunload", function() {
     localStorage.setItem("mie", store.state.profile.id);
   }
 });
+// eslint-disable-next-line no-undef
+$(window).bind("load", function() {
+  // alert("load");
+  if (
+    localStorage.getItem("level") == "Mitra" &&
+    localStorage.getItem("access_token")
+  ) {
+    store.dispatch("order/ambilOrder");
+    // alert("OK");
+  }
+});
 Vue.config.productionTip = false;
 
 new Vue({

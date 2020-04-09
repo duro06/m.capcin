@@ -20,5 +20,7 @@ export function read() {
     console.log("read", message.message);
     localStorage.removeItem("coba");
     return message.message;
+  } else {
+    return "tidak ada data";
   }
 }

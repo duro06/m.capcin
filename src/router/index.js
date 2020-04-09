@@ -205,7 +205,7 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("../views/Test.vue"),
+    component: () => import("../views/Test2.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,

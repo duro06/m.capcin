@@ -6,7 +6,7 @@
           <input
             class="input is-primary"
             type="text"
-            placeholder="Primary input"
+            placeholder="ID"
             v-model="data.id"
           />
         </div>
@@ -14,16 +14,22 @@
       <div class="field">
         <p>{{ hasil }}</p>
         <div class="control">
-          <label for="input">{{ data.name }}</label>
-          <input class="input is-primary" type="text" v-model="data.name" />
+          <!-- <label for="input">{{ data.name }}</label> -->
+          <input
+            class="input is-primary"
+            placeholder="Nama"
+            type="text"
+            v-model="data.name"
+          />
         </div>
+        <p>{{ order }}</p>
       </div>
       <div class="field">
         <div class="control">
           <input
             class="input is-primary"
             type="text"
-            placeholder="Primary input"
+            placeholder="Harga"
             v-model="data.harga"
           />
         </div>
@@ -33,7 +39,7 @@
           <input
             class="input is-primary"
             type="text"
-            placeholder="Primary input"
+            placeholder="Stok"
             v-model="data.stok_awal"
           />
         </div>
@@ -43,7 +49,7 @@
           <input
             class="input is-primary"
             type="text"
-            placeholder="Primary input"
+            placeholder="kuantity"
             v-model="data.qty"
           />
         </div>
@@ -64,6 +70,12 @@
     <button class="button is-info" @click="read">
       Storage Read
     </button>
+    <button class="button is-info" @click="readnotif">
+      Read notif
+    </button>
+    <button class="button is-info" @click="readOrder">
+      Read Order
+    </button>
   </div>
 </template>
 <script>
@@ -71,6 +83,8 @@ import * as order from "@/services/order_service";
 import * as prod from "@/services/product_service";
 import * as auth from "@/services/auth_service.js";
 import * as loc from "@/services/storage_service";
+import * as notif from "@/services/notif_service";
+import { mapState } from "vuex";
 // import axios from "axios";
 const axios = require("axios").default;
 export default {
@@ -96,13 +110,21 @@ export default {
     // this.kirimAgain();
     // this.kirim();
   },
+  computed: { ...mapState("order", { order: state => state.Order }) },
   methods: {
+    readnotif() {
+      this.hasil = notif.readNotif();
+    },
+    readOrder() {
+      this.hasil = notif.read();
+    },
     write() {
-      loc.write(JSON.stringify(this.data.nama));
+      loc.write(this.data.name);
+      // console.log("write", this.data.name);
     },
     read() {
       this.hasil = loc.read();
-      console.log(this.data.nama);
+      console.log("read", this.data.name);
     },
     testLoad() {
       this.$store.commit("loading");
@@ -210,5 +232,6 @@ export default {
 <style lang="scss" scoped>
 .coba {
   padding-top: 10px;
+  padding-bottom: 60px;
 }
 </style>

@@ -13,5 +13,6 @@ export default {
   loadShow: "",
   notification: [],
   cart: 0,
-  mitraProductMeta: {}
+  mitraProductMeta: {},
+  coba: "Coba cak"
 };
