@@ -45,6 +45,7 @@ $(window).bind("load", function() {
   ) {
     store.dispatch("order/ambilOrder");
     // alert("OK");
+    console.log("load");
   }
 });
 Vue.config.productionTip = false;
