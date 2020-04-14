@@ -116,6 +116,7 @@ export default {
       let tampil =
         this.$route.path.includes("transaksi") ||
         this.$route.path.includes("setting") ||
+        this.$route.path.includes("shipping") ||
         this.$route.path.includes("detailproduk")
           ? "none"
           : "inherit";
@@ -125,6 +126,7 @@ export default {
       let tampil =
         this.$route.path.includes("transaksi") ||
         this.$route.path.includes("setting") ||
+        this.$route.path.includes("shipping") ||
         this.$route.path.includes("detailproduk")
           ? "inherit"
           : "none";

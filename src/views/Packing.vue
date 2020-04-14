@@ -6,7 +6,7 @@
           <div class="columns is-mobile">
             <div class="column is-3 ikon">
               <div class="isi-ikon">
-                <i class="fas fa-tasks fa-2x"></i>
+                <i class="fas fa-clipboard-list fa-2x"></i>
               </div>
             </div>
             <div class="column is-9">

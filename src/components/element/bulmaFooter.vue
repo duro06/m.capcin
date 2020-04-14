@@ -72,6 +72,24 @@
             </router-link>
           </div>
           <!-- =================================================== -->
+          <!--================== Level Supplier ==================== -->
+          <div
+            v-if="level == 'Supplier'"
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('shipping') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/shipping' }" exact>
+              <i class="fas fa-shipping-fast"></i>
+              <p class="subtitle is-7">
+                Supplier
+              </p>
+            </router-link>
+          </div>
+          <!-- =================================================== -->
           <div
             :class="[
               'btn_nav_item',
@@ -125,6 +143,7 @@ export default {
       let tampil =
         this.$route.path.includes("transaksi") ||
         this.$route.path.includes("setting") ||
+        this.$route.path.includes("shipping") ||
         this.$route.path.includes("detailproduk")
           ? "none"
           : "inherit";

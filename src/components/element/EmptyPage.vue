@@ -24,6 +24,15 @@
           <p class="subtittle is-6">Belum ada Tugas untuk Anda</p>
           <p class="subtittle is-6">Silahkan kembali ke halaman utama</p>
         </div>
+        <div
+          @click="redirect"
+          class="halaman-isi"
+          v-else-if="page.includes('shipping')"
+        >
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Belum ada Tugas untuk Anda</p>
+          <p class="subtittle is-6">Silahkan kembali ke halaman utama</p>
+        </div>
         <div class="halaman-isi" v-else>
           <p class="tittle is-5">Halaman ini Kosong</p>
           <p class="subtittle is-6">Belum saya isi</p>

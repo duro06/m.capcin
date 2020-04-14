@@ -1,22 +1,11 @@
 <template>
-  <div class="detail-product">
-    <div class="isi">
-      <div class="card">
-        <div class="card-header"></div>
-        <div class="card-content">
-          <div class="columns is-mobile ">
-            <div class="column is-7">Nama Item</div>
-            <div class="column is-5">Jumlah</div>
-          </div>
-          <div v-for="(product, n) in products" :key="n">
-            <div class="columns is-mobile ">
-              <div class="column is-7">{{ product.item.nama }}</div>
-              <div class="column is-5">
-                {{ product.qty }} {{ product.item.unit.nama }}
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="shiping-details">
+    <div class="card">
+      <div class="card-header">No Reff: capcin-{{ data.reff }}</div>
+      <div class="card-content">
+        <p>Penerima : {{ data.nama }}</p>
+        <p>product yang dikirimkan : {{ data.product }}</p>
+        <p>Alamat: {{ data.alamat }}</p>
       </div>
     </div>
     <nav class="navbar is-fixed-bottom-touch is-hidden-desktop">
@@ -38,7 +27,7 @@
           >
             <button
               class="button is-danger is-small is-rounded"
-              @click="cancelPacking"
+              @click="cancelShipping"
             >
               Batalkan Tugas
             </button>
@@ -81,7 +70,7 @@
 <script>
 import { mapState } from "vuex";
 export default {
-  name: "detailProduct",
+  name: "shipping",
   components: {
     Modal: () => import("@/components/element/Modal.vue")
   },
@@ -92,11 +81,11 @@ export default {
     };
   },
   computed: {
-    ...mapState({ products: state => state.productDetails })
+    ...mapState("shipping", { data: state => state.detail })
   },
   methods: {
     save() {},
-    cancelPacking() {
+    cancelShipping() {
       this.showModal = true;
     },
     handleModal() {
@@ -107,6 +96,9 @@ export default {
 };
 </script>
 <style scoped>
+.sipping-details {
+  padding-bottom: 60px;
+}
 .navbar-brand {
   position: fixed;
   bottom: 0;
@@ -117,8 +109,5 @@ export default {
   height: 60px;
   box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
-}
-.isi {
-  padding-bottom: 60px;
 }
 </style>

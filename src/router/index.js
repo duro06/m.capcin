@@ -155,6 +155,28 @@ const routes = [
       verified: true
     }
   },
+  // {
+  //   path: "/shipping",
+  //   name: "shipping",
+  //   component: () => import("../views/ShippingOrder.vue"),
+  //   meta: {
+  //     loggedIn: true,
+  //     waitingVerified: false,
+  //     visitor: false,
+  //     verified: true
+  //   }
+  // },
+  {
+    path: "/shipping",
+    name: "shipping",
+    component: () => import("../views/DetailPengiriman.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
 
   {
     path: "/focus/:id",
