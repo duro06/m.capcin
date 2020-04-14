@@ -61,7 +61,7 @@ export function readNotif() {
           store.commit("order/updateOrder", data);
         }
         // console.log("ada pesan baru?", ada[0]);
-        console.log("ada pesan baru", ada);
+        // console.log("ada pesan baru", ada);
       });
     }
     // localStorage.removeItem("notif");
@@ -100,8 +100,8 @@ export function writeOrder(newValue, oldValue) {
     { newItems: newValue, oldItems: oldValue },
     "Pala64564ha@sakuranandaniyu99865773838"
   );
-  console.log("new", newValue);
-  console.log("old", oldValue);
+  // console.log("new", newValue);
+  // console.log("old", oldValue);
   localStorage.setItem("order", order);
 }
 export function read() {

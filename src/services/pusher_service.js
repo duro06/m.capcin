@@ -1,10 +1,12 @@
 import Pusher from "pusher-js";
 import store from "../store";
-Pusher.logToConsole = true;
+// import * as auth from "./auth_service";
+// Pusher.logToConsole = true;
 //====================== pusher =======
 export function subscribe(order) {
   // Api key + cluster
 
+  // let token = auth.getAccessToken();
   let pusher = new Pusher("ebfe3f8ff45ad9c3ad4c", {
     cluster: "ap1",
     forceTLS: true
@@ -13,8 +15,8 @@ export function subscribe(order) {
   //   cluster: "ap1",
   //   forceTLS: true
   // });
-
   let channel = pusher.subscribe("capcin-tracker." + order);
+
   channel.bind("App\\Events\\OrderStatusChanged", data => {
     store.commit("setNotification", data);
     store.commit("order/setOrderFocus", data);

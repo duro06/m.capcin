@@ -215,7 +215,7 @@ export default {
         this.displayImage = `${this.storageUrl}` + `${user.image}`;
         this.$store.commit("notLoading");
       } else {
-        this.displayImage = "@/assets/nouser.png";
+        this.displayImage = "../img/nouser.png";
         this.$store.commit("notLoading");
       }
     },

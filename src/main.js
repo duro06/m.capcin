@@ -27,7 +27,8 @@ window.addEventListener("beforeunload", function() {
     localStorage.setItem("mie", store.state.profile.id);
   }
 });
-//for mobile
+//for Mobile
+
 // eslint-disable-next-line no-undef
 $(window).bind("beforeunload", function() {
   if (store.getters.loggedIn) {
@@ -37,8 +38,15 @@ $(window).bind("beforeunload", function() {
   }
 });
 // eslint-disable-next-line no-undef
+$(window).bind("online", function() {
+  alert("online");
+});
+// eslint-disable-next-line no-undef
+$(window).bind("offline", function() {
+  alert("offline");
+});
+// eslint-disable-next-line no-undef
 $(window).bind("load", function() {
-  // alert("load");
   if (
     localStorage.getItem("level") == "Mitra" &&
     localStorage.getItem("access_token")

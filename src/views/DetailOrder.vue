@@ -309,6 +309,17 @@ export default {
 };
 </script>
 <style scoped>
+.navbar-brand {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  height: 60px;
+  box-shadow: 0 -2px 1px -2px #333;
+  background-color: #fff;
+}
 .detail {
   margin-left: 10px;
 }

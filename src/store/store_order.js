@@ -128,7 +128,7 @@ const actions = {
         last: par.last_page,
         more: more
       };
-      console.log("meta bawah", meta);
+      // console.log("meta bawah", meta);
       commit("setMitraOrderMeta", meta);
       this.store.commit("notLoading");
     } catch (e) {
@@ -179,7 +179,7 @@ const actions = {
           e.status = "Selesai";
         }
       });
-      console.log("Items modif", items);
+      // console.log("Items modif", items);
     } catch (e) {
       store.commit("notLoading");
     }

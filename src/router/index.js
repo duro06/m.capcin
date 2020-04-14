@@ -133,6 +133,28 @@ const routes = [
       verified: true
     }
   },
+  {
+    path: "/packtask",
+    name: "packtask",
+    component: () => import("../views/PackOrder.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/detailproduk",
+    name: "detailproduk",
+    component: () => import("../views/DetailProduct.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
 
   {
     path: "/focus/:id",

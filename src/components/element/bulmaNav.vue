@@ -115,7 +115,8 @@ export default {
     umum() {
       let tampil =
         this.$route.path.includes("transaksi") ||
-        this.$route.path.includes("setting")
+        this.$route.path.includes("setting") ||
+        this.$route.path.includes("detailproduk")
           ? "none"
           : "inherit";
       return tampil;
@@ -123,7 +124,8 @@ export default {
     khusus() {
       let tampil =
         this.$route.path.includes("transaksi") ||
-        this.$route.path.includes("setting")
+        this.$route.path.includes("setting") ||
+        this.$route.path.includes("detailproduk")
           ? "inherit"
           : "none";
       return tampil;
@@ -146,8 +148,8 @@ export default {
         const oldValue = this.Order;
         oldValue.forEach(item => {
           const temp = value.filter(data => {
-            console.log("filter", data.id, item.id);
-            console.log("time", new Date(data.updated_at).getTime());
+            // console.log("filter", data.id, item.id);
+            // console.log("time", new Date(data.updated_at).getTime());
 
             if (data.id == item.id && !data.read) {
               if (data.status_id == item.status_id) {
@@ -157,8 +159,8 @@ export default {
               }
             }
           });
-          console.log("temp", temp);
-          console.log("latest", latest);
+          // console.log("temp", temp);
+          // console.log("latest", latest);
           if (temp.length) {
             newValue.push(temp[temp.length - 1]);
           }
