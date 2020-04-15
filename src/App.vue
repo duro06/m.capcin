@@ -95,6 +95,14 @@ export default {
 };
 </script>
 <style lang="scss">
+.kepala {
+  background-color: rgb(199, 198, 198);
+  border-radius: 5px;
+}
+.isinya-kartu {
+  background-color: rgb(174, 255, 174);
+  border-radius: 15px;
+}
 .custom_bottom_nav {
   padding: 2px 5px;
 }

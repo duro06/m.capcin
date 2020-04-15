@@ -155,17 +155,17 @@ const routes = [
       verified: true
     }
   },
-  // {
-  //   path: "/shipping",
-  //   name: "shipping",
-  //   component: () => import("../views/ShippingOrder.vue"),
-  //   meta: {
-  //     loggedIn: true,
-  //     waitingVerified: false,
-  //     visitor: false,
-  //     verified: true
-  //   }
-  // },
+  {
+    path: "/laporanpengiriman",
+    name: "laporanpengiriman",
+    component: () => import("../views/ShippingOrder.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
   {
     path: "/shipping",
     name: "shipping",

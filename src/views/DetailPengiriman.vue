@@ -1,8 +1,8 @@
 <template>
   <div class="shiping-details">
     <div class="card">
-      <div class="card-header">No Reff: capcin-{{ data.reff }}</div>
-      <div class="card-content">
+      <div class="card-header kepala">No Reff: capcin-{{ data.reff }}</div>
+      <div class="card-content isinya-kartu">
         <p>Penerima : {{ data.nama }}</p>
         <p>product yang dikirimkan : {{ data.product }}</p>
         <p>Alamat: {{ data.alamat }}</p>

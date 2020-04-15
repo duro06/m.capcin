@@ -1,8 +1,8 @@
 <template>
   <div class="supplier">
-    <h1>Task to Completed</h1>
-
-    <div class="isi" v-for="(task, n) in tasks" :key="n">
+    <h1>Tugas Anda:</h1>
+    <empty v-if="!tasks.length" />
+    <div v-else class="isi" v-for="(task, n) in tasks" :key="n">
       <shipping :data="task" />
     </div>
   </div>
@@ -13,7 +13,8 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "supplier",
   components: {
-    shipping: () => import("@/components/role/Supplier.vue")
+    shipping: () => import("@/components/role/Supplier.vue"),
+    empty: () => import("@/components/element/EmptyPage")
   },
   created() {
     this.getShipping();
