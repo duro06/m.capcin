@@ -1,5 +1,11 @@
 <template>
   <div class="packing">
+    <h1>Tugas anda</h1>
+    <Empty v-if="!packingOrders.length" />
+    <div class="isi" v-else v-for="(item, n) in packingOrders" :key="n">
+      <Packing :data="item" />
+    </div>
+    <!-- </div>
     <router-link to="/packtask">
       <div class="card">
         <div class="card-header">
@@ -18,7 +24,7 @@
           </div>
         </div>
       </div>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 <script>
@@ -26,7 +32,8 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "packing",
   components: {
-    // Packing
+    Packing: () => import("@/components/role/Packing.vue"),
+    Empty: () => import("@/components/element/EmptyPage")
   },
   created() {
     this.getPackingOrder();
@@ -42,11 +49,11 @@ export default {
 };
 </script>
 <style scoped>
-.isi {
+/* .isi {
   display: block;
   width: -webkit-fill-available;
   background-color: rgb(252, 255, 75);
-}
+} */
 .isi-ikon {
   color: #42b549;
 }
@@ -57,5 +64,8 @@ export default {
 }
 .packing {
   padding: 20px 15px 60px 15px;
+}
+.packing-isi {
+  padding-bottom: 20px;
 }
 </style>

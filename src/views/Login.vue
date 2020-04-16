@@ -4,11 +4,14 @@
   </div>
 </template>
 <script>
-import LoginForm from "@/components/auth/LoginForm.vue";
+// import LoginForm from "@/components/auth/LoginForm.vue";
 export default {
   name: "login",
   components: {
-    LoginForm
+    LoginForm: () =>
+      import(
+        /* webpackChunkName: "loginform" */ "@/components/auth/LoginForm.vue"
+      )
   }
 };
 </script>

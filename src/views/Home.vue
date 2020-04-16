@@ -13,12 +13,13 @@
 // @ is an alias to /src
 // import Navbar from "@/components/element/bulmaNav.vue";
 // import Footer from "../components/element/bulmaFooter";
-import Welcome from "@/components/Welcome.vue";
+// import Welcome from "@/components/Welcome.vue";
 
 export default {
   name: "Home",
   components: {
-    Welcome
+    Welcome: () =>
+      import(/* webpackChunkName: "welcome" */ "@/components/Welcome.vue")
     // Footer,
     // Navbar
   },

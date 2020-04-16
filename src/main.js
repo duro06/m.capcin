@@ -56,6 +56,10 @@ $(window).bind("load", function() {
     console.log("load");
   }
 });
+
+// laravel Echo
+// import "./echo.js";
+
 Vue.config.productionTip = false;
 
 new Vue({

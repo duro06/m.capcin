@@ -133,11 +133,18 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
+
 export default {
   name: "stock",
   components: {
-    "input-bubuk": () => import("@/components/element/InputBubuk.vue"),
-    "input-laporan": () => import("@/components/element/InputLaporan.vue")
+    "input-bubuk": () =>
+      import(
+        /* webpackChunkName: "input bubuk" */ "@/components/element/InputBubuk.vue"
+      ),
+    "input-laporan": () =>
+      import(
+        /* webpackChunkName: "input laporan" */ "@/components/element/InputLaporan.vue"
+      )
   },
   data() {
     return {

@@ -3,17 +3,27 @@
     <div class="field">
       <h1>{{ percobaan }}</h1>
       <h1>{{ coba }}</h1>
+      <input v-model="nama" type="text" placeholder="Nama" />
+
       <button class="button is-primary" @click="cobaP">
         click
+      </button>
+      <button class="button is-primary" @click="session">
+        session get
+      </button>
+      <button class="button is-primary" @click="sessionSet">
+        session Update
       </button>
     </div>
   </div>
 </template>
 <script>
 // import { mapState } from "vuex";
+import * as sess from "../services/session_service";
 
 export default {
   name: "test",
+
   computed: {
     // ...mapState(["coba"]),
     coba() {
@@ -27,7 +37,8 @@ export default {
 
   data() {
     return {
-      percobaan: 0
+      percobaan: 0,
+      nama: ""
     };
   },
   methods: {
@@ -35,6 +46,33 @@ export default {
       alert(localStorage.getItem("data"));
 
       // console.log("percobaan baaang");
+    },
+    session() {
+      return new Promise(() => {
+        sess
+          .getSession()
+          .then(res => {
+            console.log("res :", res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
+    },
+    sessionSet() {
+      // let id = this.$store.state.profile.id;
+      let data = new FormData();
+      data.append("nama", this.nama);
+      return new Promise(() => {
+        sess
+          .updateSession(data)
+          .then(res => {
+            console.log("res ", res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
     }
   },
   watch: {

@@ -58,6 +58,15 @@ export default {
   created() {
     // this.getCart();
   },
+  // mounted(){
+  //   // eslint-disable-next-line no-undef
+  //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
+  //     "App\\Events\\OrderStatusChanged",
+  //     e => {
+  //       console.log(e);
+  //     }
+  //   );
+  // },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;
@@ -102,6 +111,12 @@ export default {
 .isinya-kartu {
   background-color: rgb(174, 255, 174);
   border-radius: 15px;
+}
+.kaki-kartu {
+  background-color: rgb(199, 198, 198);
+  border-radius: 5px;
+  height: 20px;
+  align-self: center;
 }
 .custom_bottom_nav {
   padding: 2px 5px;

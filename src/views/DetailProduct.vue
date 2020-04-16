@@ -10,7 +10,17 @@
           </div>
           <div v-for="(product, n) in products" :key="n">
             <div class="columns is-mobile ">
-              <div class="column is-7">{{ product.item.nama }}</div>
+              <div class="column is-7">
+                {{ product.item.nama }}
+                <!-- <span v-if="product.item.nama == 'Bubuk'">
+                  <button
+                    class="button is-info is-small kecil is-rounded"
+                    @click="detailBubuk"
+                  >
+                    Detail
+                  </button></span
+                > -->
+              </div>
               <div class="column is-5">
                 {{ product.qty }} {{ product.item.unit.nama }}
               </div>
@@ -83,7 +93,8 @@ import { mapState } from "vuex";
 export default {
   name: "detailProduct",
   components: {
-    Modal: () => import("@/components/element/Modal.vue")
+    Modal: () =>
+      import(/* webpackChunkName: "modal" */ "@/components/element/Modal.vue")
   },
   data() {
     return {
@@ -102,7 +113,10 @@ export default {
     handleModal() {
       this.showModal = false;
     },
-    submit() {}
+    submit() {},
+    detailBubuk() {
+      console.log("detail bubuk");
+    }
   }
 };
 </script>
@@ -120,5 +134,11 @@ export default {
 }
 .isi {
   padding-bottom: 60px;
+}
+.kecil {
+  padding-bottom: 0;
+  padding-top: 0;
+  height: 20px;
+  margin-top: 3px;
 }
 </style>

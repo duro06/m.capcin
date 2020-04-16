@@ -72,7 +72,8 @@ import { mapState } from "vuex";
 export default {
   name: "shipping",
   components: {
-    Modal: () => import("@/components/element/Modal.vue")
+    Modal: () =>
+      import(/* webpackChunkName: "modal" */ "@/components/element/Modal.vue")
   },
   data() {
     return {

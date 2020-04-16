@@ -18,11 +18,11 @@
         <div
           @click="redirect"
           class="halaman-isi"
-          v-else-if="page.includes('packtask')"
+          v-else-if="page.includes('packing')"
         >
           <p class="tittle is-5">Halaman ini Kosong</p>
           <p class="subtittle is-6">Belum ada Tugas untuk Anda</p>
-          <p class="subtittle is-6">Silahkan kembali ke halaman utama</p>
+          <p class="subtittle is-6">Silahkan Tunggu</p>
         </div>
         <div
           @click="redirect"
@@ -61,7 +61,7 @@ export default {
         return this.sadBag;
       } else if (this.$route.path.includes("keranjang")) {
         return this.emptyCart;
-      } else if (this.$route.path.includes("packtask")) {
+      } else if (this.$route.path.includes("packing")) {
         return this.emptyBag;
       } else {
         return this.sadBag2;

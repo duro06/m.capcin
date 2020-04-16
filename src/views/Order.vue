@@ -33,15 +33,22 @@ import infiniteScroll from "vue-infinite-scroll";
 new Vue({
   directives: { infiniteScroll }
 });
-import OrderCard from "@/components/element/OrderCard";
+// import OrderCard from "@/components/element/OrderCard";
 // import OrderFocus from "@/components/element/OrderFocus";
-import Empty from "@/components/element/EmptyPage";
+// import Empty from "@/components/element/EmptyPage";
 import { mapState, mapActions } from "vuex";
 import * as ord from "@/services/order_service";
 
 export default {
   name: "order",
-  components: { OrderCard, Empty },
+  components: {
+    OrderCard: () =>
+      import(
+        /* webpackChunkName: "order card" */ "@/components/element/OrderCard"
+      ),
+    Empty: () =>
+      import(/* webpackChunkName: "empty" */ "@/components/element/EmptyPage")
+  },
 
   data() {
     return {

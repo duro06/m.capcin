@@ -61,10 +61,10 @@
               'btn_nav_item',
               'level-item',
               'has-text-centered',
-              currentPage.includes('packtask') ? activeClass : ''
+              currentPage.includes('detailproduk') ? activeClass : ''
             ]"
           >
-            <router-link :to="{ path: '/packtask' }" exact>
+            <router-link :to="{ path: '/detailproduk' }" exact>
               <i class="fas fa-box-open"></i>
               <p class="subtitle is-7">
                 Packing

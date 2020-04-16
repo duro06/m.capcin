@@ -1,12 +1,12 @@
 <template>
-  <div class="packing">
+  <div class="packing-isi">
     <div class="card">
-      <header class="card-header ">
+      <header class="card-header kepala">
         <p class="card-header-tittle has-text-centered">
           No.Reff : {{ data.order.reff }}
         </p>
       </header>
-      <div class="card-content">
+      <div class="card-content isinya-kartu">
         <div class="content">
           <B>Nama Product</B> <br />
           {{ data.order.detail_order_one.product.name }} <br />
@@ -29,8 +29,10 @@
           </div> -->
         </div>
       </div>
-      <footer class="card-footer">
-        <span class="title is-7">dibuat pada {{ time }}</span>
+      <footer class="card-footer kaki-kartu">
+        <span class="title is-7" style="align-self:canter"
+          >dibuat pada {{ time }}</span
+        >
       </footer>
     </div>
     <!-- <p class="message-body is-primary">
