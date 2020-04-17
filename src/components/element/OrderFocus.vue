@@ -7,7 +7,7 @@
     </router-link>
     <div class="card">
       <div class="card-header zoomIn">
-        <p><B>Refferensi :</B> Capcin-{{ orderFocus.reff }}</p>
+        <p><B>Refferensi :</B> Capcin-{{ orderFocus.order.reff }}</p>
       </div>
       <div class="card-content">
         <div :class="['columns', 'is-mobile', status]">
@@ -95,7 +95,8 @@ export default {
       return this.orderFocus.status;
     },
     total() {
-      let sub = "Rp " + new Intl.NumberFormat().format(this.orderFocus.total);
+      let sub =
+        "Rp " + new Intl.NumberFormat().format(this.orderFocus.order.total);
       return sub;
     }
   },

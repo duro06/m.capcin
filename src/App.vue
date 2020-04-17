@@ -30,13 +30,25 @@ export default {
     LoadingCapcin
     // loading
   },
+  data() {
+    return {
+      userId: null
+    };
+  },
   beforeCreate: async function() {
     try {
       //jika login maka
       if (store.getters.loggedIn) {
-        if (localStorage.getItem("level") == "Mitra") {
-          store.dispatch("order/ambilOrder");
-        }
+        // let userId = localStorage.getItem("mie");
+        // console.log("User id", userId);
+
+        // eslint-disable-next-line no-undef
+        // Echo.private("App.User." + userId).notification(notification => {
+        //   console.log(notification.type);
+        // });
+        // if (localStorage.getItem("level") == "Mitra") {
+        //   store.dispatch("order/ambilOrder");
+        // }
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
 
@@ -58,15 +70,30 @@ export default {
   created() {
     // this.getCart();
   },
-  // mounted(){
-  //   // eslint-disable-next-line no-undef
-  //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
-  //     "App\\Events\\OrderStatusChanged",
-  //     e => {
-  //       console.log(e);
-  //     }
-  //   );
-  // },
+  mounted() {
+    // let userId;
+    // console.log("user", this.userId);
+    // if (this.userId) {
+    //   userId = this.userId;
+    // }
+    let userId = auth.getUserId();
+    console.log("Laravel Echo", userId);
+
+    // eslint-disable-next-line no-undef
+    Echo.private("App.User." + userId).notification(data => {
+      store.commit("setNotification", data);
+      store.commit("order/setOrderFocus", data);
+      console.log(data.type);
+      console.log("data ", data);
+    });
+    store.dispatch("notifications/getNotifications");
+    //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
+    //     "App\\Events\\OrderStatusChanged",
+    //     e => {
+    //       console.log(e);
+    //     }
+    //   );
+  },
   computed: {
     loggedIn() {
       return this.$store.getters.loggedIn;

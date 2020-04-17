@@ -2,9 +2,9 @@ import Echo from "laravel-echo";
 import store from "./store";
 import * as auth from "./services/auth_service";
 // import PusherBatchAuthorizer from "pusher-js-auth";
+// window.Pusher.logToConsole = true
 window.Pusher = require("pusher-js");
 window.Echo = new Echo({
-  logToConsole: true,
   broadcaster: "pusher",
   key: "ebfe3f8ff45ad9c3ad4c",
   cluster: "ap1",

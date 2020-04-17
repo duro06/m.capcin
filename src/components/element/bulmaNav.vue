@@ -77,10 +77,10 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import * as c from "@/services/cart_service";
 import Notification from "@/components/element/Notification.vue";
-import { updateNotif, writeOrder } from "@/services/notif_service";
+// import { updateNotif, writeOrder } from "@/services/notif_service";
 // import Pusher from "pusher-js";
 //pusher console
 
@@ -142,49 +142,53 @@ export default {
     ...mapState("order", { Order: state => state.Order })
   },
   watch: {
-    notification: {
-      handler: function(value) {
-        updateNotif();
-        let newValue = [];
-        const latest = value[value.length - 1];
-        const oldValue = this.Order;
-        oldValue.forEach(item => {
-          const temp = value.filter(data => {
-            // console.log("filter", data.id, item.id);
-            // console.log("time", new Date(data.updated_at).getTime());
-
-            if (data.id == item.id && !data.read) {
-              if (data.status_id == item.status_id) {
-                if (data.updated_at == latest.updated_at) return true;
-              } else {
-                return true;
-              }
-            }
-          });
-          // console.log("temp", temp);
-          // console.log("latest", latest);
-          if (temp.length) {
-            newValue.push(temp[temp.length - 1]);
-          }
-        });
-        writeOrder(newValue, oldValue);
-        console.log(newValue, oldValue, "value", value);
-      },
-      deep: true
-    },
-    Order: {
-      handler: function(newValue, oldValue) {
-        console.log("new", newValue);
-        console.log("old", oldValue);
-        // const newValue = this.notification[this.notification.length - 1];
-        // writeOrder(newValue, OldValue);
-      },
-      deep: true
-    }
+    // notification: {
+    //   handler: function(value) {
+    //     updateNotif();
+    //     let newValue = [];
+    //     const latest = value[value.length - 1];
+    //     const oldValue = this.Order;
+    //     oldValue.forEach(item => {
+    //       const temp = value.filter(data => {
+    //         // console.log("filter", data.id, item.id);
+    //         // console.log("time", new Date(data.updated_at).getTime());
+    //         if (data.id == item.id && !data.read) {
+    //           if (data.status_id == item.status_id) {
+    //             if (data.updated_at == latest.updated_at) return true;
+    //           } else {
+    //             return true;
+    //           }
+    //         }
+    //       });
+    //       // console.log("temp", temp);
+    //       // console.log("latest", latest);
+    //       if (temp.length) {
+    //         newValue.push(temp[temp.length - 1]);
+    //       }
+    //     });
+    //     writeOrder(newValue, oldValue);
+    //     console.log(newValue, oldValue, "value", value);
+    //   },
+    //   deep: true
+    // },
+    // Order: {
+    //   handler: function(newValue, oldValue) {
+    //     console.log("new", newValue);
+    //     console.log("old", oldValue);
+    //     // const newValue = this.notification[this.notification.length - 1];
+    //     // writeOrder(newValue, OldValue);
+    //   },
+    //   deep: true
+    // }
   },
   methods: {
+    ...mapActions("notifications", [
+      "getNotifications",
+      "readAllNotifications"
+    ]),
     allIsRead() {
       this.$store.commit("allNotifIsRead");
+      this.readAllNotifications();
       this.isActive = false;
       this.kelihatan = this.isActive ? "inherit" : "none";
     },
@@ -197,6 +201,7 @@ export default {
       this.kelihatan = this.isActive ? "inherit" : "none";
     },
     tampil() {
+      this.getNotifications();
       if (this.notification.length) {
         this.isActive = !this.isActive;
         this.kelihatan = this.isActive ? "inherit" : "none";

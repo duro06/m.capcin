@@ -1,4 +1,4 @@
-import * as pusher from "../services/pusher_service";
+// import * as pusher from "../services/pusher_service";
 // import * as echo from "../services/echo_service";
 import * as ord from "@/services/order_service";
 import { http } from "@/services/http_service";
@@ -165,7 +165,7 @@ const actions = {
       // });
       items.forEach(e => {
         store.commit("order/setOrder", e);
-        pusher.subscribe(e.id);
+        // pusher.subscribe(e.id);
         // echo.denger(e.id);
         // console.log("order id", e.id);
         if (e.status_id == 1) {

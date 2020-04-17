@@ -37,6 +37,17 @@ export function getAccessToken() {
   return tokenData.user.access_token;
 }
 
+export function getUserId() {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    return null;
+  }
+
+  const tokenData = jwt.decode(token);
+  console.log("data", tokenData);
+  return tokenData.user.user.id;
+}
+
 export function getProfile() {
   return set.http().get("auth/profile");
 }

@@ -4,11 +4,17 @@
       <!-- <router-link :to="{ path: '/order#' + pesan.id }"> -->
       <div :class="['card', data.read ? '' : 'unread']">
         <div class="card-header">
-          <p><B>Referensi : </B> Capcin-{{ pesan.reff }}</p>
+          <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
         </div>
         <div class="content">
-          <p>
+          <p v-if="pesan.status != 'Order'">
             sudah berganti status menjadi
+            <span class="status"
+              ><B> {{ pesan.status }}</B></span
+            >
+          </p>
+          <p v-else>
+            Pesanan Anda sudah kami terima. status pesanan anda saat ini:
             <span class="status"
               ><B> {{ pesan.status }}</B></span
             >
@@ -19,6 +25,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "notif",
   props: { data: Object },
@@ -34,10 +41,13 @@ export default {
   //   }
   // },
   methods: {
+    ...mapActions("notifications", ["readNotifications"]),
     read() {
       this.$store.commit("order/setOrderFocus", this.data);
-      this.$store.commit("notifIsRead", this.pesan.id);
+      this.$store.dispatch("readNotification", this.pesan.id);
+      this.readNotifications(this.pesan.id);
       console.log("Notif card", this.data);
+
       this.$emit("tutup");
 
       // this.$router.replace({ name: "order" }, () => {});

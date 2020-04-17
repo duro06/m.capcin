@@ -38,6 +38,7 @@ new Vue({
 // import Empty from "@/components/element/EmptyPage";
 import { mapState, mapActions } from "vuex";
 import * as ord from "@/services/order_service";
+import * as auth from "@/services/auth_service";
 
 export default {
   name: "order",
@@ -95,8 +96,8 @@ export default {
       console.log("test scroll");
     },
     orderScroll: function() {
-      console.log("scroll");
-      console.log(this.mitraOrderMeta.more);
+      // console.log("scroll");
+      // console.log(this.mitraOrderMeta.more);
       if (this.mitraOrderMeta.more) {
         // this.mitraOrderMeta.more = false;
         this.ambilLagi(); //jalankan fungsi Load more
@@ -162,13 +163,7 @@ export default {
       this.$store.commit("loading");
       // this.$store.commit("delOrderItems");
       this.busy = true;
-      let id = this.profile.id;
-      let ID;
-      if (id) {
-        ID = id;
-      } else {
-        ID = localStorage.getItem("mie");
-      }
+      let ID = auth.getUserId();
 
       let params = {
         params: {
