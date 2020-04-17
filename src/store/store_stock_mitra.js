@@ -64,7 +64,7 @@ const actions = {
       http()
         .post(`/admin/mitra-input-penjualan`, payload)
         .then(res => {
-          let dataReturn = res.data.data;
+          let dataReturn = res.data;
           // commit("setBubuks", dataReturn);
           resolve(dataReturn);
         });

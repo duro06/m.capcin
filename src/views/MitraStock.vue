@@ -58,7 +58,7 @@
           </div>
           <div class="has-text-centered tombol_bawah">
             <button
-              class="button warna-tema is-small "
+              :class="['button', 'warna-tema', 'is-small', loading]"
               @click="simpanLaporan"
               :disabled="disable"
             >
@@ -151,7 +151,8 @@ export default {
       report: false,
       selected: "stok",
       dataLaporan: [],
-      disable: false
+      disable: false,
+      loading: ""
     };
   },
   computed: {
@@ -195,15 +196,19 @@ export default {
     simpanLaporan() {
       console.log("lapor", this.dataLaporan);
       if (this.dataLaporan.length == this.items.length) {
+        this.loading = "is-loading";
         this.disable = true;
         this.laporanHarian(this.dataLaporan).then(res => {
+          this.getItemById(this.$route.params.id);
           console.log(res);
           this.disable = false;
+          this.loading = "";
         });
       } else {
         this.flashMessage.error({
-          message: "periksa kembali laporan anda",
-          time: 3000
+          message:
+            "data anda belum dilaporkan, periksa kembali laporan anda. tetap isi jumlah penjualan, jika tidak laku, isi dengan 0",
+          time: 5000
         });
       }
     },
