@@ -102,7 +102,14 @@ export default {
   methods: {
     ...mapActions(["getProductById"]),
     details() {
-      this.getProductById(this.product_id);
+      this.$store.commit("delDetailsProduct");
+      this.$store.commit("bubuk/delBubuks");
+      // this.getProductById(this.product_id);
+      this.$store.commit(
+        "setDetailsProduct",
+        this.data.order.detail_order_one.product.detail_items
+      );
+      this.$store.commit("bubuk/setBubuks", this.data.order.details_bubuk);
       this.$router.replace(
         this.$route.query.redirect || {
           name: "detailproduk"

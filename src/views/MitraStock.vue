@@ -129,6 +129,76 @@
         </div>
       </div>
     </div>
+
+    <modal v-if="showModal" @close="handleModal">
+      <header slot="header" class="modal-card-head">
+        <p>
+          <span class="modal-card-title ">
+            Konfirmasi laporan
+          </span>
+          <br />
+          <span class="modal-card-subtitle ">
+            Periksa kembali dan pastikan laporan penjualan anda telah sesuai
+          </span>
+        </p>
+      </header>
+      <section slot="body" class="modal-card-body ">
+        <div class="card-content">
+          <div class="card-header">
+            Stok mitra
+          </div>
+          <div class="columns is-mobile">
+            <div class="column is-4">
+              <p class="subtittle is-7">
+                Rasa
+              </p>
+            </div>
+            <div class="column is-4">
+              <p class="subtittle is-7">
+                Sisa stok
+              </p>
+            </div>
+            <div class="column is-4">
+              <p class="subtittle is-7">
+                Laporan
+              </p>
+            </div>
+          </div>
+          <div v-for="(item, n) in combine" :key="n">
+            <div class="columns is-mobile">
+              <div class="column is-4">
+                <p class="subtittle is-7">
+                  <B>{{ item.bubuk.nama }}</B>
+                </p>
+              </div>
+
+              <div class="column is-4">
+                <p class="subtittle is-7">
+                  <B> {{ item.stok_akhir }} </B>
+                </p>
+              </div>
+              <div class="column is-4">
+                <p class="subtittle is-7">
+                  <B> {{ item.laporkan }} </B>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer slot="footer" class="modal-card-foot ">
+        <button
+          :class="['button', 'is-success', 'is-small', 'is-rounded', loading]"
+          @click.prevent="konfirmasiLaporan"
+          :disabled="disable"
+        >
+          Kirimkan
+        </button>
+        <button class="button is-small is-rounded" @click.prevent="handleModal">
+          Batal
+        </button>
+      </footer>
+    </modal>
   </div>
 </template>
 <script>
@@ -144,7 +214,9 @@ export default {
     "input-laporan": () =>
       import(
         /* webpackChunkName: "input laporan" */ "@/components/element/InputLaporan.vue"
-      )
+      ),
+    modal: () =>
+      import(/* webpackChunkName: "modal" */ "@/components/element/Modal.vue")
   },
   data() {
     return {
@@ -152,7 +224,9 @@ export default {
       selected: "stok",
       dataLaporan: [],
       disable: false,
-      loading: ""
+      loading: "",
+      disableKirim: false,
+      showModal: false
     };
   },
   computed: {
@@ -160,21 +234,26 @@ export default {
       items: state => state.items,
       bubuks: state => state.bubuks,
       newUser: state => state.newUser
-    })
-    // combine() {
-    //   let combine;
-    //   this.items.forEach(data => {
-    //     let tambah = this.bubuks.filter(bubuk => {
-    //       if (bubuk.id == data.bubuk_id) {
-    //         return true;
-    //       }
-    //     });
-    //     data.bubuk = tambah[0];
-    //   });
-    //   combine = this.items;
-    //   console.log(combine);
-    //   return combine;
-    // }
+    }),
+    combine() {
+      let combine;
+      if (this.dataLaporan.length) {
+        this.items.forEach(data => {
+          let tambah = this.dataLaporan.filter(bubuk => {
+            console.log("id 1", bubuk.item_mitra_id, "id 2", data.id);
+            if (bubuk.item_mitra_id == data.id) {
+              return true;
+            }
+          });
+          data.laporkan = tambah[0].keluar;
+        });
+        combine = this.items;
+        console.log(combine);
+        return combine;
+      } else {
+        return [];
+      }
+    }
   },
   watch: { items: { handler: "coba", deep: true } },
   methods: {
@@ -196,14 +275,7 @@ export default {
     simpanLaporan() {
       console.log("lapor", this.dataLaporan);
       if (this.dataLaporan.length == this.items.length) {
-        this.loading = "is-loading";
-        this.disable = true;
-        this.laporanHarian(this.dataLaporan).then(res => {
-          this.getItemById(this.$route.params.id);
-          console.log(res);
-          this.disable = false;
-          this.loading = "";
-        });
+        this.showModal = true;
       } else {
         this.flashMessage.error({
           message:
@@ -211,6 +283,25 @@ export default {
           time: 5000
         });
       }
+    },
+    handleModal() {
+      this.showModal = false;
+    },
+    konfirmasiLaporan() {
+      this.loading = "is-loading";
+      this.disable = true;
+      this.laporanHarian(this.dataLaporan).then(res => {
+        this.getItemById(this.$route.params.id);
+        this.showModal = false;
+        console.log(res);
+        this.disable = false;
+        this.loading = "";
+        this.stock();
+        this.flashMessage.success({
+          message: "data berhasil dilaporkan",
+          time: 5000
+        });
+      });
     },
     stock() {
       this.report = false;
@@ -235,7 +326,7 @@ export default {
             return true;
           }
         });
-        // console.log(oldData)
+        console.log("old", oldData);
         if (oldData.length) {
           this.dataLaporan.forEach(data => {
             if (data.item_mitra_id == oldData[0].item_mitra_id) {

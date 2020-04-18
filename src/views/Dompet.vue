@@ -17,6 +17,23 @@
             </div>
           </div>
         </router-link>
+        <router-link
+          :to="{ name: 'mitra-penjualan', params: { id: profile.id } }"
+        >
+          <div class="card">
+            <div class="media">
+              <div class="media-left">
+                <div class="icon">
+                  <i class="fas fa-layer-group fa-2x"></i>
+                  <!-- <i class="fas fa-layer-group"></i> -->
+                </div>
+              </div>
+              <div class="media-content">
+                <p class="title is-5"><B>Laporan penjualan</B></p>
+              </div>
+            </div>
+          </div>
+        </router-link>
       </div>
       <div v-if="profile.role == 'Packing'">
         <router-link

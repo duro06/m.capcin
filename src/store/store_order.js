@@ -18,6 +18,9 @@ const mutations = {
   setLocalOrder(state, payload) {
     state.localOrder = payload;
   },
+  delLocalOrder(state) {
+    state.localOrder = [];
+  },
   //=========== mitra success order message =====
   setSuccessOrder(state, payload) {
     state.successOrder = payload;

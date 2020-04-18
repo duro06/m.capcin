@@ -41,6 +41,7 @@
               <p class="title is-6" style="color: black">{{ user.name }}</p>
               <p class="subtitle is-7" style="color: black">
                 {{ user.email }}<br />
+                {{ user.alamat }}<br />
                 {{ user.role }} Capcin
               </p>
             </div>
@@ -83,6 +84,14 @@
               class="isi-kotak input is-small "
               type="text"
               v-model="user.email"
+            />
+          </div>
+          <div class="kotak">
+            <label class="isi-kotak" for="input">Alamat </label>
+            <input
+              class="isi-kotak input is-small "
+              type="text"
+              v-model="user.alamat"
             />
           </div>
         </div>

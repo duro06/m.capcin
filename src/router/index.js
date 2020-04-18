@@ -252,6 +252,20 @@ const routes = [
     }
   },
   {
+    path: "/mitra-penjualan",
+    name: "mitra-penjualan",
+    component: () =>
+      import(
+        /* webpackChunkName: "penjualan-mitra" */ "../views/MitraPenjualan.vue"
+      ),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
     path: "/dompet",
     name: "dompet",
     component: () =>

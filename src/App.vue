@@ -131,6 +131,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.ngisi {
+  padding: 5px 20px 60px 20px;
+}
 .kepala {
   background-color: rgb(199, 198, 198);
   border-radius: 5px;

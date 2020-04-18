@@ -2,24 +2,40 @@
   <div class="detail-product">
     <div class="isi">
       <div class="card">
-        <div class="card-header"></div>
-        <div class="card-content">
+        <div class="card-header">
+          <h1><B>Produk untuk di packing</B></h1>
+        </div>
+        <div class="card-content bubuk" v-if="bubuks.length">
           <div class="columns is-mobile ">
             <div class="column is-7">Nama Item</div>
             <div class="column is-5">Jumlah</div>
           </div>
-          <div v-for="(product, n) in products" :key="n">
+          <div
+            v-for="(product, n) in bubuks"
+            :key="n"
+            :class="n % 2 == 0 ? 'even' : 'odd'"
+          >
+            <div class="columns is-mobile ">
+              <div class="column is-7">
+                {{ product.bubuk.nama }}
+              </div>
+              <div class="column is-5">{{ product.qty }} bks</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-content produk">
+          <div class="columns is-mobile ">
+            <div class="column is-7">Nama Item</div>
+            <div class="column is-5">Jumlah</div>
+          </div>
+          <div
+            v-for="(product, n) in products"
+            :key="n"
+            :class="n % 2 == 0 ? 'even' : 'odd'"
+          >
             <div class="columns is-mobile ">
               <div class="column is-7">
                 {{ product.item.nama }}
-                <!-- <span v-if="product.item.nama == 'Bubuk'">
-                  <button
-                    class="button is-info is-small kecil is-rounded"
-                    @click="detailBubuk"
-                  >
-                    Detail
-                  </button></span
-                > -->
               </div>
               <div class="column is-5">
                 {{ product.qty }} {{ product.item.unit.nama }}
@@ -103,7 +119,10 @@ export default {
     };
   },
   computed: {
-    ...mapState({ products: state => state.productDetails })
+    ...mapState({
+      products: state => state.productDetails,
+      bubuks: state => state.bubuk.bubuks
+    })
   },
   methods: {
     save() {},
@@ -140,5 +159,17 @@ export default {
   padding-top: 0;
   height: 20px;
   margin-top: 3px;
+}
+.bubuk {
+  border-color: coral;
+}
+.produk {
+  border-color: cyan;
+}
+.even {
+  background-color: rgba(120, 248, 248, 0.89);
+}
+.odd {
+  background-color: rgba(106, 255, 113, 0.89);
 }
 </style>
