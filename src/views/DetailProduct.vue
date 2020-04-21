@@ -161,10 +161,14 @@ export default {
   margin-top: 3px;
 }
 .bubuk {
-  border-color: coral;
+  box-shadow: 0px 0px 10px 1px coral;
+  padding: 14px;
+  margin: 15px;
 }
 .produk {
-  border-color: cyan;
+  box-shadow: 0px 0px 10px 1px greenyellow;
+  padding: 14px;
+  margin: 15px;
 }
 .even {
   background-color: rgba(120, 248, 248, 0.89);

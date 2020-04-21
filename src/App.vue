@@ -76,17 +76,26 @@ export default {
     // if (this.userId) {
     //   userId = this.userId;
     // }
-    let userId = auth.getUserId();
-    console.log("Laravel Echo", userId);
+    if (store.getters.loggedIn || localStorage.getItem("access_teken")) {
+      console.log("Log in ");
+      let userId = auth.getUserId();
+      console.log("Laravel Echo", userId);
 
-    // eslint-disable-next-line no-undef
-    Echo.private("App.User." + userId).notification(data => {
-      store.commit("setNotification", data);
-      store.commit("order/setOrderFocus", data);
-      console.log(data.type);
-      console.log("data ", data);
-    });
-    store.dispatch("notifications/getNotifications");
+      // eslint-disable-next-line no-undef
+      Echo.private("App.User." + userId).notification(data => {
+        store.commit("setNotification", data);
+        store.commit("order/setOrderFocus", data);
+        console.log(data.type);
+        console.log("data ", data);
+      });
+      store.dispatch("notifications/getNotifications");
+    } else {
+      console.log("Log out ");
+      store.dispatch("destroyToken"); //paggil action untuk menghapus authentifikasi
+      localStorage.removeItem("level"); // hapus temporary local storege level
+      localStorage.removeItem("mie"); // hapus temporary local storege level
+      localStorage.removeItem("notif");
+    }
     //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
     //     "App\\Events\\OrderStatusChanged",
     //     e => {

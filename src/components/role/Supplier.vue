@@ -27,7 +27,7 @@ export default {
     toDetail() {
       let data = {
         nama: this.data.order.user.name,
-        alamat: "alamat",
+        alamat: this.data.order.user.alamat,
         reff: this.data.order.reff,
         product: this.data.order.detail_order_one.product.name
       };

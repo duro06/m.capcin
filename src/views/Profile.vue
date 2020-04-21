@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <div class="has-text-centered">
+    <div class="has-text-left">
       <div class="card">
         <div class="avatar-profile">
           <div class="card-image">
@@ -27,8 +27,8 @@
         </div>
 
         <div class="card-content">
-          <div class="media">
-            <div class="media-left">
+          <div class="columns is-mobile is-fullwidth">
+            <!-- <div class="media-left">
               <figure class="image is-48x48">
                 <img
                   :src="displayImage"
@@ -36,16 +36,16 @@
                   ref="miniDisplayAvatarImage"
                 />
               </figure>
-            </div>
-            <div class="media-content">
+            </div> -->
+            <div class="column is-10">
               <p class="title is-6" style="color: black">{{ user.name }}</p>
               <p class="subtitle is-7" style="color: black">
+                {{ user.role }} Capcin <br />
                 {{ user.email }}<br />
                 {{ user.alamat }}<br />
-                {{ user.role }} Capcin
               </p>
             </div>
-            <div class="media-content">
+            <div class="column is-2">
               <button
                 class="button is-info is-small"
                 @click.prevent="editProfile"
@@ -238,7 +238,7 @@ export default {
         "load",
         function() {
           this.$refs.displayAvatarImage.src = reader.result;
-          this.$refs.miniDisplayAvatarImage.src = reader.result;
+          // this.$refs.miniDisplayAvatarImage.src = reader.result;
         }.bind(this),
         false
       );

@@ -236,6 +236,7 @@ export default {
     //   }
     // },
     orderNow: async function() {
+      this.disable = true;
       this.$store.commit("loading");
       const jumlah = this.jumlahPesanan * this.barang.harga; //new Intl.NumberFormat().format(this.jumlahPesanan);
       const formData = new FormData();
@@ -251,10 +252,13 @@ export default {
           pusher.subscribe(response.data.data.id);
           this.$router.replace({ name: "berhasil" }, () => {});
           this.$store.commit("order/setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
+          this.disable = false;
         }
 
         this.more_exist = false; // kasih false biar nanti yang update value nya fungsi updated() saja
       } catch (error) {
+        this.disable = false;
+        this.$store.commit("notLoading");
         // this.more_exist = false; //apapun hasilnya, more exist false dulu
         this.flashMessage.error({
           message: "" + error, // kirim flash Message
