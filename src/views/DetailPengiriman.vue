@@ -16,7 +16,11 @@
               level-item
               has-text-centered"
           >
-            <button class="button is-success is-small is-rounded" @click="save">
+            <button
+              class="button is-success is-small is-rounded"
+              @click="save"
+              :disabled="disable"
+            >
               Selesai
             </button>
           </div>
@@ -57,6 +61,7 @@
         <button
           class="button is-success is-small is-rounded"
           @click.prevent="submit"
+          :disabled="disable"
         >
           Kirimkan
         </button>
@@ -69,6 +74,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { http } from "../services/http_service";
 export default {
   name: "shipping",
   components: {
@@ -78,21 +84,82 @@ export default {
   data() {
     return {
       showModal: false,
-      keterangan: ""
+      keterangan: "",
+      disable: false
     };
   },
   computed: {
     ...mapState("shipping", { data: state => state.detail })
   },
   methods: {
-    save() {},
+    save() {
+      this.disable = true;
+      let data = new FormData();
+      data.append("order_id", this.data.order_id);
+      data.append("status", 1);
+      return new Promise(() => {
+        http()
+          .post(`admin/supplier_selesai`, data)
+          .then(() => {
+            this.$router.push({ name: "supplier" }, () => {});
+            this.disable = false;
+            this.flashMessage.success({
+              message: "Pengiriman selesai.", // kirim flash Message
+              time: 5000
+            });
+          })
+          .catch(err => {
+            this.$router.push({ name: "supplier" }, () => {});
+            this.disable = false;
+            this.flashMessage.error({
+              message: "Gagal " + err, // kirim flash Message
+              time: 5000
+            });
+            // console.log(err);
+          });
+      });
+    },
     cancelShipping() {
       this.showModal = true;
     },
     handleModal() {
       this.showModal = false;
     },
-    submit() {}
+    submit() {
+      this.disable = true;
+      let data = new FormData();
+      data.append("order_id", this.data.order_id);
+      data.append("status", 2);
+      data.append("keterangan", this.keterangan);
+      console.log(this.keterangan);
+      return new Promise(() => {
+        http()
+          .post(`admin/supplier_batal`, data)
+          .then(() => {
+            this.$router.push({ name: "supplier" }, () => {});
+            this.disable = false;
+            // console.log(res);
+            this.keterangan = "";
+            this.showModal = false;
+            this.flashMessage.success({
+              message: "Pengiriman dibatalkan.", // kirim flash Message
+              time: 5000
+            });
+          })
+          .catch(err => {
+            this.$router.push({ name: "supplier" }, () => {});
+
+            this.disable = false;
+            this.flashMessage.error({
+              message: "Gagal " + err, // kirim flash Message
+              time: 5000
+            });
+            // console.log(err);
+            this.keterangan = "";
+            this.showModal = false;
+          });
+      });
+    }
   }
 };
 </script>

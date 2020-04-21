@@ -77,14 +77,22 @@ export default {
     //   userId = this.userId;
     // }
     if (store.getters.loggedIn || localStorage.getItem("access_teken")) {
+      // console.log("Laravel Echo", userId);
       console.log("Log in ");
-      let userId = auth.getUserId();
-      console.log("Laravel Echo", userId);
 
+      let userId = auth.getUserId();
       // eslint-disable-next-line no-undef
       Echo.private("App.User." + userId).notification(data => {
-        store.commit("setNotification", data);
-        store.commit("order/setOrderFocus", data);
+        if (store.state.profile.role == "Mitra") {
+          store.commit("setNotification", data);
+          store.commit("order/setOrderFocus", data);
+        } else if (store.state.profile.role == "Packing") {
+          store.commit("setNotification", data);
+          store.dispatch("pack/getPackingOrder");
+        } else if (store.state.profile.role == "Supplier") {
+          store.commit("setNotification", data);
+          store.dispatch("shipping/getShipping");
+        }
         console.log(data.type);
         console.log("data ", data);
       });

@@ -53,7 +53,11 @@
               level-item
               has-text-centered"
           >
-            <button class="button is-success is-small is-rounded" @click="save">
+            <button
+              class="button is-success is-small is-rounded"
+              @click="save"
+              :disabled="disable"
+            >
               Selesai
             </button>
           </div>
@@ -94,6 +98,7 @@
         <button
           class="button is-success is-small is-rounded"
           @click.prevent="submit"
+          :disabled="disable"
         >
           Kirimkan
         </button>
@@ -106,6 +111,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { http } from "../services/http_service";
 export default {
   name: "detailProduct",
   components: {
@@ -115,24 +121,85 @@ export default {
   data() {
     return {
       showModal: false,
-      keterangan: ""
+      keterangan: "",
+      disable: false
     };
   },
   computed: {
     ...mapState({
       products: state => state.productDetails,
-      bubuks: state => state.bubuk.bubuks
+      bubuks: state => state.bubuk.bubuks,
+      order_id: state => state.pack.orderId
     })
   },
   methods: {
-    save() {},
+    save() {
+      this.disable = true;
+      let data = new FormData();
+      data.append("order_id", this.order_id);
+      data.append("status", 1);
+      return new Promise(() => {
+        http()
+          .post(`admin/packing_selesai`, data)
+          .then(() => {
+            this.disable = false;
+            this.$router.push({ name: "packing" }, () => {});
+            this.flashMessage.success({
+              message: "Packing selesai.", // kirim flash Message
+              time: 5000
+            });
+          })
+          .catch(err => {
+            this.disable = false;
+            this.$router.push({ name: "packing" }, () => {});
+            this.flashMessage.error({
+              message: "Gagal " + err, // kirim flash Message
+              time: 5000
+            });
+            // console.log(err);
+          });
+      });
+    },
     cancelPacking() {
       this.showModal = true;
     },
     handleModal() {
       this.showModal = false;
     },
-    submit() {},
+    submit() {
+      this.disable = true;
+      let data = new FormData();
+      data.append("order_id", this.order_id);
+      data.append("status", 2);
+      data.append("keterangan", this.keterangan);
+      console.log(this.keterangan);
+      return new Promise(() => {
+        http()
+          .post(`admin/packing_batal`, data)
+          .then(() => {
+            this.$router.push({ name: "packing" }, () => {});
+            this.disable = false;
+            // console.log(res);
+            this.keterangan = "";
+            this.showModal = false;
+            this.flashMessage.success({
+              message: "Packing dibatalkan.", // kirim flash Message
+              time: 5000
+            });
+          })
+          .catch(err => {
+            this.$router.push({ name: "packing" }, () => {});
+            this.disable = false;
+            this.flashMessage.error({
+              message: "Gagal " + err, // kirim flash Message
+              time: 5000
+            });
+            // console.log(err);
+            this.keterangan = "";
+            this.showModal = false;
+          });
+      });
+    },
     detailBubuk() {
       console.log("detail bubuk");
     }

@@ -131,7 +131,7 @@
 </template>
 <script>
 //import fungsi login dari auth_service
-import { login } from "@/services/auth_service";
+import * as auth from "@/services/auth_service";
 export default {
   name: "Login",
   props: {
@@ -328,11 +328,20 @@ export default {
         this.loading = "is-loading"; // button spinner on
         this.disable = true; //disable button
         try {
-          const response = await login(this.user); // paggil fungsi login dari auth dengan membawa data user
+          const response = await auth.login(this.user); // paggil fungsi login dari auth dengan membawa data user
           this.loading = ""; // button spinner off
           this.disable = false; // button enable
           this.errors = {}; // sepertinya belum berfungsi membesihkan error dengan baik dan benar
           this.findRole(response.token_scope); // panggil fungsi redirect sesuai role
+
+          // listen to laravel Echo
+          let userId = auth.getUserId();
+          // eslint-disable-next-line no-undef
+          Echo.private("App.User." + userId).notification(data => {
+            this.$store.commit("setNotification", data);
+            this.$store.commit("order/setOrderFocus", data);
+          });
+          this.$store.dispatch("notifications/getNotifications");
         } catch (error) {
           // console.log(error);
           this.disable = false; //button enable

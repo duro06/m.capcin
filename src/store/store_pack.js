@@ -2,7 +2,8 @@ import { http } from "../services/http_service";
 import store from ".";
 
 const state = () => ({
-  packingOrders: []
+  packingOrders: [],
+  orderId: null
 });
 ///////////////////////////////////////////////
 const mutations = {
@@ -11,6 +12,12 @@ const mutations = {
   },
   delPackingOrders(state) {
     state.packingOrders = [];
+  },
+  setOrderId(state, payload) {
+    state.orderId = payload;
+  },
+  delOrderId(state) {
+    state.orderId = null;
   }
 };
 //////////////////////////////////////////////

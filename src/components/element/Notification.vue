@@ -1,7 +1,9 @@
 <template>
   <div class="container" @click="read">
-    <router-link :to="{ name: 'focus', params: { id: this.data.id } }">
-      <!-- <router-link :to="{ path: '/order#' + pesan.id }"> -->
+    <router-link
+      v-if="role == 'Mitra'"
+      :to="{ name: 'focus', params: { id: this.data.id } }"
+    >
       <div :class="['card', data.read ? '' : 'unread']">
         <div class="card-header">
           <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
@@ -22,6 +24,18 @@
         </div>
       </div>
     </router-link>
+    <a v-if="role == 'Packing'">
+      <div :class="['card', data.read ? '' : 'unread']">
+        Anda mendapat tugas packing dengan
+        <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
+      </div>
+    </a>
+    <a v-if="role == 'Supplier'">
+      <div :class="['card', data.read ? '' : 'unread']">
+        Anda mendapat tugas pengantaran dengan
+        <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
+      </div>
+    </a>
   </div>
 </template>
 <script>
@@ -34,12 +48,11 @@ export default {
       pesan: this.data
     };
   },
-  // computed: {
-  //   baca() {
-  //     console.log(this.data.read);
-  //     return this.data.read;
-  //   }
-  // },
+  computed: {
+    role() {
+      return this.$store.state.profile.role;
+    }
+  },
   methods: {
     ...mapActions("notifications", ["readNotifications"]),
     read() {

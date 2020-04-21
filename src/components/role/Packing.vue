@@ -104,12 +104,14 @@ export default {
     details() {
       this.$store.commit("delDetailsProduct");
       this.$store.commit("bubuk/delBubuks");
+      this.$store.commit("pack/delOrderId");
       // this.getProductById(this.product_id);
       this.$store.commit(
         "setDetailsProduct",
         this.data.order.detail_order_one.product.detail_items
       );
       this.$store.commit("bubuk/setBubuks", this.data.order.details_bubuk);
+      this.$store.commit("pack/setOrderId", this.data.order_id);
       this.$router.replace(
         this.$route.query.redirect || {
           name: "detailproduk"

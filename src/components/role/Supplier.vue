@@ -29,7 +29,8 @@ export default {
         nama: this.data.order.user.name,
         alamat: this.data.order.user.alamat,
         reff: this.data.order.reff,
-        product: this.data.order.detail_order_one.product.name
+        product: this.data.order.detail_order_one.product.name,
+        order_id: this.data.order_id
       };
       this.setDetails(data);
       this.$router.replace(
