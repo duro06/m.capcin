@@ -80,6 +80,7 @@
 import { mapState, mapActions } from "vuex";
 import * as c from "@/services/cart_service";
 import Notification from "@/components/element/Notification.vue";
+// import * as auth from "../../services/auth_service";
 // import { updateNotif, writeOrder } from "@/services/notif_service";
 // import Pusher from "pusher-js";
 //pusher console
@@ -98,7 +99,25 @@ export default {
   created() {
     this.getCart();
   },
-  mounted() {},
+  mounted() {
+    // let userId = auth.getUserId();
+    // // eslint-disable-next-line no-undef
+    // Echo.private("App.User." + userId).notification(data => {
+    //   if (this.$store.state.profile.role == "Mitra") {
+    //     this.$store.commit("setNotification", data);
+    //     this.$store.commit("order/setOrderFocus", data);
+    //   } else if (this.$store.state.profile.role == "Packing") {
+    //     this.$store.commit("setNotification", data);
+    //     this.$store.dispatch("pack/getPackingOrder");
+    //   } else if (this.$store.state.profile.role == "Supplier") {
+    //     this.$store.commit("setNotification", data);
+    //     this.$store.dispatch("shipping/getShipping");
+    //   }
+    //   console.log(data.type);
+    //   console.log("data ", data);
+    // });
+    // this.$store.dispatch("notifications/getNotifications");
+  },
   computed: {
     PesanNotif() {
       return this.notification.filter(data => data.read == false);

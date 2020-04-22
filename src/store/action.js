@@ -101,9 +101,7 @@ export default {
           });
           console.log(response);
         })
-        .catch(error => {
-          console.log(error.response);
-        });
+        .catch(() => {});
 
       localStorage.removeItem("access_token"),
         localStorage.removeItem("level"),

@@ -1,18 +1,13 @@
 <template>
   <div class="order-container">
-    <router-link :to="{ path: '/order' }" exact>
-      <button class="button is-fullwidth is-light is-primary">
-        tampilkan semua
-      </button>
-    </router-link>
     <div class="card">
       <div class="card-header zoomIn">
-        <p><B>Refferensi :</B> Capcin-{{ orderFocus.reff }}</p>
+        <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div>
       <div class="card-content">
         <div :class="['columns', 'is-mobile', status]">
           <div class="column is-5 zoomIn">
-            <p class="rata-kiri">Jumlah :</p>
+            <p class="rata-kiri">Harga :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
           <div class="column is-7 zoomIn">
@@ -20,17 +15,13 @@
               <B>status :</B>
             </p>
             <p class="rata-kiri box has-text-centered">
-              <B>{{ orderFocus.status.name }}</B>
+              <B>{{ item.status.name }}</B>
             </p>
           </div>
         </div>
       </div>
-      <div
-        v-if="orderFocus.status_id == 5"
-        class="has-text-centered"
-        @click="confirm"
-      >
-        <button class="button is-success is-rounded is-small">
+      <div class="has-text-centered">
+        <button class="button is-success is-rounded is-small" @click="confirm">
           Barang sudah diterima
         </button>
       </div>
@@ -38,69 +29,41 @@
   </div>
 </template>
 <script>
-import * as ord from "@/services/order_service";
-import { mapState } from "vuex";
 export default {
-  name: "focus",
-
+  name: "card",
+  props: { data: Object, detail: Array },
   data() {
     return {
-      // orderFocus: this.orderFocus,
+      item: this.data,
       details: this.detail,
       dataDetails: [],
       kelihatan: "none",
-      isDisplay: false
+      isDisplay: false,
+      loading: false
     };
   },
-  mounted() {
-    if (this.orderFocus.id == undefined) {
-      this.$store.commit("loading");
-      this.$router.push({ name: "mitra" }, () => {});
-    }
-  },
   computed: {
-    ...mapState("order", { orderFocus: state => state.Focus }),
     status() {
-      return this.orderFocus.status.name;
+      return this.item.status.name;
     },
     total() {
-      let sub = "Rp " + new Intl.NumberFormat().format(this.orderFocus.total);
+      let sub = "Rp " + new Intl.NumberFormat().format(this.item.total);
       return sub;
     }
   },
   methods: {
     confirm() {
-      this.$store.dispatch("order/confirmOrder", this.orderFocus.id);
-    },
-    getDetail() {
-      this.isDisplay = !this.isDisplay;
-      this.kelihatan = this.isDisplay ? "inherit" : "none";
-      if (this.isDisplay) {
-        this.ambilDetail();
-      }
-    },
-    ambilDetail: async function() {
-      this.$store.commit("loading");
-      let id = this.orderFocus.id;
-      let params = {
-        params: {
-          q: id
-        }
-      };
-      try {
-        const res = await ord.getDetail(params);
-        this.$store.commit("notLoading");
-        if (res.status == 200) {
-          this.dataDetails = res.data.data;
-        }
-      } catch (e) {
-        this.$store.commit("notLoading");
-      }
+      this.$store.commit("order/setOrderFocus", this.item);
+      this.$store.dispatch("order/confirmOrder", this.item.id);
     }
   }
 };
 </script>
 <style scoped>
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
 .isi-kartu {
   padding: 0px 24px;
 }

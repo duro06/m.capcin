@@ -238,6 +238,17 @@ export default {
           .dispatch("register", this.user)
           .then(response => {
             pusher.register(response.data.data.id);
+            // ganti pusher dengan laravel echo
+            // let userId = response.data.data.id;
+            // // eslint-disable-next-line no-undef
+            // Echo.private("App.Register." + userId).notification(data => {
+            //   if (data != "") {
+            //     this.$store.dispatch("destroyVerifie");
+            //     this.$store.dispatch("stockMitra/remove", "ada");
+            //   }
+            //   console.log(data.type);
+            //   console.log("data ", data);
+            // });
             console.log("response id", response.data.data.id);
             // panggil fungsi "retriveVerivie" di action nya Vuex, bawa apa aja buat di tarun d locak storage
             vm.$store.dispatch("retrieveVerifie", "response");

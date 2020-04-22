@@ -30,7 +30,10 @@ const mutations = {
   },
   //============= mitra order to subscribe ====
   setOrder(state, payload) {
-    state.Order.push(payload);
+    state.Order = payload;
+  },
+  gantiStatus(state, payload) {
+    state.Focus.status_id = payload;
   },
   updateOrder(state, payload) {
     state.Order.forEach(data => {
@@ -78,6 +81,20 @@ const mutations = {
   }
 };
 const actions = {
+  confirmOrder({ state, commit }, payload) {
+    // order_id sama status id
+    commit("gantiStatus", 6);
+    return new Promise(() => {
+      http()
+        .put(`user/orders/${payload}`, state.Focus)
+        .then(res => {
+          console.log("update", res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
+  },
   setMeta({ commit }, payload) {
     commit("setMitraOrderMeta", payload);
   },
@@ -162,30 +179,7 @@ const actions = {
       const res = await ord.getToNotif(params);
       items = res.data.data;
       store.commit("notLoading");
-      // console.log("Items", items);
-      // console.log("res", res);
-      // items.forEach(e => {
-      // });
-      items.forEach(e => {
-        store.commit("order/setOrder", e);
-        // pusher.subscribe(e.id);
-        // echo.denger(e.id);
-        // console.log("order id", e.id);
-        if (e.status_id == 1) {
-          e.status = "Order";
-        } else if (e.status_id == 2) {
-          e.status = "Proses Produksi";
-        } else if (e.status_id == 3) {
-          e.status = "Proses Packing";
-        } else if (e.status_id == 4) {
-          e.status = "Dikirim";
-        } else if (e.status_id == 5) {
-          e.status = "Terkirim";
-        } else if (e.status_id == 6) {
-          e.status = "Selesai";
-        }
-      });
-      // console.log("Items modif", items);
+      store.commit("order/setOrder", items);
     } catch (e) {
       store.commit("notLoading");
     }

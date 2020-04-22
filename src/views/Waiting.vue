@@ -51,6 +51,18 @@ export default {
     // this.subscribe();
     // this.kirimKePuser()
   },
+  mounted(){
+    let userId = 25;
+            // eslint-disable-next-line no-undef
+            Echo.private("App.Register." + userId).notification(data => {
+              if (data != "") {
+                this.$store.dispatch("destroyVerifie");
+                this.$store.dispatch("stockMitra/remove", "ada");
+              }
+              console.log(data.type);
+              console.log("data ", data);
+            });
+  },
   computed: {
     //Menunggu Verivikasi 
     waiting () {
