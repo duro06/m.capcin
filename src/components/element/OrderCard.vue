@@ -5,19 +5,8 @@
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div>
       <div class="card-content">
-        <!-- <router-link
-          :to="{
-            name: 'order_detail',
-            params: { id: this.data.id }
-          }"
-          class="detail-items"
-        > -->
         <div :class="['columns', 'is-mobile', status]">
-          <!-- <div @click="getDetail" class="column is-3 zoomIn"> -->
-          <!-- <div class="column is-3 zoomIn">
-            <p class="rata-kiri">Harga</p>
-          </div> -->
-          <div @click="position" class="column is-5 zoomIn">
+          <div class="column is-5 zoomIn">
             <p class="rata-kiri">Harga :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
@@ -30,53 +19,12 @@
             </p>
           </div>
         </div>
-        <!-- </router-link> -->
-      </div>
-    </div>
-    <button
-      v-if="loading"
-      class="button transparent is-fullwidth is-loading is-large is-outlined"
-    >
-      loading ...
-    </button>
-    <div class="kalo" v-if="dataDetails.length">
-      <div class="card" :style="{ display: kelihatan }">
-        <div class="isi-kartu">
-          <div class="columns is-mobile">
-            <div class="column is-5 zoomIn">
-              <p><B>Nama Produk</B></p>
-            </div>
-            <div class="column is-3 zoomIn">
-              <p><B>Harga</B></p>
-            </div>
-            <div class="column is-4 zoomIn">
-              <p><B>Jumlah</B></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="pengulangan" v-for="(d, n) in dataDetails" :key="n">
-        <div class="card" :style="{ display: kelihatan }">
-          <div class="isi-kartu">
-            <div class="columns is-mobile">
-              <div class="column is-5 zoomIn">
-                <p>{{ d.product.name }}</p>
-              </div>
-              <div class="column is-3 zoomIn">
-                <p>{{ d.harga }}</p>
-              </div>
-              <div class="column is-4 zoomIn">
-                <p>{{ d.qty }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import * as ord from "@/services/order_service";
+// import * as ord from "@/services/order_service";
 // require("../../echo.js");
 
 export default {
@@ -92,21 +40,6 @@ export default {
       loading: false
     };
   },
-  created() {
-    // console.log(this.item);
-    // this.detail;
-  },
-  mounted() {
-    // if (this.data.status != "Terkirim") {
-    //   // eslint-disable-next-line no-undef
-    //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
-    //     "OrderStatusChanged",
-    //     e => {
-    //       console.log(e);
-    //     }
-    //   );
-    // }
-  },
   computed: {
     status() {
       return this.item.status.name;
@@ -115,49 +48,8 @@ export default {
       let sub = "Rp " + new Intl.NumberFormat().format(this.item.total);
       return sub;
     }
-    // Ddetail() {
-    //   const detail = this.details.filter(e => e.order_id === this.item.id);
-    //   return detail;
-    // }
   },
-  methods: {
-    position() {
-      // location.href = "#" + this.item.id;
-      // let positionX = this.$refs.myPosition.getClientRects();
-      // let positionY = this.$refs.myPosition.getBoundingClientRect();
-      // console.log("location ", location.href);
-      // console.log("y", positionY);
-    },
-    getDetail() {
-      this.isDisplay = !this.isDisplay;
-      this.kelihatan = this.isDisplay ? "inherit" : "none";
-      if (this.isDisplay && !this.dataDetails.length) {
-        this.ambilDetail();
-      }
-    },
-    ambilDetail: async function() {
-      // this.$store.commit("loading");
-      this.loading = true;
-      let id = this.item.id;
-      let params = {
-        params: {
-          q: id
-        }
-      };
-      try {
-        const res = await ord.getDetail(params);
-        // this.$store.commit("notLoading");
-        this.loading = false;
-        if (res.status == 200) {
-          this.dataDetails = res.data.data;
-          // console.log(this.dataDetails)
-        }
-      } catch (e) {
-        this.loading = false;
-        // this.$store.commit("notLoading");
-      }
-    }
-  }
+  methods: {}
 };
 </script>
 <style scoped>

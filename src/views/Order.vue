@@ -1,6 +1,17 @@
 <template>
   <div class="order">
-    <div class="isi" v-if="Items.length">
+    <div class="isi" v-if="Items.length && Order.length">
+      <div
+        class="pegulangan"
+        v-for="(item, n) in Order"
+        :key="n"
+        @scroll="testScroll"
+      >
+        <order-to-complete :data="item" />
+      </div>
+    </div>
+
+    <div class="isi" v-if="Items.length && !Order.length">
       <div
         class="pegulangan"
         v-for="(item, n) in Items"
@@ -10,7 +21,7 @@
         <OrderCard :data="item" />
       </div>
     </div>
-    <div class="kosong" v-else>
+    <div class="kosong" v-if="!Items.length && !Order.length">
       <Empty />
     </div>
     <div
@@ -21,7 +32,7 @@
     ></div>
     <button
       class="button transparent is-loading is-fullwidth is-large"
-      v-if="mitraOrderMeta.more"
+      v-if="mitraOrderMeta.more && !Order.length"
     >
       ...is loading
     </button>
@@ -45,7 +56,11 @@ export default {
   components: {
     OrderCard: () =>
       import(
-        /* webpackChunkName: "order card" */ "@/components/element/OrderCard"
+        /* webpackChunkName: "order-card" */ "@/components/element/OrderCard"
+      ),
+    "order-to-complete": () =>
+      import(
+        /* webpackChunkName: "order-to-complete" */ "@/components/element/OrderToComplete"
       ),
     Empty: () =>
       import(/* webpackChunkName: "empty" */ "@/components/element/EmptyPage")
@@ -69,6 +84,7 @@ export default {
   mounted() {
     console.log(this.Items);
     console.log("busy", this.busy);
+    this.ambilOrder(this.profile.id);
     // this.updateData();
     // if (!this.Items.length) {
     // }
@@ -78,6 +94,7 @@ export default {
     ...mapState(["profile"]),
     ...mapState("order", {
       Items: state => state.Items,
+      Order: state => state.Order,
       mitraOrderMeta: state => state.meta
     })
   },
@@ -88,7 +105,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("order", ["getDataOrder", "setMeta"]),
+    ...mapActions("order", ["getDataOrder", "setMeta", "ambilOrder"]),
     // removeFocus() {
     //   this.$store.commit("setOrderFocus", {});
     // },

@@ -56,7 +56,7 @@ export default {
   methods: {
     ...mapActions("notifications", ["readNotifications"]),
     read() {
-      this.$store.commit("order/setOrderFocus", this.data);
+      this.$store.commit("order/setOrderFocus", this.data.order);
       this.$store.dispatch("readNotification", this.pesan.id);
       this.readNotifications(this.pesan.id);
       console.log("Notif card", this.data);

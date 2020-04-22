@@ -132,6 +132,7 @@
 <script>
 //import fungsi login dari auth_service
 import * as auth from "@/services/auth_service";
+// import denger from "../../echo";
 export default {
   name: "Login",
   props: {
@@ -333,15 +334,17 @@ export default {
           this.disable = false; // button enable
           this.errors = {}; // sepertinya belum berfungsi membesihkan error dengan baik dan benar
           this.findRole(response.token_scope); // panggil fungsi redirect sesuai role
-
-          // listen to laravel Echo
-          let userId = auth.getUserId();
-          // eslint-disable-next-line no-undef
-          Echo.private("App.User." + userId).notification(data => {
-            this.$store.commit("setNotification", data);
-            this.$store.commit("order/setOrderFocus", data);
-          });
-          this.$store.dispatch("notifications/getNotifications");
+          // setTimeout(function() {
+          //   denger;
+          //   // listen to laravel Echo
+          //   let userId = auth.getUserId();
+          //   // eslint-disable-next-line no-undef
+          //   Echo.private("App.User." + userId).notification(data => {
+          //     this.$store.commit("setNotification", data);
+          //     this.$store.commit("order/setOrderFocus", data);
+          //   });
+          //   this.$store.dispatch("notifications/getNotifications");
+          // }, 8000);
         } catch (error) {
           // console.log(error);
           this.disable = false; //button enable
