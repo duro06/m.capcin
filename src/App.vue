@@ -30,19 +30,25 @@ export default {
     LoadingCapcin
     // loading
   },
+  data() {
+    return {
+      userId: null
+    };
+  },
   beforeCreate: async function() {
     try {
       //jika login maka
       if (store.getters.loggedIn) {
-        if (localStorage.getItem("level") == "Mitra") {
-          store.dispatch("order/ambilOrder");
-          // let params = {
-          //   params: {
-          //     q: localStorage.getItem("mie")
-          //   }
-          // };
-          // store.dispatch("order/getDataOrder", params);
-        }
+        // let userId = localStorage.getItem("mie");
+        // console.log("User id", userId);
+
+        // eslint-disable-next-line no-undef
+        // Echo.private("App.User." + userId).notification(notification => {
+        //   console.log(notification.type);
+        // });
+        // if (localStorage.getItem("level") == "Mitra") {
+        //   store.dispatch("order/ambilOrder");
+        // }
         const response = await auth.getProfile(); // ambil profile
         store.dispatch("aunthenticate", response.data); // panggil action untuk manuliskan
 
@@ -63,6 +69,47 @@ export default {
   },
   created() {
     // this.getCart();
+  },
+  mounted() {
+    // let userId;
+    // console.log("user", this.userId);
+    // if (this.userId) {
+    //   userId = this.userId;
+    // }
+    if (store.getters.loggedIn || localStorage.getItem("access_teken")) {
+      // console.log("Laravel Echo", userId);
+      console.log("Log in ");
+
+      let userId = auth.getUserId();
+      // eslint-disable-next-line no-undef
+      Echo.private("App.User." + userId).notification(data => {
+        if (store.state.profile.role == "Mitra") {
+          store.commit("setNotification", data);
+          store.commit("order/setOrderFocus", data);
+        } else if (store.state.profile.role == "Packing") {
+          store.commit("setNotification", data);
+          store.dispatch("pack/getPackingOrder");
+        } else if (store.state.profile.role == "Supplier") {
+          store.commit("setNotification", data);
+          store.dispatch("shipping/getShipping");
+        }
+        console.log(data.type);
+        console.log("data ", data);
+      });
+      store.dispatch("notifications/getNotifications");
+    } else {
+      console.log("Log out ");
+      store.dispatch("destroyToken"); //paggil action untuk menghapus authentifikasi
+      localStorage.removeItem("level"); // hapus temporary local storege level
+      localStorage.removeItem("mie"); // hapus temporary local storege level
+      localStorage.removeItem("notif");
+    }
+    //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
+    //     "App\\Events\\OrderStatusChanged",
+    //     e => {
+    //       console.log(e);
+    //     }
+    //   );
   },
   computed: {
     loggedIn() {
@@ -101,6 +148,23 @@ export default {
 };
 </script>
 <style lang="scss">
+.ngisi {
+  padding: 5px 20px 60px 20px;
+}
+.kepala {
+  background-color: rgb(199, 198, 198);
+  border-radius: 5px;
+}
+.isinya-kartu {
+  background-color: rgb(174, 255, 174);
+  border-radius: 15px;
+}
+.kaki-kartu {
+  background-color: rgb(199, 198, 198);
+  border-radius: 5px;
+  height: 20px;
+  align-self: center;
+}
 .custom_bottom_nav {
   padding: 2px 5px;
 }

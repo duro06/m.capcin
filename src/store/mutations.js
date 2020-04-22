@@ -35,6 +35,9 @@ export default {
   setDetailsProduct(state, payload) {
     state.productDetails = payload;
   },
+  delDetailsProduct(state) {
+    state.productDetails = [];
+  },
   // =========== loading ==============
   loading(state) {
     state.loadShow = "payload";

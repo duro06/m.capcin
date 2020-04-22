@@ -27,7 +27,8 @@ window.addEventListener("beforeunload", function() {
     localStorage.setItem("mie", store.state.profile.id);
   }
 });
-//for mobile
+//for Mobile
+
 // eslint-disable-next-line no-undef
 $(window).bind("beforeunload", function() {
   if (store.getters.loggedIn) {
@@ -36,6 +37,29 @@ $(window).bind("beforeunload", function() {
     localStorage.setItem("mie", store.state.profile.id);
   }
 });
+// eslint-disable-next-line no-undef
+$(window).bind("online", function() {
+  alert("online");
+});
+// eslint-disable-next-line no-undef
+$(window).bind("offline", function() {
+  alert("offline");
+});
+// eslint-disable-next-line no-undef
+$(window).bind("load", function() {
+  if (
+    localStorage.getItem("level") == "Mitra" &&
+    localStorage.getItem("access_token")
+  ) {
+    store.dispatch("order/ambilOrder");
+    // alert("OK");
+    console.log("load");
+  }
+});
+
+// laravel Echo
+import "./echo.js";
+
 Vue.config.productionTip = false;
 
 new Vue({

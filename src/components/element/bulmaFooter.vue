@@ -1,73 +1,111 @@
 <template>
-  <nav
-    class="navbar is-fixed-bottom-touch is-hidden-desktop"
-    :style="{ display: umum }"
-  >
-    <div class="container">
-      <div class="navbar-brand level is-mobile">
-        <div
-          :class="[
-            'btn_nav_item',
-            'level-item',
-            'has-text-centered',
-            currentPage.includes('home') ? activeClass : ''
-          ]"
-        >
-          <a @click="role" exact>
-            <i class="fas fa-home" />
-            <p class="subtitle is-7 ">
-              Beranda
-            </p>
-          </a>
-        </div>
+  <keep-alive>
+    <nav
+      class="navbar is-fixed-bottom-touch is-hidden-desktop"
+      :style="{ display: umum }"
+    >
+      <div class="container">
+        <div class="navbar-brand level is-mobile">
+          <div
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('home') ? activeClass : ''
+            ]"
+          >
+            <a @click="role" exact>
+              <i class="fas fa-home" />
+              <p class="subtitle is-7 ">
+                Beranda
+              </p>
+            </a>
+          </div>
 
-        <div
-          :class="[
-            'btn_nav_item',
-            'level-item',
-            'has-text-centered',
-            currentPage.includes('dompet') ? activeClass : ''
-          ]"
-        >
-          <router-link :to="{ path: '/dompet' }" exact>
-            <i class="fas fa-wallet"></i>
-            <p class="subtitle is-7">
-              Dompet
-            </p>
-          </router-link>
-        </div>
-
-        <div
-          :class="[
-            'btn_nav_item',
-            'level-item',
-            'has-text-centered',
-            currentPage.includes('order') ? activeClass : ''
-          ]"
-        >
-          <router-link :to="{ path: '/order' }" exact>
-            <i class="fas fa-folder"></i>
-            <p class="subtitle is-7">
-              Order
-            </p>
-          </router-link>
-        </div>
-        <div
-          :class="[
-            'btn_nav_item',
-            'level-item',
-            'has-text-centered',
-            currentPage.includes('profile') ? activeClass : ''
-          ]"
-        >
-          <router-link :to="{ path: '/profile' }" exact>
-            <i class="fas fa-user-tie"></i>
-            <p class="subtitle is-7">
-              Profile
-            </p>
-          </router-link>
-        </div>
-        <!-- <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
+          <div
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('dompet') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/dompet' }" exact>
+              <i class="fas fa-wallet"></i>
+              <p class="subtitle is-7">
+                Dompet
+              </p>
+            </router-link>
+          </div>
+          <!-- ================== Level mitra ======================-->
+          <div
+            v-if="level == 'Mitra'"
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('order') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/order' }" exact>
+              <i class="fas fa-folder"></i>
+              <p class="subtitle is-7">
+                Order
+              </p>
+            </router-link>
+          </div>
+          <!--================== Level Packing ==================== -->
+          <div
+            v-if="level == 'Packing'"
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('detailproduk') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/detailproduk' }" exact>
+              <i class="fas fa-box-open"></i>
+              <p class="subtitle is-7">
+                Packing
+              </p>
+            </router-link>
+          </div>
+          <!-- =================================================== -->
+          <!--================== Level Supplier ==================== -->
+          <div
+            v-if="level == 'Supplier'"
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('shipping') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/shipping' }" exact>
+              <i class="fas fa-shipping-fast"></i>
+              <p class="subtitle is-7">
+                Supplier
+              </p>
+            </router-link>
+          </div>
+          <!-- =================================================== -->
+          <div
+            :class="[
+              'btn_nav_item',
+              'level-item',
+              'has-text-centered',
+              currentPage.includes('profile') ? activeClass : ''
+            ]"
+          >
+            <router-link :to="{ path: '/profile' }" exact>
+              <i class="fas fa-user-tie"></i>
+              <p class="subtitle is-7">
+                Profile
+              </p>
+            </router-link>
+          </div>
+          <!-- <div v-if="!loggedIn" class="btn_nav_item level-item has-text-centered">
           <router-link :to="{ path: '/login' }" exact>
             <i class="fas fa-sign-in-alt"></i>
             <p class="subtitle is-7">
@@ -75,7 +113,7 @@
             </p>
           </router-link>
         </div>-->
-        <!-- <div
+          <!-- <div
           v-if="currentPage.includes('setting')"
           class="btn_nav_item level-item has-text-centered"
         >
@@ -86,9 +124,10 @@
             </p>
           </router-link>
         </div> -->
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </keep-alive>
 </template>
 
 <script>
@@ -103,7 +142,9 @@ export default {
     umum() {
       let tampil =
         this.$route.path.includes("transaksi") ||
-        this.$route.path.includes("setting")
+        this.$route.path.includes("setting") ||
+        this.$route.path.includes("shipping") ||
+        this.$route.path.includes("detailproduk")
           ? "none"
           : "inherit";
       return tampil;
@@ -120,6 +161,8 @@ export default {
   },
 
   methods: {
+    savePacking() {},
+    cancelPacking() {},
     role() {
       switch (this.level) {
         case "Produksi":

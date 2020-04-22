@@ -22,7 +22,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
     meta: {
       loggedIn: false,
       waitingVerified: false,
@@ -33,7 +33,8 @@ const routes = [
   {
     path: "/signup",
     name: "signup",
-    component: () => import("../components/auth/SignUp.vue"),
+    component: () =>
+      import(/* webpackChunkName: "sign up" */ "../components/auth/SignUp.vue"),
     meta: {
       loggedIn: false,
       waitingVerified: false,
@@ -44,7 +45,8 @@ const routes = [
   {
     path: "/waiting",
     name: "waiting",
-    component: () => import("../views/Waiting.vue"),
+    component: () =>
+      import(/* webpackChunkName: "waiting" */ "../views/Waiting.vue"),
     meta: {
       loggedIn: false,
       waitingVerified: true,
@@ -55,7 +57,7 @@ const routes = [
   {
     path: "/home",
     name: "home",
-    component: () => import("../views/Home.vue"),
+    component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -66,25 +68,29 @@ const routes = [
       {
         path: "produksi",
         name: "produksi",
-        component: () => import("../views/Produksi.vue"),
+        component: () =>
+          import(/* webpackChunkName: "produksi" */ "../views/Produksi.vue"),
         meta: { role: "Produksi" }
       },
       {
         path: "packing",
         name: "packing",
-        component: () => import("../views/Packing.vue"),
+        component: () =>
+          import(/* webpackChunkName: "packing" */ "../views/Packing.vue"),
         meta: { role: "Packing" }
       },
       {
         path: "supplier",
         name: "supplier",
-        component: () => import("../views/Supplier.vue"),
+        component: () =>
+          import(/* webpackChunkName: "Supplier" */ "../views/Supplier.vue"),
         meta: { role: "Supplier" }
       },
       {
         path: "mitra",
         name: "mitra",
-        component: () => import("../views/Mitra.vue"),
+        component: () =>
+          import(/* webpackChunkName: "Mitra" */ "../views/Mitra.vue"),
         meta: { role: "Mitra" }
       }
     ]
@@ -92,7 +98,8 @@ const routes = [
   {
     path: "/stock/:id",
     name: "stock",
-    component: () => import("../views/MitraStock.vue"),
+    component: () =>
+      import(/* webpackChunkName: "stock" */ "../views/MitraStock.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: true,
@@ -103,7 +110,8 @@ const routes = [
   {
     path: "*",
     name: "hello",
-    component: () => import("../components/HelloWorld.vue"),
+    component: () =>
+      import(/* webpackChunkName: "404" */ "../components/HelloWorld.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: true,
@@ -114,7 +122,8 @@ const routes = [
   {
     path: "/profile",
     name: "profile",
-    component: () => import("../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "profile" */ "../views/Profile.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -125,7 +134,64 @@ const routes = [
   {
     path: "/order",
     name: "order",
-    component: () => import("../views/Order.vue"),
+    component: () =>
+      import(/* webpackChunkName: "Order" */ "../views/Order.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/laporanpacking",
+    name: "laporanpacking",
+    component: () =>
+      import(
+        /* webpackChunkName: "laporan packing" */ "../views/PackOrder.vue"
+      ),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/detailproduk",
+    name: "detailproduk",
+    component: () =>
+      import(
+        /* webpackChunkName: "detail product" */ "../views/DetailProduct.vue"
+      ),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/laporanpengiriman",
+    name: "laporanpengiriman",
+    component: () =>
+      import(
+        /* webpackChunkName: "laporan pengiriman" */ "../views/ShippingOrder.vue"
+      ),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/shipping",
+    name: "shipping",
+    component: () =>
+      import(
+        /* webpackChunkName: "shipping" */ "../views/DetailPengiriman.vue"
+      ),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -137,7 +203,10 @@ const routes = [
   {
     path: "/focus/:id",
     name: "focus",
-    component: () => import("../components/element/OrderFocus.vue"),
+    component: () =>
+      import(
+        /* webpackChunkName: "focus" */ "../components/element/OrderFocus.vue"
+      ),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -148,7 +217,8 @@ const routes = [
   {
     path: "/transaksi/order_detail/:id",
     name: "order_detail",
-    component: () => import("../views/DetailOrder.vue"),
+    component: () =>
+      import(/* webpackChunkName: "detail order" */ "../views/DetailOrder.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -160,7 +230,8 @@ const routes = [
   {
     path: "/transaksi/keranjang",
     name: "keranjang",
-    component: () => import("../views/Keranjang.vue"),
+    component: () =>
+      import(/* webpackChunkName: "cart" */ "../views/Keranjang.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -171,7 +242,22 @@ const routes = [
   {
     path: "/berhasil",
     name: "berhasil",
-    component: () => import("../views/SuccessOrder.vue"),
+    component: () =>
+      import(/* webpackChunkName: "behasil" */ "../views/SuccessOrder.vue"),
+    meta: {
+      loggedIn: true,
+      waitingVerified: false,
+      visitor: false,
+      verified: true
+    }
+  },
+  {
+    path: "/mitra-penjualan",
+    name: "mitra-penjualan",
+    component: () =>
+      import(
+        /* webpackChunkName: "penjualan-mitra" */ "../views/MitraPenjualan.vue"
+      ),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -182,7 +268,8 @@ const routes = [
   {
     path: "/dompet",
     name: "dompet",
-    component: () => import("../views/Dompet.vue"),
+    component: () =>
+      import(/* webpackChunkName: "dompet" */ "../views/Dompet.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -193,7 +280,8 @@ const routes = [
   {
     path: "/setting",
     name: "setting",
-    component: () => import("../views/Setting.vue"),
+    component: () =>
+      import(/* webpackChunkName: "setting" */ "../views/Setting.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -205,7 +293,8 @@ const routes = [
   {
     path: "/test",
     name: "test",
-    component: () => import("../views/Test.vue"),
+    component: () =>
+      import(/* webpackChunkName: "test page" */ "../views/Test2.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,
@@ -216,7 +305,8 @@ const routes = [
   {
     path: "/logout",
     name: "logout",
-    component: () => import("../components/auth/Logout.vue")
+    component: () =>
+      import(/* webpackChunkName: "logout" */ "../components/auth/Logout.vue")
   }
 ];
 

@@ -1,10 +1,33 @@
 import { http } from "../services/http_service.js";
+import * as prod from "../services/product_service.js";
 import { setToken } from "../services/auth_service.js";
 import store from ".";
 
 export default {
+  getProductById({ commit }, payload) {
+    commit("delDetailsProduct");
+    console.log("payload", payload);
+    return new Promise((resolve, reject) => {
+      prod
+        .getById(payload)
+        .then(res => {
+          if (res.status == 200) {
+            let details = res.data.data[0].detail_items;
+            commit("setDetailsProduct", details);
+            console.log(res);
+            resolve(res.data);
+          }
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  },
   setNotification({ commit }, payload) {
     commit("setNotification", payload);
+  },
+  readNotification({ commit }, payload) {
+    commit("notifIsRead", payload);
   },
   ///===============product ======
   productIn(context, payload) {

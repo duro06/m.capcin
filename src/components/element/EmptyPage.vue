@@ -7,9 +7,31 @@
         </figure>
       </div>
       <div class="card-content">
-        <div @click="redirect" class="halaman-isi" v-if="page">
+        <div
+          @click="redirect"
+          class="halaman-isi"
+          v-if="page.includes('order')"
+        >
           <p class="tittle is-5">Halaman ini Kosong</p>
           <p class="subtittle is-6">Silahkan lakukan transaksi</p>
+        </div>
+        <div
+          @click="redirect"
+          class="halaman-isi"
+          v-else-if="page.includes('packing')"
+        >
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Belum ada Tugas untuk Anda</p>
+          <p class="subtittle is-6">Silahkan Tunggu</p>
+        </div>
+        <div
+          @click="redirect"
+          class="halaman-isi"
+          v-else-if="page.includes('supplier')"
+        >
+          <p class="tittle is-5">Halaman ini Kosong</p>
+          <p class="subtittle is-6">Belum ada Tugas untuk Anda</p>
+          <p class="subtittle is-6">Silahkan tunggu</p>
         </div>
         <div class="halaman-isi" v-else>
           <p class="tittle is-5">Halaman ini Kosong</p>
@@ -39,19 +61,14 @@ export default {
         return this.sadBag;
       } else if (this.$route.path.includes("keranjang")) {
         return this.emptyCart;
+      } else if (this.$route.path.includes("packing")) {
+        return this.emptyBag;
       } else {
         return this.sadBag2;
       }
     },
     page() {
-      if (
-        this.$route.path.includes("order") ||
-        this.$route.path.includes("keranjang")
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.$route.path;
     }
   },
   methods: {

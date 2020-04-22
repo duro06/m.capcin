@@ -23,14 +23,15 @@
   </div>
 </template>
 <script>
-import Mitra from "@/components/role/Mitra.vue";
+// import Mitra from "@/components/role/Mitra.vue";
 import * as prod from "@/services/product_service.js";
 import { mapState } from "vuex";
 
 export default {
   name: "mitra",
   components: {
-    Mitra
+    Mitra: () =>
+      import(/* webpackChunkName: "loginform" */ "@/components/role/Mitra.vue")
   },
 
   data() {

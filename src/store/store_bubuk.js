@@ -1,6 +1,6 @@
 import { http } from "../services/http_service";
 const state = () => ({
-  items: [],
+  bubuks: [],
   meta: [],
 
   item: {
@@ -14,8 +14,14 @@ const state = () => ({
 });
 /////////////////////////////////////////////////////////
 const mutations = {
+  setBubuks(state, payload) {
+    state.bubuks = payload;
+  },
+  delBubuks(state) {
+    state.bubuks = [];
+  },
   ASSIGN_DATA(state, payload) {
-    (state.items = payload), (state.meta = payload);
+    (state.bubuks = payload), (state.meta = payload);
   }
 };
 ////////////////////////////////////////////////////////

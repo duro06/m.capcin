@@ -12,6 +12,7 @@
             v-model.number="data"
             @change="isi"
             @keyup.enter="isi"
+            :disabled="isi_laporan"
           />
         </p>
       </div>

@@ -77,6 +77,8 @@
 </template>
 <script>
 import * as ord from "@/services/order_service";
+// require("../../echo.js");
+
 export default {
   name: "card",
   props: { data: Object, detail: Array },
@@ -93,6 +95,17 @@ export default {
   created() {
     // console.log(this.item);
     // this.detail;
+  },
+  mounted() {
+    // if (this.data.status != "Terkirim") {
+    //   // eslint-disable-next-line no-undef
+    //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
+    //     "OrderStatusChanged",
+    //     e => {
+    //       console.log(e);
+    //     }
+    //   );
+    // }
   },
   computed: {
     status() {

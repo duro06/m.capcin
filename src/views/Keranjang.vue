@@ -35,15 +35,17 @@ import { mapState } from "vuex";
 import * as cart from "@/services/cart_service";
 import * as order from "@/services/order_service";
 // import Modal from "@/components/element/Modal.vue";
-import Card from "@/components/element/CartProduct";
-import Empty from "@/components/element/EmptyPage";
-
+// import Card from "@/components/element/CartProduct";
+// import Empty from "@/components/element/EmptyPage";
+/* webpackChunkName: "behasil" */
 export default {
   name: "Keranjang",
   components: {
     //  Modal,
-    Card,
-    Empty
+    Card: () =>
+      import(/* webpackChunkName: "card" */ "@/components/element/CartProduct"),
+    Empty: () =>
+      import(/* webpackChunkName: "empty" */ "@/components/element/EmptyPage")
   },
   data() {
     return {

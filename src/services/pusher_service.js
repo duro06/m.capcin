@@ -1,17 +1,41 @@
 import Pusher from "pusher-js";
 import store from "../store";
+import * as auth from "./auth_service";
+
+// import {pusher} from "./http_service";
 // Pusher.logToConsole = true;
 //====================== pusher =======
 export function subscribe(order) {
   // Api key + cluster
 
-  let pusher = new Pusher("c1b487e073e0124e259f", {
+  // let token = auth.getAccessToken();
+  let pusher = new Pusher("ebfe3f8ff45ad9c3ad4c", {
     cluster: "ap1",
+    authEndpoint: `${store.state.server}/broadcasting/auth`,
+    auth: {
+      headers: {
+        Authorization: "Bearer " + auth.getAccessToken()
+      }
+    },
     forceTLS: true
   });
 
-  let channel = pusher.subscribe("capcin-tracker." + order);
-  channel.bind("App\\Events\\OrderStatusChanged", data => {
+  // ===== ini pusher nya mas hari =========================
+  // let pusher = new Pusher("c1b487e073e0124e259f", {
+  //   cluster: "ap1",
+  // authEndpoint: `${store.state.server}/broadcasting/auth`,
+  //   auth: {
+  //     headers: {
+  //       Authorization: "Bearer " + auth.getAccessToken()
+  //     }
+  //   },
+  //   forceTLS: true
+  // });
+
+  let channel = pusher.subscribe("private-capcin-tracker." + order);
+  // let channel = pusher.subscribe("capcin-tracker." + order);
+
+  channel.bind("OrderStatusChanged", data => {
     store.commit("setNotification", data);
     store.commit("order/setOrderFocus", data);
     store.commit("order/updateOrder", data);
