@@ -251,7 +251,7 @@ export default {
             // });
             console.log("response id", response.data.data.id);
             // panggil fungsi "retriveVerivie" di action nya Vuex, bawa apa aja buat di tarun d locak storage
-            vm.$store.dispatch("retrieveVerifie", "response");
+            // vm.$store.dispatch("retrieveVerifie", "response");
             console.log("respose", response);
             // tampilkan flas message
             this.flashMessage.success({

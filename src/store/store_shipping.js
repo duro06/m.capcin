@@ -1,5 +1,6 @@
 import { http } from "../services/http_service";
-import store from ".";
+import { getUserId } from "../services/auth_service";
+// import store from ".";
 
 const state = () => ({
   shipping: [],
@@ -28,13 +29,9 @@ const actions = {
   },
   getShipping({ commit }) {
     commit("delShipping");
-    let id = store.state.profile.id;
-    let ID;
-    if (id) {
-      ID = id;
-    } else {
-      ID = localStorage.getItem("mie");
-    }
+
+    let ID = getUserId();
+
     return new Promise(() => {
       http()
         .get(`admin/supplier-by-id-user/${ID}`)
