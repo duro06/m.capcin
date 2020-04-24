@@ -60,7 +60,16 @@ export default {
           message: "Konfirmasi barang diterima sudah selesai",
           time: 3000
         });
-        this.$router.push({ name: "order" }, () => {});
+        this.$store.dispatch("order/ambilOrder", this.$store.state.profile.id);
+        this.$store.dispatch(
+          "order/getDataOrder",
+          this.$store.state.profile.id
+        );
+        // this.$router.replace(
+        //   this.$route.query.redirect || { name: "order" },
+        //   () => {}
+        // );
+        // this.$router.push({ name: "order" }, () => {});
       });
     }
   }

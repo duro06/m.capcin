@@ -107,12 +107,13 @@ export default {
               message: "Pengiriman selesai.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("shipping/delDetail");
           })
           .catch(err => {
             this.$router.push({ name: "supplier" }, () => {});
             this.disable = false;
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);
@@ -145,13 +146,14 @@ export default {
               message: "Pengiriman dibatalkan.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("shipping/delDetail");
           })
           .catch(err => {
             this.$router.push({ name: "supplier" }, () => {});
 
             this.disable = false;
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);

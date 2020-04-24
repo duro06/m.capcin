@@ -17,12 +17,15 @@
               Rincian Product
             </button>
           </div>
+          <div class="column is-8" v-if="data.keterangan">
+            <p class="merah">
+              <i>Tugas ini dibatalkan {{ data.keterangan }}</i>
+            </p>
+          </div>
           <!-- <div class="column is-4">
             <button class="button is-success is-small" @click="save">
               Selesai
             </button>
-          </div>
-          <div class="column is-4">
             <button class="button is-danger is-small" @click="cancelPacking">
               Batalkan Tugas
             </button>
@@ -127,5 +130,8 @@ export default {
 <style scoped>
 .column {
   padding: 0px;
+}
+.merah {
+  color: red;
 }
 </style>

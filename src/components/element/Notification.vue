@@ -5,35 +5,45 @@
       :to="{ name: 'focus', params: { id: this.data.id } }"
     >
       <div :class="['card', data.read ? '' : 'unread']">
-        <div class="card-header">
-          <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
-        </div>
         <div class="content">
-          <p v-if="pesan.status != 'Order'">
-            sudah berganti status menjadi
+          <p class="has-text-left"></p>
+          <p v-if="pesan.order.status_id == 1">
+            Pesanan anda sudah kami terima dengan nomor referensi<B>
+              {{ pesan.order.reff }} </B
+            >. status pesanan anda saat ini:
             <span class="status"
               ><B> {{ pesan.status }}</B></span
             >
           </p>
+          <p v-else-if="pesan.order.status_id == 7">
+            Pesanan anda dengan nomor referensi<B> {{ pesan.order.reff }} </B>
+            sudah berganti status menjadi
+            <span class="status">
+              <B>{{ pesan.status }}</B>
+            </span>
+            dan data stok anda sudah ditambahkan.
+          </p>
           <p v-else>
-            Pesanan Anda sudah kami terima. status pesanan anda saat ini:
-            <span class="status"
-              ><B> {{ pesan.status }}</B></span
-            >
+            Pesanan anda dengan nomor referensi<B> {{ pesan.order.reff }} </B>
+            sudah berganti status menjadi
+            <span class="status">
+              <B>{{ pesan.status }}</B>
+            </span>
           </p>
         </div>
       </div>
     </router-link>
-    <a v-if="role == 'Packing'">
+    <a v-if="role == 'Packing'" @click.prevent="toPacking">
       <div :class="['card', data.read ? '' : 'unread']">
         Anda mendapat tugas packing dengan
-        <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
+        <p><B>Referensi : </B> {{ pesan.order.reff }}</p>
       </div>
+      <!-- <p>data Packing {{ packing.order.id }}</p> -->
     </a>
     <a v-if="role == 'Supplier'">
       <div :class="['card', data.read ? '' : 'unread']">
         Anda mendapat tugas pengantaran dengan
-        <p><B>Referensi : </B> Capcin-{{ pesan.order.reff }}</p>
+        <p><B>Referensi : </B> {{ pesan.order.reff }}</p>
       </div>
     </a>
   </div>
@@ -51,10 +61,47 @@ export default {
   computed: {
     role() {
       return this.$store.state.profile.role;
+    },
+    packing() {
+      if (this.role == "Packing") {
+        let packOrder = this.$store.state.pack.packingOrders.filter(dat => {
+          if (dat.order_id == this.data.order.id) {
+            return true;
+          }
+        });
+        return packOrder ? packOrder[0] : [];
+      } else return [];
     }
   },
   methods: {
     ...mapActions("notifications", ["readNotifications"]),
+    toPacking() {
+      console.log("packing", this.packing);
+      if (this.packing) {
+        this.$store.commit("delDetailsProduct");
+        this.$store.commit("bubuk/delBubuks");
+        this.$store.commit("pack/delOrderId");
+        // this.getProductById(this.product_id);
+        this.$store.commit(
+          "setDetailsProduct",
+          this.packing.order.detail_order_one.product.detail_items
+        );
+        this.$store.commit("bubuk/setBubuks", this.packing.order.details_bubuk);
+        this.$store.commit("pack/setOrderId", this.packing.order_id);
+        this.$router.replace(
+          this.$route.query.redirect || {
+            name: "detailproduk"
+          },
+          () => {}
+        );
+      } else {
+        this.flashMessage.error({
+          message: "Data tidak ada. silahkan lihat tugas anda di beranda", // kirim flash Message
+          time: 5000
+        });
+      }
+      // console.log()
+    },
     read() {
       this.$store.commit("order/setOrderFocus", this.data.order);
       this.$store.dispatch("readNotification", this.pesan.id);

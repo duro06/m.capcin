@@ -143,17 +143,21 @@ export default {
           .post(`admin/packing_selesai`, data)
           .then(() => {
             this.disable = false;
-            this.$router.push({ name: "packing" }, () => {});
             this.flashMessage.success({
               message: "Packing selesai.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("delDetailsProduct");
+            this.$store.commit("bubuk/delBubuks");
+            this.$store.commit("pack/delOrderId");
+            this.$store.dispatch("pack/getPackingOrder");
+            this.$router.push({ name: "packing" }, () => {});
           })
           .catch(err => {
             this.disable = false;
             this.$router.push({ name: "packing" }, () => {});
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);
@@ -168,16 +172,20 @@ export default {
     },
     submit() {
       this.disable = true;
+      let alasan =
+        "oleh " +
+        this.$store.state.profile.name +
+        " dengan alasan " +
+        this.keterangan;
       let data = new FormData();
       data.append("order_id", this.order_id);
       data.append("status", 2);
-      data.append("keterangan", this.keterangan);
-      console.log(this.keterangan);
+      data.append("keterangan", alasan);
+      // console.log(this.keterangan);
       return new Promise(() => {
         http()
           .post(`admin/packing_batal`, data)
           .then(() => {
-            this.$router.push({ name: "packing" }, () => {});
             this.disable = false;
             // console.log(res);
             this.keterangan = "";
@@ -186,12 +194,17 @@ export default {
               message: "Packing dibatalkan.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("delDetailsProduct");
+            this.$store.commit("bubuk/delBubuks");
+            this.$store.commit("pack/delOrderId");
+            this.$store.dispatch("pack/getPackingOrder");
+            this.$router.push({ name: "packing" }, () => {});
           })
           .catch(err => {
             this.$router.push({ name: "packing" }, () => {});
             this.disable = false;
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);
