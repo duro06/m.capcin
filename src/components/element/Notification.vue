@@ -40,7 +40,7 @@
       </div>
       <!-- <p>data Packing {{ packing.order.id }}</p> -->
     </a>
-    <a v-if="role == 'Supplier'">
+    <a v-if="role == 'Supplier'" @click.prevent="toShipping">
       <div :class="['card', data.read ? '' : 'unread']">
         Anda mendapat tugas pengantaran dengan
         <p><B>Referensi : </B> {{ pesan.order.reff }}</p>
@@ -71,6 +71,16 @@ export default {
         });
         return packOrder ? packOrder[0] : [];
       } else return [];
+    },
+    shipping() {
+      if (this.role == "Supplier") {
+        let shipOrder = this.$store.state.shipping.shipping.filter(dat => {
+          if (dat.order_id == this.data.order.id) {
+            return true;
+          }
+        });
+        return shipOrder ? shipOrder[0] : [];
+      } else return [];
     }
   },
   methods: {
@@ -91,6 +101,32 @@ export default {
         this.$router.replace(
           this.$route.query.redirect || {
             name: "detailproduk"
+          },
+          () => {}
+        );
+      } else {
+        this.flashMessage.error({
+          message: "Data tidak ada. silahkan lihat tugas anda di beranda", // kirim flash Message
+          time: 5000
+        });
+      }
+      // console.log()
+    },
+    toShipping() {
+      console.log("shipping", this.shipping);
+      if (this.shipping) {
+        let data = {
+          nama: this.shipping.order.user.name,
+          alamat: this.shipping.order.user.alamat,
+          reff: this.shipping.order.reff,
+          product: this.shipping.order.detail_order_one.product.name,
+          order_id: this.shipping.order_id
+        };
+        this.$store.dispatch("shipping/setDetails", data);
+        // this.setDetails(data);
+        this.$router.replace(
+          this.$route.query.redirect || {
+            name: "shipping"
           },
           () => {}
         );
