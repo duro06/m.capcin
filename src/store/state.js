@@ -13,7 +13,7 @@ export default {
   productDetails: [],
   loadShow: "",
   notification: [],
+  registrasi: [],
   cart: 0,
-  mitraProductMeta: {},
-  coba: "Coba cak"
+  mitraProductMeta: {}
 };

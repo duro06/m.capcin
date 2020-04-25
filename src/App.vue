@@ -15,6 +15,7 @@
 <script>
 import * as auth from "@/services/auth_service";
 import * as cart from "@/services/cart_service";
+// import * as pusher from "@/services/pusher_service";
 import store from "@/store";
 import { readNotif } from "@/services/notif_service";
 import Footer from "@/components/element/bulmaFooter";
@@ -104,6 +105,9 @@ export default {
       localStorage.removeItem("mie"); // hapus temporary local storege level
       localStorage.removeItem("notif");
     }
+    // coba register
+    // pusher.register(26);
+
     //   Echo.private(`capcin-tracker.${this.data.id}`).listen(
     //     "App\\Events\\OrderStatusChanged",
     //     e => {

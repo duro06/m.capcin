@@ -14,6 +14,13 @@ export default {
   setDestroyverifie(state) {
     state.adminVerified = null;
   },
+  setReg(state, payload) {
+    state.registrasi.push(payload);
+  },
+  delReg(state) {
+    state.registrasi = [];
+  },
+
   //================= token ======
   setRetrieveToken(state, token) {
     state.token = token;

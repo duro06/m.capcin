@@ -49,7 +49,6 @@ const routes = [
       import(/* webpackChunkName: "waiting" */ "../views/Waiting.vue"),
     meta: {
       loggedIn: false,
-      waitingVerified: true,
       visitor: true,
       verified: false
     }

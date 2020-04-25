@@ -46,7 +46,7 @@ export function subscribe(order) {
 export function register(order) {
   // Api key + cluster
 
-  let pusher = new Pusher("c1b487e073e0124e259f", {
+  let pusher = new Pusher("ebfe3f8ff45ad9c3ad4c", {
     cluster: "ap1",
     forceTLS: true
   });
@@ -54,8 +54,10 @@ export function register(order) {
   let channel = pusher.subscribe("capcin-reg." + order);
   channel.bind("App\\Events\\RegisterEvent", data => {
     if (data != "") {
-      store.dispatch("destroyVerifie");
-      store.dispatch("stockMitra/remove", "ada");
+      store.commit("setReg", data);
+      console.log("data Registrasi", data);
+      // store.dispatch("destroyVerifie");
+      // store.dispatch("stockMitra/remove", "ada");
     }
   });
 }

@@ -23,7 +23,10 @@
               </div>
             </article>
             <div class="message-body field fadeInUp">
-              <h3 class="notification berhasil">Menunggu konfirmasi</h3>
+              <h3 class="notification berhasil" v-if="reg.length">
+                Sudah mendapatkan konfirmasi
+              </h3>
+              <h3 class="notification berhasil" v-else>Menunggu konfirmasi</h3>
               <a @click="pindah" class="button is-small is-rounded is-danger">
                 Klik untuk Login
               </a>
@@ -35,6 +38,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 /* eslint-disable */
 
 // import Pusher from "pusher-js";
@@ -65,6 +69,9 @@ export default {
   },
   computed: {
     //Menunggu Verivikasi 
+    ...mapState({
+      reg:state=>state.registrasi
+    }),
     waiting () {
     return this.$store.getters.waitingVerified;
     }
