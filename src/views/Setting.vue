@@ -9,9 +9,6 @@
               <span class="mega-icon">
                 <i class="fas fa-sign-out-alt"></i>
               </span>
-              <p class="subtitle is-7">
-                Logout
-              </p>
             </router-link>
           </div>
         </div>

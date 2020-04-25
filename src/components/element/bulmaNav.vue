@@ -38,12 +38,25 @@
                   <span class="tag is-danger" v-if="cart > 0">{{ cart }}</span>
                 </router-link>
               </li> -->
-              <li
+              <!-- <li
                 class="one-icon mega-li navbar-item"
                 v-if="currentPage.includes('profile')"
               >
                 <router-link to="/setting" class="mega-link">
                   <span class="mega-icon"><i class="fas fa-cog"></i></span>
+                </router-link>
+              </li> -->
+              <li
+                class="one-icon mega-li navbar-item"
+                v-if="currentPage.includes('profile')"
+              >
+                <router-link :to="{ path: '/logout' }" class="mega-link">
+                  <span class="mega-icon">
+                    <i class="fas fa-sign-out-alt"></i>
+                  </span>
+                  <p class="subtitle is-7">
+                    Logout
+                  </p>
                 </router-link>
               </li>
             </ul>
