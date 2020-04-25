@@ -1,60 +1,60 @@
 <template>
   <div class="profile">
-    <div class="has-text-left">
-      <div class="card">
-        <div class="avatar-profile">
-          <div class="card-image">
-            <figure class="image is-480x480">
-              <img
-                class="avatar-ku"
-                :src="displayImage"
-                ref="displayAvatarImage"
-                alt="avatar"
-              />
-            </figure>
-          </div>
-          <div class="edit-avatar">
-            <input
-              type="file"
-              ref="editAvatar"
-              id="image"
-              @change="attachImage"
-            />
-            <!-- <input type="file" id="image" @change="previewFiles" /> -->
-            <label for="image"> Change Avatar </label>
-            <!-- <myInput id="image" @input="onFilePicked" /> -->
-          </div>
+    <div class="edit-avatar">
+      <input type="file" ref="editAvatar" id="image" @change="attachImage" />
+      <label for="image"><i class="fa fa-pencil-alt"></i> </label>
+    </div>
+    <div class="avatar-profile">
+      <div class="card-image">
+        <figure class="image">
+          <img
+            class="avatar-ku"
+            :src="displayImage"
+            ref="displayAvatarImage"
+            alt="avatar"
+          />
+        </figure>
+      </div>
+    </div>
+    <div class="detail-profile">
+      <div class="headline">
+        <div class="tempat-nama">
+          <h1 class="has-text-centered"><b>{{ user.name }}</b></h1>
         </div>
-
-        <div class="card-content">
-          <div class="columns is-mobile is-fullwidth">
-            <!-- <div class="media-left">
-              <figure class="image is-48x48">
-                <img
-                  :src="displayImage"
-                  alt="avatar"
-                  ref="miniDisplayAvatarImage"
-                />
-              </figure>
-            </div> -->
-            <div class="column is-10">
-              <p class="title is-6" style="color: black">{{ user.name }}</p>
-              <p class="subtitle is-7" style="color: black">
-                {{ user.role }} Capcin <br />
-                {{ user.email }}<br />
-                {{ user.alamat }}<br />
-              </p>
-            </div>
-            <div class="column is-2">
-              <button
-                class="button is-info is-small"
-                @click.prevent="editProfile"
-              >
-                edit
-              </button>
-            </div>
-          </div>
+        <div class="tempat-button">
+          <button
+            class="button is-fullwidth is-success"
+            @click.prevent="editProfile"
+          >
+            <i class="fa fa-pencil-alt"></i> <span> Edit Profile</span>
+          </button>
         </div>
+      </div>
+      <div class="content-profile">
+        <p>
+          <span class="icon is-medium has-text-success">
+            <i class="fas fa-handshake"></i>
+          </span>
+          {{ user.role }} Capcin
+        </p>
+        <p>
+          <span class="icon is-medium has-text-success">
+            <i class="fas fa-envelope"></i>
+          </span>
+          {{ user.email }}
+        </p>
+        <p>
+          <span class="icon is-medium has-text-success">
+            <i class="fas fa-address-card"></i>
+          </span>
+          {{ user.alamat == null? "data belum ada": user.alamat }}
+        </p>
+        <p>
+          <span class="icon is-medium has-text-success">
+            <i class="fas fa-clock"></i>
+          </span>
+          {{ user.created_at }}
+        </p>
       </div>
     </div>
     <Modal v-if="showModal" @close="handleModal">
@@ -267,9 +267,48 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .profile {
-  padding: 3rem 0.3rem 3rem 0.3rem;
+  background-color: grey;
+  padding-top: 40px;
+}
+/* Avatar */
+.avatar-profile {
+  /* padding: 0.25rem;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 5px; */
+  width: 160px;
+  height: 160px;
+  /* border-radius: 100%; */
+  /* position: absolute; */
+  margin-left: auto;
+  margin-right: auto;
+}
+img.avatar-ku {
+  /* padding-top: 40px; */
+  /* width: 100%; */
+  width: 160px;
+  height: 160px;
+  border-radius: 100%;
+  border: 5px solid #fff;
+}
+
+.card-image {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.detail-profile {
+  position: relative;
+  background-color: white;
+  min-height: 650px;
+  // border-radius: 20px;
+  top: -80px;
+  .headline {
+    padding-top: 80px;
+  }
 }
 
 .kotak {
@@ -290,23 +329,12 @@ export default {
   border: 1px solid #dbdbdb; */
 }
 
-/* Avatar */
-.avatar-profile {
-  padding: 0.25rem;
-  overflow: hidden;
-  background-color: white;
-  border-radius: 5px;
-}
-img.avatar-ku {
-  width: 100%;
-  border-radius: 5px;
-}
+
 /* -=========================================================== */
 .edit-avatar {
   position: absolute;
-  left: 11px;
-  top: 10px;
-  /* text-align: center;  */
+  left: 58%;
+  z-index: 10;
 }
 
 .edit-avatar input {
@@ -314,31 +342,19 @@ img.avatar-ku {
 }
 .edit-avatar label {
   display: inline-block;
-  width: 100%;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   color: black;
-  padding: 1px;
-  background: #00ffec61;
-  border: 1px solid transparent;
+  padding: 5px;
+  padding-left: 12px;
+  background: grey;
+  border: 2px solid white;
+  border-radius: 50%;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   font-weight: normal;
   transition: all 0.2s ease-in-out;
 }
-.file-cta {
-  display: inline-flex;
-  width: 100%;
-  /* height: 34px; */
-  color: black;
-  padding: 0px;
-  background: #00ffec61;
-  border: 1px solid transparent;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-  font-weight: normal;
-  transition: all 0.2s ease-in-out;
-}
-
 .edit-avatar label:hover {
   background: grey;
   border-color: #d6d6d6;
@@ -355,4 +371,26 @@ img.avatar-ku {
   text-align: center;
   margin: auto;
 }
+
+.file-cta {
+  display: inline-flex;
+  width: 100%;
+  /* height: 34px; */
+  color: black;
+  padding: 0px;
+  background: #00ffec61;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+.tempat-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.content-profile {
+  padding: 10px;
+}
+
 </style>

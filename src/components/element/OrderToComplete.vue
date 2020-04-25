@@ -1,20 +1,23 @@
 <template>
   <div class="order-container">
     <div class="card">
-      <div class="card-header zoomIn">
+      <!-- <div class="card-header zoomIn">
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
-      </div>
+      </div> -->
       <div class="card-content">
-        <div :class="['columns', 'is-mobile', status]">
-          <div class="column is-5 zoomIn">
-            <p class="rata-kiri">Harga :</p>
-            <p class="rata-kiri">{{ total }}</p>
-          </div>
+        <div :class="['columns', 'is-mobile', statusText]">
           <div class="column is-7 zoomIn">
-            <p class="rata-kiri">
-              <B>status :</B>
+            <p class="t-sm"><b>Order :</b> C-{{ item.reff }}</p>
+            <p class="t-xsm kelam">
+              <i>{{ item.created_at }}</i>
             </p>
-            <p class="rata-kiri box has-text-centered">
+          </div>
+          <div class="column is-5 zoomIn">
+            <p class="rata-kanan t-sm">
+              <B>{{ total }}</B>
+            </p>
+            <!-- <p class="rata-kanan"> -->
+            <p :class="['rata-kanan t-sm', statusText]">
               <B>{{ item.status.name }}</B>
             </p>
           </div>
@@ -25,6 +28,7 @@
           Barang sudah diterima
         </button>
       </div>
+      <br>
     </div>
   </div>
 </template>
@@ -45,6 +49,15 @@ export default {
   computed: {
     status() {
       return this.item.status.name;
+    },
+    statusText() {
+      if (this.item.status.name === "Selesai") {
+        return "txt-gray";
+      } else if (this.item.status.name === "Konfirmasi") {
+        return "txt-merah";
+      } else {
+        return "txt-hijau";
+      }
     },
     total() {
       let sub = "Rp " + new Intl.NumberFormat().format(this.item.total);
@@ -72,6 +85,15 @@ export default {
 }
 .columns {
   border-radius: 10px;
+}
+.t-sm {
+  font-size: 14px;
+}
+.t-xsm {
+  font-size: 12px;
+}
+.kelam {
+  color: gray;
 }
 .Order {
   background-color: rgb(255, 255, 150);
@@ -126,5 +148,19 @@ export default {
   color: aliceblue;
   cursor: not-allowed;
   padding: 7px 16px;
+}
+.card {
+  box-shadow: 0 0 0 1px lightgray;
+  border-radius: 3px !important;
+
+  .txt-merah {
+    color: red;
+  }
+  .txt-hijau {
+    color:green;
+  }
+  .txt-gray {
+    color:gray;
+  }
 }
 </style>

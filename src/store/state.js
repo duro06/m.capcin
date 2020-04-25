@@ -1,6 +1,6 @@
 // import store from ".."
 export default {
-  server: "http://192.168.0.105:8000",
+  server: "http://192.168.43.231:8000",
   // server: "http://192.168.1.100:8000",
   // server: "http://localhost:8000",
   // serverApi: "http://localhost:8000/api/",

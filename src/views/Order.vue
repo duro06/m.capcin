@@ -1,5 +1,17 @@
 <template>
   <div class="order">
+    <div class="note-order">
+      <h6><b>Halaman Order</b></h6>
+      <p class="t-xsm">
+        <b>Notes : </b>
+        <i>
+          <span>Diharap seluruh mitra mengklik </span>
+          <b style="color:red"> Barang telah diterima </b>
+          <span> jika telah menerima barang dari supplier </span>
+          <span>Terimakasih</span>
+        </i>
+      </p>
+    </div>
     <div class="isi" v-if="Items.length && Order.length">
       <div
         class="pegulangan"
@@ -300,9 +312,30 @@ export default {
   // }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .order {
-  padding-bottom: 55px;
+  background-color: whitesmoke;
+  padding: 5px;
+  margin-bottom: 20px;
+  /* border: 1px solid gray; */
+}
+.note-order {
+  background-color: white;
+  margin: -5px;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+.t-xsm {
+  font-size: 12px;
+}
+.txt-red {
+  color: red;
+}
+.txt-red {
+  color: gray;
+}
+.isi {
+  margin: 0px;
 }
 .transparent {
   background-color: transparent;
