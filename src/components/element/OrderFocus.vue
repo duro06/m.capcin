@@ -70,7 +70,16 @@ export default {
   },
   methods: {
     confirm() {
-      this.$store.dispatch("order/confirmOrder", this.orderFocus.id);
+      this.$store
+        .dispatch("order/confirmOrder", this.orderFocus.id)
+        .then(() => {
+          this.$store.dispatch("shipping/getShipping");
+          this.flashMessage.success({
+            message: "Konfirmasi barang diterima sudah selesai",
+            time: 3000
+          });
+          this.$router.push({ name: "order" }, () => {});
+        });
     },
     getDetail() {
       this.isDisplay = !this.isDisplay;

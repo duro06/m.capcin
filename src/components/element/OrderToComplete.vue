@@ -67,7 +67,23 @@ export default {
   methods: {
     confirm() {
       this.$store.commit("order/setOrderFocus", this.item);
-      this.$store.dispatch("order/confirmOrder", this.item.id);
+      this.$store.dispatch("order/confirmOrder", this.item.id).then(() => {
+        this.$store.dispatch("shipping/getShipping");
+        this.flashMessage.success({
+          message: "Konfirmasi barang diterima sudah selesai",
+          time: 3000
+        });
+        this.$store.dispatch("order/ambilOrder", this.$store.state.profile.id);
+        this.$store.dispatch(
+          "order/getDataOrder",
+          this.$store.state.profile.id
+        );
+        // this.$router.replace(
+        //   this.$route.query.redirect || { name: "order" },
+        //   () => {}
+        // );
+        // this.$router.push({ name: "order" }, () => {});
+      });
     }
   }
 };

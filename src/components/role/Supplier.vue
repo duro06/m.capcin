@@ -11,6 +11,9 @@
             Detail Pengiriman
           </button>
         </p>
+        <p class="merah" v-if="data.keterangan">
+          <i>Tugas ini dibatalkan {{ data.keterangan }}</i>
+        </p>
       </div>
     </div>
   </div>
@@ -46,5 +49,8 @@ export default {
 <style scoped>
 .supp {
   padding-bottom: 15px;
+}
+.merah {
+  color: red;
 }
 </style>

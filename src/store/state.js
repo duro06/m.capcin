@@ -1,7 +1,7 @@
 // import store from ".."
 export default {
-  server: "http://192.168.43.231:8000",
-  // server: "http://192.168.1.100:8000",
+  // server: "http://192.168.43.231:8000",
+  server: "http://192.168.0.106:8000",
   // server: "http://localhost:8000",
   // serverApi: "http://localhost:8000/api/",
   // serverApi2: "http://localhost:8000/api",
@@ -13,7 +13,7 @@ export default {
   productDetails: [],
   loadShow: "",
   notification: [],
+  registrasi: [],
   cart: 0,
-  mitraProductMeta: {},
-  coba: "Coba cak"
+  mitraProductMeta: {}
 };

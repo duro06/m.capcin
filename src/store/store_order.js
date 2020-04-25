@@ -84,10 +84,14 @@ const actions = {
   confirmOrder({ state, commit }, payload) {
     // order_id sama status id
     commit("gantiStatus", 6);
-    return new Promise(() => {
+    return new Promise(resolve => {
       http()
         .put(`user/orders/${payload}`, state.Focus)
         .then(res => {
+          // if (res.status == 200) {
+          // }
+          resolve(res);
+
           console.log("update", res);
         })
         .catch(err => {

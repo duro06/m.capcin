@@ -16,14 +16,17 @@
                 </p>
               </div>
               <div class="message-body field fadeInUp">
-                <strong>Silahkan tunggu 1 x 24 jam</strong>
+                <strong>Silahkan tunggu </strong>
                 <p>hubungi Admin di nomor</p>
                 <strong>088 000 888 999</strong>
-                <p>jika dalam waktu 1 x 24 jam halaman ini belum berubah</p>
+                <p>jika dalam waktu 1 x 24 jam anda belum bisa Login</p>
               </div>
             </article>
-            <div v-if="!waiting" class="message-body field fadeInUp">
-              <h3 class="notification berhasil">Anda sudah terverifikasi</h3>
+            <div class="message-body field fadeInUp">
+              <h3 class="notification berhasil" v-if="reg.length">
+                Sudah mendapatkan konfirmasi
+              </h3>
+              <h3 class="notification berhasil" v-else>Menunggu konfirmasi</h3>
               <a @click="pindah" class="button is-small is-rounded is-danger">
                 Klik untuk Login
               </a>
@@ -35,6 +38,7 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 /* eslint-disable */
 
 // import Pusher from "pusher-js";
@@ -65,6 +69,9 @@ export default {
   },
   computed: {
     //Menunggu Verivikasi 
+    ...mapState({
+      reg:state=>state.registrasi
+    }),
     waiting () {
     return this.$store.getters.waitingVerified;
     }

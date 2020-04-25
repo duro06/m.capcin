@@ -101,18 +101,19 @@ export default {
         http()
           .post(`admin/supplier_selesai`, data)
           .then(() => {
-            this.$router.push({ name: "supplier" }, () => {});
             this.disable = false;
             this.flashMessage.success({
               message: "Pengiriman selesai.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("shipping/delDetail");
+            this.$router.push({ name: "supplier" }, () => {});
           })
           .catch(err => {
             this.$router.push({ name: "supplier" }, () => {});
             this.disable = false;
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);
@@ -127,10 +128,15 @@ export default {
     },
     submit() {
       this.disable = true;
+      let alasan =
+        "oleh " +
+        this.$store.state.profile.name +
+        " dengan alasan " +
+        this.keterangan;
       let data = new FormData();
       data.append("order_id", this.data.order_id);
       data.append("status", 2);
-      data.append("keterangan", this.keterangan);
+      data.append("keterangan", alasan);
       console.log(this.keterangan);
       return new Promise(() => {
         http()
@@ -145,13 +151,14 @@ export default {
               message: "Pengiriman dibatalkan.", // kirim flash Message
               time: 5000
             });
+            this.$store.commit("shipping/delDetail");
           })
           .catch(err => {
             this.$router.push({ name: "supplier" }, () => {});
 
             this.disable = false;
             this.flashMessage.error({
-              message: "Gagal " + err, // kirim flash Message
+              message: "Gagal. Silahkan hubungi admin " + err, // kirim flash Message
               time: 5000
             });
             // console.log(err);

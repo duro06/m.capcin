@@ -148,7 +148,7 @@ export default {
         }
       },
       selected: "",
-      minggu: null,
+      minggu: 1,
       rangePicker: [
         { id: 1, tittle: "Hari ini" },
         { id: 2, tittle: "Minggu ini" },
@@ -173,7 +173,7 @@ export default {
       return Array.from(Array(moment().weeksInYear()).keys());
     },
     week() {
-      return moment().weeksInYear(this.tahun);
+      return moment().weeksInYear();
     }
   },
   methods: {
