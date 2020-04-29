@@ -1,9 +1,9 @@
 <template>
   <div class="packing-isi">
-    <div class="card">
+    <div class="card batas-kotak">
       <header class="card-header kepala">
         <p class="card-header-tittle has-text-centered">
-          No.Reff : {{ data.order.reff }}
+          No.Reff : C-{{ data.order.reff }}
         </p>
       </header>
       <div class="card-content isinya-kartu">
@@ -13,7 +13,7 @@
         </div>
         <div class="columns is-mobile is-fullwidth has-text-centered">
           <div class="column is-4">
-            <button class="button is-info is-small" @click="details">
+            <button class="button warna-tema is-small" @click="details">
               Rincian Product
             </button>
           </div>
@@ -22,14 +22,6 @@
               <i>Tugas ini dibatalkan {{ data.keterangan }}</i>
             </p>
           </div>
-          <!-- <div class="column is-4">
-            <button class="button is-success is-small" @click="save">
-              Selesai
-            </button>
-            <button class="button is-danger is-small" @click="cancelPacking">
-              Batalkan Tugas
-            </button>
-          </div> -->
         </div>
       </div>
       <footer class="card-footer kaki-kartu">

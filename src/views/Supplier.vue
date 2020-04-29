@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* .isi {
   display: block;
   width: -webkit-fill-available;
@@ -46,8 +46,10 @@ export default {
 } */
 .supplier {
   padding: 20px 15px 60px 15px;
-}
-h1 {
-  margin-bottom: 20px;
+  background-color: whitesmoke;
+  h1 {
+    padding-bottom: 10px;
+    font-weight: 500;
+  }
 }
 </style>

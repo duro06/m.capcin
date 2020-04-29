@@ -1,13 +1,11 @@
 <template>
   <div class="supp">
-    <div class="card">
-      <div class="card-header kepala">
-        No. Reff : capcin-{{ data.order.reff }}
-      </div>
+    <div class="card batas-kotak">
+      <div class="card-header kepala">No. Reff : C-{{ data.order.reff }}</div>
       <div class="card-content isinya-kartu">
         <p>Nama Pembeli : {{ data.order.user.name }}</p>
         <p>
-          <button class="button is-info is-small" @click="toDetail">
+          <button class="button warna-tema is-small" @click="toDetail">
             Detail Pengiriman
           </button>
         </p>

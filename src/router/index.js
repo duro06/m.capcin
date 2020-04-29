@@ -147,7 +147,7 @@ const routes = [
     name: "laporanpacking",
     component: () =>
       import(
-        /* webpackChunkName: "laporan packing" */ "../views/PackOrder.vue"
+        /* webpackChunkName: "laporanPacking" */ "../views/LaporanPacking.vue"
       ),
     meta: {
       loggedIn: true,
@@ -175,7 +175,7 @@ const routes = [
     name: "laporanpengiriman",
     component: () =>
       import(
-        /* webpackChunkName: "laporan pengiriman" */ "../views/ShippingOrder.vue"
+        /* webpackChunkName: "laporan pengiriman" */ "../views/LaporanPengiriman.vue"
       ),
     meta: {
       loggedIn: true,
@@ -265,10 +265,10 @@ const routes = [
     }
   },
   {
-    path: "/dompet",
-    name: "dompet",
+    path: "/laporan",
+    name: "laporan",
     component: () =>
-      import(/* webpackChunkName: "dompet" */ "../views/Dompet.vue"),
+      import(/* webpackChunkName: "dompet" */ "../views/Laporan.vue"),
     meta: {
       loggedIn: true,
       waitingVerified: false,

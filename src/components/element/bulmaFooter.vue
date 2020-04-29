@@ -27,13 +27,14 @@
               'btn_nav_item',
               'level-item',
               'has-text-centered',
-              currentPage.includes('dompet') ? activeClass : ''
+              currentPage.includes('laporan') ? activeClass : ''
             ]"
           >
-            <router-link :to="{ path: '/dompet' }" exact>
-              <i class="fas fa-wallet"></i>
+            <router-link :to="{ path: '/laporan' }" exact>
+              <i class="fas fa-file-invoice"></i>
+              <!-- <i class="fas fa-wallet"></i> -->
               <p class="subtitle is-7">
-                Dompet
+                Laporan
               </p>
             </router-link>
           </div>

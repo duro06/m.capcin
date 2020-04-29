@@ -6,12 +6,29 @@
       </button>
     </router-link>
     <div class="card">
-      <div class="card-header zoomIn">
-        <p><B>Refferensi :</B> Capcin-{{ orderFocus.reff }}</p>
-      </div>
+      <div class="card-header zoomIn"></div>
       <div class="card-content">
-        <div :class="['columns', 'is-mobile', status]">
+        <div class="columns is-mobile">
+          <div class="column is-7 zoomIn">
+            <p class="t-sm"><b>Order :</b> C-{{ orderFocus.reff }}</p>
+            <p class="t-xsm kelam">
+              <i>{{ orderFocus.created_at }}</i>
+            </p>
+          </div>
           <div class="column is-5 zoomIn">
+            <p class="rata-kanan t-sm">
+              <B>{{ total }}</B>
+            </p>
+            <!-- <p class="rata-kanan"> -->
+            <p :class="['rata-kanan t-sm', statusText]">
+              <B>{{ orderFocus.status.name }}</B>
+            </p>
+          </div>
+        </div>
+        <!-- </div> -->
+        <!-- <div :class="['columns', 'is-mobile', status]">
+          <div class="column is-5 zoomIn">
+        <p><B>Refferensi :</B> C-{{ orderFocus.reff }}</p>
             <p class="rata-kiri">Jumlah :</p>
             <p class="rata-kiri">{{ total }}</p>
           </div>
@@ -23,7 +40,7 @@
               <B>{{ orderFocus.status.name }}</B>
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
       <div
         v-if="orderFocus.status_id == 5"
@@ -31,7 +48,7 @@
         @click="confirm"
       >
         <button class="button is-success is-rounded is-small">
-          Barang sudah diterima
+          Barang telah diterima
         </button>
       </div>
     </div>
@@ -62,6 +79,15 @@ export default {
     ...mapState("order", { orderFocus: state => state.Focus }),
     status() {
       return this.orderFocus.status.name;
+    },
+    statusText() {
+      if (this.orderFocus.status_id === 7) {
+        return "txt-gray";
+      } else if (this.orderFocus.status_id === 6) {
+        return "txt-merah";
+      } else {
+        return "txt-hijau";
+      }
     },
     total() {
       let sub = "Rp " + new Intl.NumberFormat().format(this.orderFocus.total);
@@ -109,7 +135,21 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.card {
+  box-shadow: 0 0 0 1px lightgray;
+  border-radius: 3px !important;
+
+  .txt-merah {
+    color: red;
+  }
+  .txt-hijau {
+    color: green;
+  }
+  .txt-gray {
+    color: gray;
+  }
+}
 .isi-kartu {
   padding: 0px 24px;
 }

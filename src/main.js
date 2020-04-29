@@ -6,7 +6,7 @@ import store from "./store";
 
 import Vuex from "vuex";
 import axios from "axios";
-// import vueNumeral from "vue-numeral-filter";
+// import moment from "moment";
 import FlashMessage from "@smartweb/vue-flash-message";
 import VueCarousel from "vue-carousel";
 import infiniteScroll from "vue-infinite-scroll";
@@ -18,6 +18,7 @@ Vue.use(Vuex, axios);
 Vue.use(FlashMessage);
 Vue.use(VueCarousel);
 Vue.use(infiniteScroll);
+// Vue.use(moment);
 import { writeNotif } from "./services/notif_service";
 
 window.addEventListener("beforeunload", function() {
@@ -39,11 +40,11 @@ $(window).bind("beforeunload", function() {
 });
 // eslint-disable-next-line no-undef
 $(window).bind("online", function() {
-  alert("online");
+  // alert("online");
 });
 // eslint-disable-next-line no-undef
 $(window).bind("offline", function() {
-  alert("offline");
+  // alert("offline");
 });
 // eslint-disable-next-line no-undef
 $(window).bind("load", function() {

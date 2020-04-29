@@ -156,16 +156,21 @@ export default {
   padding: 5px 20px 60px 20px;
 }
 .kepala {
-  background-color: rgb(199, 198, 198);
-  border-radius: 5px;
+  background-color: rgba(229, 226, 226, 0.747);
+  border-radius: 1px;
+  padding-left: 10px;
+}
+.batas-kotak {
+  box-shadow: 0 0 0 1px lightgray;
 }
 .isinya-kartu {
-  background-color: rgb(174, 255, 174);
-  border-radius: 15px;
+  background-color: rgba(204, 245, 204, 0.5);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px lightgray;
 }
 .kaki-kartu {
-  background-color: rgb(199, 198, 198);
-  border-radius: 5px;
+  background-color: rgba(224, 223, 223, 0.733);
+  border-radius: 1px;
   height: 20px;
   align-self: center;
 }
@@ -201,6 +206,9 @@ export default {
   color: #636e72;
 }
 .btn_nav_item.active a {
+  color: #42b549 !important;
+}
+.hijau {
   color: #42b549 !important;
 }
 .btn_nav_item.active p {

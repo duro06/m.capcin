@@ -1,5 +1,5 @@
 <template>
-  <div class="ngisi">
+  <div class="shipping-order">
     <!-- ==========input tanggal========= -->
     <div class="card">
       <div class="media-content">
@@ -52,65 +52,23 @@
       <I> {{ formatDate(tanggalAkhir) }}</I>
     </p>
     <div class="card" v-if="dataLaporan.length">
-      <h1 class="grey">
-        <i> Total penjualan : {{ total_jumlah }} cup </i>
-      </h1>
-      <div class="card dalem media-content">
+      <div class="card isinya media-content">
         <div
-          class="columns rasa is-fullwidth"
+          class=" kartu is-fullwidth"
           v-for="(data, n) in dataLaporan"
           :key="n"
+          :class="n % 2 == 0 ? 'genap' : 'ganjil'"
         >
-          <div class="">
-            <div class="column is-4 kartu ">
-              <div class="columns is-mobile">
-                <div class="column is-8 has-text-left">
-                  <span class="">
-                    {{ data.bubuk.nama }}
-                    <span class="grey rasa title is-7">
-                      <i>{{ data.sum_keluar }} Cup</i>
-                    </span>
-                  </span>
-                </div>
-                <div
-                  class="column is-4 has-text-right icon-kanan"
-                  v-if="data.tampil == false"
-                  @click="tampil(data)"
-                >
-                  <div class="hijau">
-                    <i class="fas fa-angle-right "></i>
-                  </div>
-                </div>
-                <div
-                  class="column is-4 has-text-right icon-kanan"
-                  v-if="data.tampil == true"
-                  @click="sembunyi(data)"
-                >
-                  <div class="hijau">
-                    <i class="fas fa-angle-up "></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="column is-8" v-if="data.tampil == true">
-              <div
-                v-for="(detail, i) in data.details_stok"
-                :key="i"
-                class="columns is-mobile"
-                :class="i % 2 == 0 ? 'even' : 'odd'"
-              >
-                <div class="column is-8">
-                  <i class="title is-7" style="padding-left: 5px;"
-                    >{{ formatDate(detail.created_at) }}
-                  </i>
-                </div>
-                <div class="column is-4">
-                  {{ detail.keluar }}
-                  <span class="subtitle is-7"> <i>cup</i> </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p class="judul is-7">Referensi: C-{{ data.order.reff }}</p>
+          <p class="sub-judul is-7">
+            <i>
+              <b>Penerima :</b> {{ data.order.user.name }} <br />
+              Pada <b>{{ formatDate(data.created_at) }}</b> <br />
+              Lama Proses
+              <b>{{ perbedaan(data.created_at, data.updated_at) }}</b>
+            </i>
+          </p>
+          <p class="sub-judul is-7"></p>
         </div>
       </div>
     </div>
@@ -120,15 +78,11 @@
   </div>
 </template>
 <script>
+import moment from "moment";
 import * as auth from "../services/auth_service";
 import { http } from "../services/http_service";
-// import "vue2-datepicker/index.css";
-import moment from "moment";
 export default {
-  name: "mitra-penjualan",
-  components: {
-    // DatePicker: () => import("vue2-datepicker")
-  },
+  name: "shipping-order",
   data() {
     return {
       tanggalAwal: null,
@@ -156,36 +110,21 @@ export default {
     };
   },
   computed: {
-    total_jumlah() {
-      return this.dataLaporan.reduce(function(sum, val) {
-        let keluar = val.sum_keluar == null ? 0 : parseInt(val.sum_keluar);
-        let total = sum + keluar;
-        return total;
-      }, 0);
-    },
     weeks() {
       return Array.from(Array(moment().weeksInYear()).keys());
     },
     week() {
       return moment().weeksInYear();
-    },
-    laporans() {
-      let laporan = this.dataLaporan;
-      laporan.forEach(data => {
-        data.tampil = false;
-      });
-      return laporan;
     }
   },
   methods: {
-    tampil(data) {
-      data.tampil = true;
-    },
-    sembunyi(data) {
-      data.tampil = false;
-    },
     formatDate(value) {
       return moment(value).format("D MMMM, YYYY");
+    },
+    perbedaan(from, to) {
+      moment.locale("id");
+      let durations = moment.duration(moment(to).diff(moment(from))).humanize();
+      return durations;
     },
     lihatData() {
       if (this.tanggalAwal != null && this.tanggalAkhir != null) {
@@ -205,7 +144,7 @@ export default {
         this.tanggalAwal = moment().startOf("week")._d;
         this.tanggalAkhir = moment().endOf("week")._d;
         this.minggu = moment().week();
-        console.log("awal", this.tanggalAwal, "akhir", this.tanggalAkhir);
+        // console.log("awal", this.tanggalAwal, "akhir", this.tanggalAkhir);
       } else {
         // pilih minggu
         if (this.minggu) {
@@ -237,19 +176,12 @@ export default {
       console.log(params);
       return new Promise(() => {
         http()
-          .get(`admin/mitra-laporan-penjualan`, params)
+          .get(`admin/laporan-supplier`, params)
           .then(res => {
             if (res.status == 200) {
               console.log(res);
               this.afterSubmit = true;
               this.dataLaporan = res.data.data;
-              this.dataLaporan.forEach(data => {
-                let name = data.bubuk.nama;
-                data.details_stok.forEach(stock => {
-                  let value = { details: stock, nama: name };
-                  this.detailLaporan.push(value);
-                });
-              });
             }
           })
           .catch(err => {
@@ -264,10 +196,13 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
-.ngisi {
-  margin-bottom: 10px;
+<style scoped>
+.shipping-order {
+  margin: 15px 15px 60px 15px;
   background-color: whitesmoke;
+}
+.isi {
+  padding: 10px 0px;
 }
 .tanggal {
   width: 95%;
@@ -275,42 +210,29 @@ export default {
 .tengah {
   align-self: center;
 }
-.icon-kanan {
-  padding-right: 30px;
-}
-.odd {
-  background-color: rgb(230, 228, 228);
-  padding-left: 20px;
-}
-.even {
-  background-color: aliceblue;
-  padding-left: 20px;
-}
-.grey {
-  color: grey;
+
+/* .ganjil {
+  background-color: rgb(204, 247, 213);
 }
 .genap {
-  background-color: rgb(255, 249, 242);
-}
+  background-color: rgb(250, 244, 236);
+} */
 .kartu {
-  margin-top: 0.2rem;
-  margin-bottom: 0.5rem;
-  border-radius: 0.5rem;
   box-shadow: 0 0 0 1px lightgray;
-  border-radius: 3px !important;
+  padding-left: 0.5rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.2rem;
+  background-color: white;
 }
-.rasa {
-  margin-top: 1px;
-  margin-bottom: 2px;
-  padding-left: 5px;
+.sub-judul {
+  font-size: 0.75rem;
 }
-.card {
-  h1 {
-    margin-top: 10px;
-    padding-left: 5px;
-  }
+.judul {
+  font-size: 0.75rem;
+  font-weight: 600;
 }
-.dalem {
-  overflow-y: hidden;
+.isinya {
+  background-color: whitesmoke;
 }
 </style>

@@ -5,26 +5,6 @@
     <div class="isi" v-else v-for="(item, n) in packingOrders" :key="n">
       <Packing :data="item" />
     </div>
-    <!-- </div>
-    <router-link to="/packtask">
-      <div class="card">
-        <div class="card-header">
-          <div class="columns is-mobile">
-            <div class="column is-3 ikon">
-              <div class="isi-ikon">
-                <i class="fas fa-clipboard-list fa-2x"></i>
-              </div>
-            </div>
-            <div class="column is-9">
-              <div class="isi">
-                Anda memiliki <B>{{ packingOrders.length }}</B> tugas yang belum
-                selesai
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </router-link> -->
   </div>
 </template>
 <script>
@@ -48,7 +28,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 /* .isi {
   display: block;
   width: -webkit-fill-available;
@@ -63,7 +43,12 @@ export default {
   display: flex;
 }
 .packing {
-  padding: 20px 15px 60px 15px;
+  margin: 20px 15px 60px 15px;
+  background-color: whitesmoke;
+  h1 {
+    padding-bottom: 10px;
+    font-weight: 500;
+  }
 }
 .packing-isi {
   padding-bottom: 20px;

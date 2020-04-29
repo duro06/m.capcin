@@ -10,7 +10,18 @@
           <div class="column is-7 zoomIn">
             <p class="t-sm"><b>Order :</b> C-{{ item.reff }}</p>
             <p class="t-xsm kelam">
-              <i>{{ item.created_at }}</i>
+              <i>pada {{ dibuat(item.created_at) }}</i> <br />
+              <!-- <span v-if="item.status_id != 1">
+                <i>
+                  Lama Proses
+                  <b>{{ perbedaan(data.created_at, data.updated_at) }}</b>
+                </i>
+              </span>
+              <span v-if="item.status_id == 1">
+                <i>
+                  belum di proses
+                </i>
+              </span> -->
             </p>
             <!-- <p class="rata-kiri">Harga :</p>
             <p class="rata-kiri">{{ total }}</p> -->
@@ -31,7 +42,7 @@
   </div>
 </template>
 <script>
-// import moment from "moment";
+import moment from "moment";
 export default {
   name: "card",
   props: { data: Object, detail: Array },
@@ -42,7 +53,7 @@ export default {
       dataDetails: [],
       kelihatan: "none",
       isDisplay: false,
-      loading: false,
+      loading: false
     };
   },
   computed: {
@@ -51,9 +62,9 @@ export default {
     },
     statusText() {
       // return this.item.status.name == "Selesai" ? "txt-hijau" : "txt-merah";
-      if (this.item.status.name === "Selesai") {
+      if (this.item.status_id === 7) {
         return "txt-gray";
-      } else if (this.item.status.name === "Konfirmasi") {
+      } else if (this.item.status_id === 6) {
         return "txt-merah";
       } else {
         return "txt-hijau";
@@ -64,7 +75,17 @@ export default {
       return sub;
     }
   },
-  methods: {}
+  methods: {
+    dibuat(tgl) {
+      moment.locale("id");
+      return moment(tgl).format("DD MMMM YYYY");
+    },
+    perbedaan(from, to) {
+      moment.locale("id");
+      let durations = moment.duration(moment(to).diff(moment(from))).humanize();
+      return durations;
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -145,6 +166,7 @@ export default {
 //   cursor: not-allowed;
 //   padding: 7px 16px;
 // }
+
 /* BARU INI WAN */
 .card {
   box-shadow: 0 0 0 1px lightgray;
@@ -154,10 +176,10 @@ export default {
     color: red;
   }
   .txt-hijau {
-    color:green;
+    color: green;
   }
   .txt-gray {
-    color:gray;
+    color: gray;
   }
 }
 </style>

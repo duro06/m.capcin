@@ -5,7 +5,7 @@
         <p><B>Refferensi :</B> Capcin-{{ item.reff }}</p>
       </div> -->
       <div class="card-content">
-        <div :class="['columns', 'is-mobile', statusText]">
+        <div class="columns is-mobile ">
           <div class="column is-7 zoomIn">
             <p class="t-sm"><b>Order :</b> C-{{ item.reff }}</p>
             <p class="t-xsm kelam">
@@ -25,10 +25,10 @@
       </div>
       <div class="has-text-centered">
         <button class="button is-success is-rounded is-small" @click="confirm">
-          Barang sudah diterima
+          Barang telah diterima
         </button>
       </div>
-      <br>
+      <br />
     </div>
   </div>
 </template>
@@ -51,9 +51,9 @@ export default {
       return this.item.status.name;
     },
     statusText() {
-      if (this.item.status.name === "Selesai") {
+      if (this.item.status_id === 7) {
         return "txt-gray";
-      } else if (this.item.status.name === "Konfirmasi") {
+      } else if (this.item.status_id === 6) {
         return "txt-merah";
       } else {
         return "txt-hijau";
@@ -88,7 +88,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .transparent {
   background-color: transparent;
   border-color: transparent;
@@ -173,10 +173,10 @@ export default {
     color: red;
   }
   .txt-hijau {
-    color:green;
+    color: green;
   }
   .txt-gray {
-    color:gray;
+    color: gray;
   }
 }
 </style>

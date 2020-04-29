@@ -1,30 +1,12 @@
 <template>
   <div class="detail-product">
-    <div class="isi">
+    <div class="isi" v-if="bubuks.length && products.length">
       <div class="card">
-        <div class="card-header">
+        <div class="card-header warna-tema">
           <h1><B>Produk untuk di packing</B></h1>
         </div>
-        <div class="card-content bubuk" v-if="bubuks.length">
-          <div class="columns is-mobile ">
-            <div class="column is-7">Nama Item</div>
-            <div class="column is-5">Jumlah</div>
-          </div>
-          <div
-            v-for="(product, n) in bubuks"
-            :key="n"
-            :class="n % 2 == 0 ? 'even' : 'odd'"
-          >
-            <div class="columns is-mobile ">
-              <div class="column is-7">
-                {{ product.bubuk.nama }}
-              </div>
-              <div class="column is-5">{{ product.qty }} bks</div>
-            </div>
-          </div>
-        </div>
         <div class="card-content produk">
-          <div class="columns is-mobile ">
+          <div class="columns is-mobile has-text-centered">
             <div class="column is-7">Nama Item</div>
             <div class="column is-5">Jumlah</div>
           </div>
@@ -38,14 +20,41 @@
                 {{ product.item.nama }}
               </div>
               <div class="column is-5">
-                {{ product.qty }} {{ product.item.unit.nama }}
+                {{ product.qty }}
+                <i class="satuan">{{ product.item.unit.nama }}</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-content bubuk" v-if="bubuks.length">
+          <div class="columns is-mobile has-text-centered">
+            <div class="column is-7">Nama Item</div>
+            <div class="column is-5">Jumlah</div>
+          </div>
+          <div
+            v-for="(product, n) in bubuks"
+            :key="n"
+            :class="n % 2 == 0 ? 'even' : 'odd'"
+          >
+            <div class="columns is-mobile ">
+              <div class="column is-7">
+                {{ product.bubuk.nama }}
+              </div>
+              <div class="column is-5">
+                {{ product.qty }} <i class="satuan">bks</i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <nav class="navbar is-fixed-bottom-touch is-hidden-desktop">
+    <div v-else>
+      <p class="has-text-centered kosong">Belum ada detail tugas</p>
+    </div>
+    <nav
+      class="navbar is-fixed-bottom-touch is-hidden-desktop"
+      v-if="bubuks.length && products.length"
+    >
       <div class="container">
         <div class="navbar-brand level is-mobile">
           <div
@@ -219,7 +228,21 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.card {
+  h1 {
+    // padding: 1rem;
+    margin: 1rem;
+    // box-shadow: 0px 0px 0px 1px grey;
+    // background-color: lightcyan;
+  }
+  .column {
+    padding: 6px;
+  }
+  .satuan {
+    font-size: 0.78rem;
+  }
+}
 .navbar-brand {
   position: fixed;
   bottom: 0;
@@ -227,12 +250,13 @@ export default {
   right: 0;
   z-index: 1000;
   display: flex;
-  height: 60px;
+  height: 55px;
   box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
 }
 .isi {
-  padding-bottom: 60px;
+  margin-bottom: 60px;
+  background-color: rgba(0, 0, 255, 0.2);
 }
 .kecil {
   padding-bottom: 0;
@@ -241,19 +265,29 @@ export default {
   margin-top: 3px;
 }
 .bubuk {
-  box-shadow: 0px 0px 10px 1px coral;
+  box-shadow: 0px 0px 2px 2px rgba(255, 0, 0, 0.5);
   padding: 14px;
   margin: 15px;
 }
 .produk {
-  box-shadow: 0px 0px 10px 1px greenyellow;
+  box-shadow: 0px 0px 2px 2px rgba(255, 0, 0, 0.5);
   padding: 14px;
   margin: 15px;
 }
 .even {
-  background-color: rgba(120, 248, 248, 0.89);
+  background-color: rgba(0, 255, 0, 0.1);
+  padding-left: 10px;
+  margin-bottom: 1rem;
+  // color: red;
 }
 .odd {
-  background-color: rgba(106, 255, 113, 0.89);
+  background-color: rgba(0, 0, 255, 0.05);
+  padding-left: 10px;
+  margin-bottom: 1rem;
+  // color: white;
+}
+.kosong {
+  padding: 30px;
+  background-color: wheat;
 }
 </style>

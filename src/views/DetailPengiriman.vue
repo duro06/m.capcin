@@ -1,14 +1,28 @@
 <template>
   <div class="shiping-details">
-    <div class="card">
-      <div class="card-header kepala">No Reff: capcin-{{ data.reff }}</div>
+    <div class="card" v-if="data.reff">
+      <div class="card-header warna-tema">
+        <h1><B>Produk untuk di kirimkan</B></h1>
+      </div>
       <div class="card-content isinya-kartu">
-        <p>Penerima : {{ data.nama }}</p>
-        <p>product yang dikirimkan : {{ data.product }}</p>
-        <p>Alamat: {{ data.alamat }}</p>
+        <p class="pake-margin">No Reff: C-{{ data.reff }}</p>
+        <p class="pake-margin">Penerima : {{ data.nama }}</p>
+
+        <p class="pake-margin">product yang dikirimkan : {{ data.product }}</p>
+
+        <p>Alamat:</p>
+        <p class="alamat">
+          <i>{{ data.alamat }}</i>
+        </p>
       </div>
     </div>
-    <nav class="navbar is-fixed-bottom-touch is-hidden-desktop">
+    <div v-else>
+      <p class="has-text-centered kosong">Belum ada detail tugas</p>
+    </div>
+    <nav
+      class="navbar is-fixed-bottom-touch is-hidden-desktop"
+      v-if="data.reff"
+    >
       <div class="container">
         <div class="navbar-brand level is-mobile">
           <div
@@ -170,9 +184,21 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .sipping-details {
   padding-bottom: 60px;
+}
+.card {
+  h1 {
+    margin: 1rem;
+  }
+}
+.pake-margin {
+  margin-bottom: 0.5rem;
+}
+.alamat {
+  font-weight: 600;
+  padding-left: 1.5rem;
 }
 .navbar-brand {
   position: fixed;
@@ -184,5 +210,9 @@ export default {
   height: 60px;
   box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
+}
+.kosong {
+  padding: 30px;
+  background-color: wheat;
 }
 </style>
