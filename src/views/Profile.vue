@@ -19,7 +19,9 @@
     <div class="detail-profile">
       <div class="headline">
         <div class="tempat-nama">
-          <h1 class="has-text-centered"><b>{{ user.name }}</b></h1>
+          <h1 class="has-text-centered">
+            <b>{{ user.name }}</b>
+          </h1>
         </div>
         <div class="tempat-button">
           <button
@@ -45,15 +47,21 @@
         </p>
         <p>
           <span class="icon is-medium has-text-success">
+            <i class="fas fa-phone"></i>
+          </span>
+          {{ user.tlp == "" ? "data belum ada" : user.tlp }}
+        </p>
+        <p>
+          <span class="icon is-medium has-text-success">
             <i class="fas fa-address-card"></i>
           </span>
-          {{ user.alamat == null? "data belum ada": user.alamat }}
+          {{ user.alamat == "" ? "data belum ada" : user.alamat }}
         </p>
         <p>
           <span class="icon is-medium has-text-success">
             <i class="fas fa-clock"></i>
           </span>
-          {{ user.created_at }}
+          {{ formatDate(user.created_at) }}
         </p>
       </div>
     </div>
@@ -87,6 +95,14 @@
             />
           </div>
           <div class="kotak">
+            <label class="isi-kotak" for="input">Telepon </label>
+            <input
+              class="isi-kotak input is-small "
+              type="text"
+              v-model="user.tlp"
+            />
+          </div>
+          <div class="kotak">
             <label class="isi-kotak" for="input">Alamat </label>
             <input
               class="isi-kotak input is-small "
@@ -113,16 +129,14 @@
   </div>
 </template>
 <script>
-// import { getProfile } from "@/services/auth_service";
+import moment from "moment";
 import { mapState, mapGetters } from "vuex";
 import * as auth from "@/services/auth_service";
-import Modal from "@/components/element/Modal.vue";
-// import Footer from "@/components/element/bulmaFooter";
 
 export default {
   name: "profile",
   components: {
-    Modal
+    Modal: () => import("@/components/element/Modal.vue")
     //  Footer
   },
   data() {
@@ -147,15 +161,6 @@ export default {
   computed: {
     ...mapState(["profile", "token"]),
     ...mapGetters(["storageUrl"])
-    // loading() {
-    //   if (this.user.image != "" || this.user.image != undefined) {
-    //     console.log("not Loading");
-    //     return this.$store.commit("notLoading");
-    //   } else {
-    //     console.log("not Loading");
-    //     return this.$store.commit("loading", "terserah");
-    //   }
-    // }
   },
   watch: {
     user: {
@@ -164,17 +169,17 @@ export default {
         this.getProfile();
       }
     }
-    // imageName: {
-    //   immediate: true,
-    //   handler() {
-    //     this.pickFile();
-    //   }
-    // }
   },
   mounted() {
     this.$store.commit("loading");
   },
   methods: {
+    formatDate(value) {
+      moment.locale("id");
+      // return moment(value).format("D MMMM, YYYY HH:mm:ss");
+      return moment(value).format("D MMMM, YYYY");
+      // return moment(value).humanize();
+    },
     editProfile() {
       this.showModal = true;
       this.disable = false;
@@ -329,7 +334,6 @@ img.avatar-ku {
   border: 1px solid #dbdbdb; */
 }
 
-
 /* -=========================================================== */
 .edit-avatar {
   position: absolute;
@@ -392,5 +396,4 @@ img.avatar-ku {
 .content-profile {
   padding: 10px;
 }
-
 </style>

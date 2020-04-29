@@ -1,5 +1,17 @@
 <template>
   <div class="container is-fullhd">
+    <router-link to="/profile" class="syarat " v-if="nilai < 100">
+      <progress class="progress is-link" :value="nilai" max="100"> </progress>
+      <span v-if="role == 'Mitra'">
+        <i>
+          Profile anda belum lengkap, harap lengkapi profile Anda. klik disini
+          untuk melengkapi
+        </i>
+      </span>
+      <span v-else>
+        <i>Profile anda belum lengkap. klik disini untuk melengkapi</i>
+      </span>
+    </router-link>
     <!-- <Navbar class="navbar" /> -->
     <div class="has-text-centered">
       <Welcome />
@@ -10,6 +22,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 // @ is an alias to /src
 // import Navbar from "@/components/element/bulmaNav.vue";
 // import Footer from "../components/element/bulmaFooter";
@@ -24,12 +37,26 @@ export default {
     // Navbar
   },
   computed: {
+    ...mapState(["profile"]),
     produksi() {
       if (this.$store.getters.levelAccess == "Produksi") {
         return true;
       } else {
         return false;
       }
+    },
+    role() {
+      return this.profile.role;
+    },
+    nilai() {
+      let nilai = 80;
+      if (this.profile.alamat != "") {
+        nilai = nilai + 10;
+      }
+      if (this.profile.tlp != "") {
+        nilai = nilai + 10;
+      }
+      return nilai;
     }
   }
   // methods: {

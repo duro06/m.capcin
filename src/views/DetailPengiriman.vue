@@ -6,13 +6,17 @@
       </div>
       <div class="card-content isinya-kartu">
         <p class="pake-margin">No Reff: C-{{ data.reff }}</p>
-        <p class="pake-margin">Penerima : {{ data.nama }}</p>
-
         <p class="pake-margin">product yang dikirimkan : {{ data.product }}</p>
-
+        <p class="pake-margin">Penerima : {{ data.nama }}</p>
+        <p class="pake-margin">
+          Telepon : {{ data.tlp == "" ? "belum ada data" : data.tlp }}
+        </p>
         <p>Alamat:</p>
-        <p class="alamat">
+        <p class="alamat" v-if="data.alamat">
           <i>{{ data.alamat }}</i>
+        </p>
+        <p v-else style="padding-left:20px">
+          <i>Belum ada data</i>
         </p>
       </div>
     </div>

@@ -6,6 +6,7 @@
     ></FlashMessage>
     <LoadingCapcin />
     <Nav class="navbar" v-if="loggedIn" />
+
     <transition name="slide-fade" v-wow data-wow-duration="1s">
       <router-view />
     </transition>
@@ -34,6 +35,7 @@ export default {
   data() {
     return {
       userId: null
+      // nilai: 0
     };
   },
   beforeCreate: async function() {
@@ -68,9 +70,7 @@ export default {
       store.dispatch("destroyToken");
     }
   },
-  created() {
-    // this.getCart();
-  },
+  created() {},
   mounted() {
     // let userId;
     // console.log("user", this.userId);
@@ -152,6 +152,14 @@ export default {
 };
 </script>
 <style lang="scss">
+.syarat {
+  margin: 10px;
+  background-color: whitesmoke;
+  .progress {
+    margin-bottom: 2px;
+    height: 6px;
+  }
+}
 .ngisi {
   padding: 5px 20px 60px 20px;
 }

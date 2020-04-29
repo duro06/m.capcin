@@ -46,7 +46,7 @@
                   <span class="mega-icon"><i class="fas fa-cog"></i></span>
                 </router-link>
               </li> -->
-              <li
+              <!-- <li
                 class="one-icon mega-li navbar-item"
                 v-if="currentPage.includes('profile')"
               >
@@ -58,7 +58,7 @@
                     Logout
                   </p>
                 </router-link>
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -151,6 +151,7 @@ export default {
         this.$route.path.includes("shipping") ||
         this.$route.path.includes("stock") ||
         this.$route.path.includes("penjualan") ||
+        this.$route.path.includes("profile") ||
         this.$route.path.includes("detailproduk")
           ? "none"
           : "inherit";
@@ -163,6 +164,7 @@ export default {
         this.$route.path.includes("stock") ||
         this.$route.path.includes("penjualan") ||
         this.$route.path.includes("shipping") ||
+        this.$route.path.includes("profile") ||
         this.$route.path.includes("detailproduk")
           ? "inherit"
           : "none";

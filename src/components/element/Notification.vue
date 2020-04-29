@@ -118,6 +118,7 @@ export default {
         let data = {
           nama: this.shipping.order.user.name,
           alamat: this.shipping.order.user.alamat,
+          tlp: this.shipping.order.user.tlp,
           reff: this.shipping.order.reff,
           product: this.shipping.order.detail_order_one.product.name,
           order_id: this.shipping.order_id

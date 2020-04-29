@@ -29,6 +29,7 @@ export default {
       let data = {
         nama: this.data.order.user.name,
         alamat: this.data.order.user.alamat,
+        tlp: this.data.order.user.tlp,
         reff: this.data.order.reff,
         product: this.data.order.detail_order_one.product.name,
         order_id: this.data.order_id
