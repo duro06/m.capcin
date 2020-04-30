@@ -34,9 +34,16 @@
               </option>
             </select>
           </div>
-          <div class="column is-6">
+          <div
+            :class="[
+              'column',
+              'is-6',
+              'has-text-centered',
+              selected == 3 ? 'tombol1' : 'tombol'
+            ]"
+          >
             <button
-              class="button is-info is-small is-rounded"
+              class="button warna-tema is-small is-rounded"
               @click="lihatData"
             >
               <i class="fa fa-eye"></i> Lihat data
@@ -265,6 +272,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.tombol {
+  padding-top: 17px;
+}
+.tombol1 {
+  padding-top: 38px;
+}
 .ngisi {
   margin-bottom: 10px;
   background-color: whitesmoke;
