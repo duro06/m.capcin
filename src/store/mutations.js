@@ -57,34 +57,44 @@ export default {
     state.mitraProductMeta = payload;
   },
   // ====mitra notification =============
+  delNotification(state) {
+    state.notification = [];
+  },
   setNotification(state, payload) {
     if (!payload.read) {
-      state.notification.push(payload);
+      state.notification.unshift(payload);
+      // state.notification.push(payload);
     }
     // writeNotif();
   },
   allNotifIsRead(state) {
     state.notification.forEach(e => {
-      e.read = true;
+      e.data.read = true;
     });
   },
   notifIsRead(state, payload) {
-    const temp = state.notification.filter(
-      e => e.id === payload && e.read == false
-    );
-    if (temp.length) {
-      temp[0].read = true;
-      console.log("notif", temp);
-      if (temp.length > 1) {
-        state.notification.forEach(e => {
-          if (e.id == temp[0].id) {
-            e.read = temp[0].read;
-          }
-        });
-      } else {
-        state.notification.read = temp[0].read;
+    state.notification.filter(e => {
+      if (e.id == payload) {
+        e.data.read = true;
       }
-    }
+    });
+    // const temp = state.notification.filter(
+    //   e => e.id === payload && e.data.read == false
+    // );
+    // console.log("temp", temp);
+    // if (temp.length) {
+    //   temp[0].data.read = true;
+    //   console.log("notif", temp);
+    //   if (temp.length > 1) {
+    //     state.notification.forEach(e => {
+    //       if (e.id == temp[0].id) {
+    //         e.data.read = temp[0].data.read;
+    //       }
+    //     });
+    //   } else {
+    //     state.notification.data.read = temp[0].data.read;
+    //   }
+    // }
   },
   //=====mitra cart========
   setCart(state, payload) {

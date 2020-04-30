@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div class="detail-order">
     <div class="satu">
       <div class="has-text-centered">
         <div class="card">
@@ -62,7 +62,9 @@
                     </div>
                     <div class="column is-6 zoomIn">
                       <p class="subtitle is-7 has-text-left">
-                        <B> {{ d.qty }} {{ d.item.unit.nama }} </B>
+                        <B>
+                          {{ d.qty }} <i> {{ d.item.unit.nama }}</i>
+                        </B>
                       </p>
                     </div>
                     <!-- <div class="column is-4 zoomIn">
@@ -109,6 +111,50 @@
         </div> -->
       </div>
     </div>
+    <Modal v-if="showModal" @close="handleModal">
+      <header slot="header" class="modal-card-head fadeInUp">
+        <p class="modal-card-title  fadeInUp">
+          Profile Belum Lengkap
+        </p>
+        <button
+          class="delete"
+          aria-label="close"
+          @click.prevent="handleModal"
+        ></button>
+      </header>
+      <section slot="body" class="modal-card-body  fadeInUp">
+        <div class="content">
+          <div class="telepon">
+            <p>
+              Nomor telepon :
+              {{
+                profile.tlp == "null" ? "belum ada nomor telepon" : profile.tlp
+              }}
+            </p>
+          </div>
+          <div class="alamat">
+            <p>
+              Alamat :
+              {{
+                profile.alamat == "null" ? "belum ada alamat" : profile.alamat
+              }}
+            </p>
+          </div>
+        </div>
+      </section>
+      <footer slot="footer" class="modal-card-foot  fadeInUp">
+        <button
+          class="button warna-tema fadeInUp is-small"
+          @click.prevent="keProfile"
+          :disabled="disable"
+        >
+          Lengkapi data
+        </button>
+        <button class="button  fadeInUp is-small" @click.prevent="handleModal">
+          Cancel
+        </button>
+      </footer>
+    </Modal>
     <nav class="navbar is-fixed-bottom-touch ">
       <div class="container">
         <div class="navbar-brand level is-mobile">
@@ -124,8 +170,8 @@
           <div class="btn_nav_item level-item">
             <button
               type="submit"
-              class="button is-success is-small is-rounded"
-              @click.prevent="orderNow"
+              class="button warna-tema is-small is-rounded"
+              @click.prevent="checkProfile"
               :disabled="disable"
             >
               Order Sekarang
@@ -147,7 +193,7 @@ import * as prod from "@/services/product_service";
 export default {
   name: "Detail_Order",
   components: {
-    //  Modal,
+    Modal: () => import("@/components/element/Modal.vue")
     // Footer
   },
   data() {
@@ -156,7 +202,8 @@ export default {
       errors: [],
       kdisable: true,
       disable: false,
-      barang: {}
+      barang: {},
+      showModal: false // modal tampil atau tidak
     };
   },
 
@@ -179,62 +226,19 @@ export default {
     }
   },
   methods: {
-    // getCart: async function() {
-    //   let id = this.profile.id;
-
-    //   try {
-    //     const res = await cart.getChart(id);
-    //     let panjang = res.data.data.data.length;
-    //     if (panjang > 0) {
-    //       this.$store.commit("setCart", panjang);
-    //     } else {
-    //       this.$store.commit("setCart", 0);
-    //     }
-    //     this.$router.replace({ name: "mitra" }, () => {});
-    //     console.log("cart :", res);
-    //     console.log("data :", panjang);
-    //   } catch (e) {
-    //     this.$router.replace({ name: "mitra" }, () => {});
-    //     console.log(e);
-    //   }
-    // },
-    // kurang() {
-    //   if (this.jumlahPesanan <= 2) {
-    //     // this.jumlahPesanan = this.jumlahPesanan;
-    //     this.kdisable = true;
-    //     this.jumlahPesanan--;
-    //   } else {
-    //     this.kdisable = false;
-    //     this.jumlahPesanan--;
-    //   }
-    // },
-    // tambah() {
-    //   this.jumlahPesanan++;
-    //   if (this.jumlahPesanan > 0) {
-    //     this.kdisable = false;
-    //   }
-    // },
-    // addToCart: async function() {
-    //   this.$store.commit("loading");
-    //   const formData = new FormData();
-    //   formData.append("user_id", this.profile.id);
-    //   formData.append("product_id", this.barang.id);
-    //   formData.append("harga", this.barang.harga);
-    //   formData.append("qty", this.jumlahPesanan);
-
-    //   try {
-    //     const response = await cart.toChart(formData);
-    //     if (response.status === 200) {
-    //       this.$router.replace({ name: "mitra" }, () => {});
-    //       this.getCart();
-    //       // this.$store.commit("setSuccessOrder", response.data); // untuk mengisi pesan di halaman sebelah
-    //     }
-    //     this.$store.commit("notLoading");
-    //   } catch (e) {
-    //     this.$store.commit("notLoading");
-    //     this.errors = e;
-    //   }
-    // },
+    handleModal() {
+      this.showModal = false;
+    },
+    keProfile() {
+      this.$router.replace({ name: "profile" }, () => {});
+    },
+    checkProfile() {
+      if (this.profile.tlp != "null" && this.profile.alamat != "null") {
+        this.orderNow();
+      } else {
+        this.showModal = true;
+      }
+    },
     orderNow: async function() {
       this.disable = true;
       this.$store.commit("loading");
@@ -312,7 +316,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .navbar-brand {
   position: fixed;
   bottom: 0;
@@ -335,8 +339,21 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.profile {
-  padding: 3rem 0.3rem 3rem 0.3rem;
+.detail-order {
+  padding: left 5px;
+  padding: right 5px;
+  padding: top 10px;
+  margin-bottom: 50px;
+  background-color: whitesmoke;
+}
+.card {
+  background-color: whitesmoke;
+  .media {
+    background-color: white;
+  }
+  .card-content {
+    background-color: white;
+  }
 }
 
 .kotak {

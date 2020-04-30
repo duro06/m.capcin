@@ -2,7 +2,7 @@
   <div class="detail-product">
     <div class="isi" v-if="bubuks.length && products.length">
       <div class="card">
-        <div class="card-header warna-tema">
+        <div class="card-header ">
           <h1><B>Produk untuk di packing</B></h1>
         </div>
         <div class="card-content produk">
@@ -105,7 +105,7 @@
       </section>
       <footer slot="footer" class="modal-card-foot ">
         <button
-          class="button is-success is-small is-rounded"
+          class="button warna-tema is-small is-rounded"
           @click.prevent="submit"
           :disabled="disable"
         >
@@ -230,6 +230,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .card {
+  // background-color: whitesmoke;
   h1 {
     // padding: 1rem;
     margin: 1rem;
@@ -265,23 +266,23 @@ export default {
   margin-top: 3px;
 }
 .bubuk {
-  box-shadow: 0px 0px 2px 2px rgba(255, 0, 0, 0.5);
+  box-shadow: 0px 0px 2px 2px lightgray;
   padding: 14px;
   margin: 15px;
 }
 .produk {
-  box-shadow: 0px 0px 2px 2px rgba(255, 0, 0, 0.5);
+  box-shadow: 0px 0px 2px 2px lightgray;
   padding: 14px;
   margin: 15px;
 }
 .even {
-  background-color: rgba(0, 255, 0, 0.1);
+  background-color: white;
   padding-left: 10px;
   margin-bottom: 1rem;
   // color: red;
 }
 .odd {
-  background-color: rgba(0, 0, 255, 0.05);
+  background-color: whitesmoke;
   padding-left: 10px;
   margin-bottom: 1rem;
   // color: white;

@@ -80,7 +80,7 @@
                 </div>
                 <p
                   :class="['help', 'align-left', 'is-danger']"
-                  :style="{ visibility: classSelect }"
+                  :style="{ display: classSelect }"
                 >
                   {{ validSelect }}
                 </p>
@@ -231,7 +231,7 @@ export default {
       // shortcut this
       const vm = this;
       //jika email dan password valid
-      if (vm.Vpass == true && vm.Vmail == true) {
+      if (vm.Vpass == true && vm.Vmail == true && this.user.role != "") {
         vm.loading = "is-loading"; // button spinner enable
         //panggil fungsi "register" di action nya vuex, bawa data user
         vm.$store
@@ -272,7 +272,7 @@ export default {
                   }
                   if (role) {
                     this.valSelect = "is-danger";
-                    this.classSelect = "visible";
+                    this.classSelect = "inherit";
                     this.validSelect =
                       error.response.data.errors.role[0] +
                       "\n" +
@@ -305,6 +305,7 @@ export default {
       } else if (
         vm.user.name == "" ||
         vm.user.email == "" ||
+        vm.user.role == "" ||
         vm.slected == "" ||
         vm.user.password == ""
       ) {
@@ -351,13 +352,13 @@ export default {
     //= ===================== Validasi Level ===============
 
     validasiSelect() {
-      if (this.role == "") {
+      if (this.user.role == "") {
         this.valSelect = "is-danger";
-        this.classSelect = "visible";
+        this.classSelect = "inherit";
         this.validSelect = "Tidak boleh kosong";
       } else {
         this.valSelect = "";
-        this.classSelect = "hidden";
+        this.classSelect = "none";
         this.validSelect = "Tidak boleh kosong";
       }
     },

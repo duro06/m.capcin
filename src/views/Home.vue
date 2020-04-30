@@ -50,10 +50,10 @@ export default {
     },
     nilai() {
       let nilai = 80;
-      if (this.profile.alamat != "") {
+      if (this.profile.alamat != "null") {
         nilai = nilai + 10;
       }
-      if (this.profile.tlp != "") {
+      if (this.profile.tlp != "null") {
         nilai = nilai + 10;
       }
       return nilai;

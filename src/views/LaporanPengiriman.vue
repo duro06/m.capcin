@@ -64,8 +64,8 @@
             <i>
               <b>Penerima :</b> {{ data.order.user.name }} <br />
               Pada <b>{{ formatDate(data.created_at) }}</b> <br />
-              Lama Proses
-              <b>{{ perbedaan(data.created_at, data.updated_at) }}</b>
+              <!-- Lama Proses
+              <b>{{ perbedaan(data.created_at, data.updated_at) }}</b> -->
             </i>
           </p>
           <p class="sub-judul is-7"></p>

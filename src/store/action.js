@@ -29,6 +29,9 @@ export default {
   readNotification({ commit }, payload) {
     commit("notifIsRead", payload);
   },
+  delNotification({ commit }) {
+    commit("delNotification");
+  },
   ///===============product ======
   productIn(context, payload) {
     context.commit("setProduct", payload, { root: true });

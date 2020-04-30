@@ -188,7 +188,7 @@ export default {
 <style scoped>
 .content-body {
   background: whitesmoke;
-  padding: 0px 5px 55px 5px;
+  padding: 0px 5px 50px 5px;
 }
 .VueCarousel {
   border-radius: 20px !important;

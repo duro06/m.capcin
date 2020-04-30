@@ -24,56 +24,72 @@ const actions = {
           let existingNotif = store.state.notification;
           let notif = res.data.data;
           console.log(notif);
-
+          store.commit("delNotification");
           let newNotif = [];
-          if (notif.length != existingNotif.length) {
-            if (existingNotif.length) {
-              let dataBaru = notif.filter(data => {
-                existingNotif.forEach(e => {
-                  if (data.id != e.id) {
-                    return true;
-                  }
-                });
-              });
-              dataBaru.forEach(data => {
-                let baru = {
-                  id: data.id,
-                  type: data.type,
-                  read: data.data.read,
-                  status: data.data.status,
-                  order: data.data.order
-                };
-                newNotif.push(baru);
-              });
-              console.log("dataBaru ", dataBaru);
-              let dataBaru2 = existingNotif.filter(data => {
-                notif.forEach(e => {
-                  if (data.id != e.id) {
-                    return true;
-                  }
-                });
-              });
-              console.log("dataBaru 2", dataBaru2);
-              dataBaru2.forEach(data => {
+          // if (notif.length != existingNotif.length) {
+          if (existingNotif.length) {
+            let terbaca = existingNotif.filter(data => data.data.read == true);
+            notif.forEach(data => {
+              newNotif.push(data);
+            });
+            console.log("terbaca", terbaca);
+            if (terbaca.length) {
+              terbaca.forEach(data => {
                 newNotif.push(data);
               });
-            } else {
-              notif.forEach(data => {
-                let baru = {
-                  id: data.id,
-                  type: data.type,
-                  read: data.data.read,
-                  status: data.data.status,
-                  order: data.data.order
-                };
-                newNotif.push(baru);
-              });
             }
-            console.log("new ", newNotif);
-            newNotif.forEach(data => {
-              store.commit("setNotification", data);
+            // let dataBaru = notif.filter(data => {
+            //   existingNotif.forEach(e => {
+            //     // console.log("id lama", e.id, "id baru", data.id);
+            //     if (data.id != e.id) {
+            //       console.log("baru", data.id);
+            //       console.log("lama", e.id);
+            //       return true;
+            //     }
+            //   });
+            // });
+            // dataBaru.forEach(data => {
+            //   newNotif.push(data);
+            // });
+            // console.log("dataBaru ", dataBaru);
+            // let dataBaru2 = existingNotif.filter(data => {
+            //   notif.forEach(e => {
+            //     // console.log("id lama", e.id, "id baru", data.id);
+            //     if (data.id != e.id) {
+            //       console.log("baru", data.id);
+            //       console.log("lama", e.id);
+            //       return true;
+            //     }
+            //   });
+            // });
+            // console.log("dataBaru 2", dataBaru2);
+            // dataBaru2.forEach(data => {
+            //   newNotif.push(data);
+            // });
+          } else {
+            notif.forEach(data => {
+              newNotif.push(data);
             });
           }
+          console.log("new ", newNotif);
+          newNotif.forEach(data => {
+            store.commit("setNotification", data);
+          });
+          // } else {
+          //   let baru = existingNotif.filter(lama => {
+          //     notif.forEach(baru => {
+          //       if (lama.id == baru.id) {
+          //         lama = baru;
+          //         console.log("data change", lama.id, baru.id);
+          //       } else if (lama.id != baru.id) {
+          //         return true;
+          //       }
+          //     });
+          //   });
+          //   baru.forEach(e => {
+          //     store.commit("setNotification", e);
+          //   });
+          // }
           if (res.status == 200) {
             resolve(res.data);
           }

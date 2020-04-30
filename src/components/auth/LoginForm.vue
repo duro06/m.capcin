@@ -184,6 +184,7 @@ export default {
             message: "Anda login sebagai " + item + " Capcin",
             time: 3000
           });
+          location.reload();
           break;
         case "Packing":
           this.$router.push({ name: "packing" }, () => {});
@@ -191,6 +192,7 @@ export default {
             message: "Anda login sebagai " + item + " Capcin",
             time: 3000
           });
+          location.reload();
           break;
         case "Supplier":
           this.$router.push({ name: "supplier" }, () => {});
@@ -198,6 +200,7 @@ export default {
             message: "Anda login sebagai " + item + " Capcin",
             time: 3000
           });
+          location.reload();
           break;
         case "Mitra":
           this.$router.push({ name: "mitra" }, () => {});
@@ -205,6 +208,7 @@ export default {
             message: "Anda login sebagai " + item + " Capcin",
             time: 3000
           });
+          location.reload();
           break;
         case "Admin":
           this.disable = true; // disable button login

@@ -1,7 +1,10 @@
 <template>
   <keep-alive>
-    <nav class="navbar is-fixed-bottom-touch is-hidden-desktop">
-      <div :style="{ display: umum }">
+    <nav
+      class="navbar is-fixed-bottom-touch is-hidden-desktop"
+      :style="{ display: umum }"
+    >
+      <div>
         <div class="container">
           <div class="navbar-brand level is-mobile">
             <div
@@ -126,23 +129,6 @@
           </div>
         </div>
       </div>
-      <!--       
-    </nav>
-    <nav class="navbar is-fixed-bottom-touch " > -->
-      <div class="custom_bottom_nav" :style="{ display: prof }">
-        <div class="navbar-brand level is-mobile is-pulled-right">
-          <div class="btn_nav_item level-item has-text-centered">
-            <router-link :to="{ path: '/logout' }" exact>
-              <span class="mega-icon">
-                <i class="fas fa-sign-out-alt"></i>
-              </span>
-              <p class="subtitle is-7">
-                Logout
-              </p>
-            </router-link>
-          </div>
-        </div>
-      </div>
     </nav>
   </keep-alive>
 </template>
@@ -167,10 +153,7 @@ export default {
           : "inherit";
       return tampil;
     },
-    prof() {
-      let tampil = this.$route.path.includes("profile") ? "inherit" : "none";
-      return tampil;
-    },
+
     loggedIn() {
       return this.$store.getters.loggedIn;
     },
@@ -238,9 +221,9 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 1;
   display: flex;
-  height: 60px;
+  height: 50px;
   box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
 }

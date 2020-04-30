@@ -279,11 +279,11 @@ export default {
   padding-right: 30px;
 }
 .odd {
-  background-color: rgb(230, 228, 228);
+  background-color: white;
   padding-left: 20px;
 }
 .even {
-  background-color: aliceblue;
+  background-color: whitesmoke;
   padding-left: 20px;
 }
 .grey {

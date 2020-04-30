@@ -1,7 +1,7 @@
 <template>
   <div class="shiping-details">
     <div class="card" v-if="data.reff">
-      <div class="card-header warna-tema">
+      <div class="card-header ">
         <h1><B>Produk untuk di kirimkan</B></h1>
       </div>
       <div class="card-content isinya-kartu">
@@ -9,10 +9,10 @@
         <p class="pake-margin">product yang dikirimkan : {{ data.product }}</p>
         <p class="pake-margin">Penerima : {{ data.nama }}</p>
         <p class="pake-margin">
-          Telepon : {{ data.tlp == "" ? "belum ada data" : data.tlp }}
+          Telepon : {{ data.tlp == "null" ? "belum ada data" : data.tlp }}
         </p>
         <p>Alamat:</p>
-        <p class="alamat" v-if="data.alamat">
+        <p class="alamat" v-if="data.alamat != 'null'">
           <i>{{ data.alamat }}</i>
         </p>
         <p v-else style="padding-left:20px">
@@ -77,7 +77,7 @@
       </section>
       <footer slot="footer" class="modal-card-foot ">
         <button
-          class="button is-success is-small is-rounded"
+          class="button warna-tema is-small is-rounded"
           @click.prevent="submit"
           :disabled="disable"
         >
@@ -190,7 +190,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .sipping-details {
-  padding-bottom: 60px;
+  margin-bottom: 50px;
+  padding: left 5px;
+  padding: right 5px;
+  background-color: whitesmoke;
 }
 .card {
   h1 {
@@ -211,7 +214,7 @@ export default {
   right: 0;
   z-index: 1000;
   display: flex;
-  height: 60px;
+  height: 50px;
   box-shadow: 0 -2px 1px -2px #333;
   background-color: #fff;
 }

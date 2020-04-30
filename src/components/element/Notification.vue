@@ -4,51 +4,62 @@
       v-if="role == 'Mitra'"
       :to="{ name: 'focus', params: { id: this.data.id } }"
     >
-      <div :class="['card', data.read ? '' : 'unread']">
+      <div :class="['card', data.data.read ? '' : 'unread']">
         <div class="content">
           <p class="has-text-left"></p>
-          <p v-if="pesan.order.status_id == 1">
-            Pesanan anda sudah kami terima dengan nomor referensi<B>
-              {{ pesan.order.reff }} </B
-            >. status pesanan anda saat ini:
-            <span class="status"
-              ><B> {{ pesan.status }}</B></span
-            >
-          </p>
-          <p v-else-if="pesan.order.status_id == 7">
-            Pesanan anda dengan nomor referensi<B> {{ pesan.order.reff }} </B>
-            sudah berganti status menjadi
+          <div v-if="pesan.data.order.status_id == 1">
+            Pesanan anda sudah kami terima dengan status pesanan :
             <span class="status">
-              <B>{{ pesan.status }}</B>
+              <i>{{ pesan.data.status }}</i>
             </span>
-            dan data stok anda sudah ditambahkan.
-          </p>
-          <p v-else>
-            Pesanan anda dengan nomor referensi<B> {{ pesan.order.reff }} </B>
-            sudah berganti status menjadi
+            <p style="color:gray; font-size:10px !important;">
+              <i>{{ perbedaan(pesan.created_at) }} yang lalu</i>
+            </p>
+          </div>
+          <div v-else-if="pesan.data.order.status_id == 7">
+            Status pesanan
             <span class="status">
-              <B>{{ pesan.status }}</B>
+              <i>{{ pesan.data.status }}</i>
             </span>
-          </p>
+            dan stok anda sudah ditambahkan.
+            <p style="color:gray; font-size:10px !important;">
+              <i>{{ perbedaan(pesan.created_at) }} yang lalu</i>
+            </p>
+          </div>
+          <div v-else>
+            Status pesanan berganti :
+            <span class="status">
+              <i>{{ pesan.data.status }}</i>
+            </span>
+            <p style="color:gray; font-size:10px !important;">
+              <i>{{ perbedaan(pesan.created_at) }} yang lalu</i>
+            </p>
+          </div>
         </div>
       </div>
     </router-link>
     <a v-if="role == 'Packing'" @click.prevent="toPacking">
-      <div :class="['card', data.read ? '' : 'unread']">
-        Anda mendapat tugas packing dengan
-        <p><B>Referensi : </B> {{ pesan.order.reff }}</p>
+      <div :class="['card', data.data.read ? '' : 'unread']">
+        Anda mendapat tugas packing
+        <p style="color:gray; font-size:10px !important;">
+          <i>{{ perbedaan(pesan.created_at) }} yang lalu</i>
+        </p>
       </div>
       <!-- <p>data Packing {{ packing.order.id }}</p> -->
     </a>
     <a v-if="role == 'Supplier'" @click.prevent="toShipping">
-      <div :class="['card', data.read ? '' : 'unread']">
-        Anda mendapat tugas pengantaran dengan
-        <p><B>Referensi : </B> {{ pesan.order.reff }}</p>
+      <div :class="['card', data.data.read ? '' : 'unread']">
+        Anda mendapat tugas pengantaran
+
+        <p style="color:gray; font-size:10px !important;">
+          <i>{{ perbedaan(pesan.created_at) }} yang lalu</i>
+        </p>
       </div>
     </a>
   </div>
 </template>
 <script>
+import moment from "moment";
 import { mapActions } from "vuex";
 export default {
   name: "notif",
@@ -65,7 +76,7 @@ export default {
     packing() {
       if (this.role == "Packing") {
         let packOrder = this.$store.state.pack.packingOrders.filter(dat => {
-          if (dat.order_id == this.data.order.id) {
+          if (dat.order_id == this.data.data.order.id) {
             return true;
           }
         });
@@ -75,7 +86,7 @@ export default {
     shipping() {
       if (this.role == "Supplier") {
         let shipOrder = this.$store.state.shipping.shipping.filter(dat => {
-          if (dat.order_id == this.data.order.id) {
+          if (dat.order_id == this.data.data.order.id) {
             return true;
           }
         });
@@ -85,6 +96,12 @@ export default {
   },
   methods: {
     ...mapActions("notifications", ["readNotifications"]),
+    perbedaan(from) {
+      moment.locale("id");
+      // let to = Date.now();
+      let durations = moment.duration(moment().diff(moment(from))).humanize();
+      return durations;
+    },
     toPacking() {
       console.log("packing", this.packing);
       if (this.packing) {
@@ -140,7 +157,7 @@ export default {
       // console.log()
     },
     read() {
-      this.$store.commit("order/setOrderFocus", this.data.order);
+      this.$store.commit("order/setOrderFocus", this.data.data.order);
       this.$store.dispatch("readNotification", this.pesan.id);
       this.readNotifications(this.pesan.id);
       console.log("Notif card", this.data);
@@ -157,9 +174,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .unread {
-  background-color: rgb(193, 243, 250);
+  background-color: whitesmoke;
 }
 .status {
-  color: #07ffc9;
+  color: gray;
+  // font-size: 18px;
 }
 </style>

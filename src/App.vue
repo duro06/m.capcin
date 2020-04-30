@@ -85,17 +85,18 @@ export default {
       // eslint-disable-next-line no-undef
       Echo.private("App.User." + userId).notification(data => {
         if (store.state.profile.role == "Mitra") {
-          store.commit("setNotification", data);
+          // store.commit("setNotification", data);
           store.commit("order/setOrderFocus", data);
         } else if (store.state.profile.role == "Packing") {
-          store.commit("setNotification", data);
+          // store.commit("setNotification", data);
           store.dispatch("pack/getPackingOrder");
         } else if (store.state.profile.role == "Supplier") {
-          store.commit("setNotification", data);
+          // store.commit("setNotification", data);
           store.dispatch("shipping/getShipping");
         }
         console.log(data.type);
         console.log("data ", data);
+        store.dispatch("notifications/getNotifications");
       });
       store.dispatch("notifications/getNotifications");
     } else {
@@ -172,7 +173,7 @@ export default {
   box-shadow: 0 0 0 1px lightgray;
 }
 .isinya-kartu {
-  background-color: rgba(204, 245, 204, 0.5);
+  background-color: whitesmoke;
   border-radius: 1px;
   box-shadow: 0 0 0 1px lightgray;
 }

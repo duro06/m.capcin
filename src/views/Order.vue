@@ -316,7 +316,7 @@ export default {
 .order {
   background-color: whitesmoke;
   padding: 5px;
-  margin-bottom: 60px;
+  margin-bottom: 55px;
   /* border: 1px solid gray; */
 }
 .note-order {
